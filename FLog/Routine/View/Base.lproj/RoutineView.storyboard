@@ -11,7 +11,8 @@
         <scene sceneID="xS0-BN-UJ8">
             <objects>
                 <navigationController id="Qto-he-5XZ" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kBv-MP-q43">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="kBv-MP-q43">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -26,13 +27,13 @@
         <!--FLog-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="FLog" id="BYZ-38-t0r" customClass="ViewController" customModule="FLog" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="FLog" id="BYZ-38-t0r" customClass="RoutineView" customModule="FLog" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IfJ-7G-yvr">
-                                <rect key="frame" x="10" y="93" width="120" height="30"/>
+                                <rect key="frame" x="10" y="5" width="120" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="POL-jQ-hqQ"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="Qlc-Ks-gL7"/>
@@ -46,7 +47,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="moO-5I-G7h">
-                                <rect key="frame" x="374" y="93" width="30" height="30"/>
+                                <rect key="frame" x="374" y="5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="EOr-2m-qmo"/>
                                     <constraint firstAttribute="height" constant="30" id="w4o-0S-73W"/>
@@ -60,12 +61,12 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VrN-L0-DN3">
-                                <rect key="frame" x="0.0" y="128" width="414" height="734"/>
+                                <rect key="frame" x="0.0" y="40" width="414" height="734"/>
                                 <color key="backgroundColor" red="0.96862655880000004" green="0.96475034950000005" blue="0.96454447509999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.96862655880000004" green="0.96475034950000005" blue="0.96454447509999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.96862655880000004" green="0.96475034950000005" blue="0.96454447509999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MainTableViewCell" id="gX2-Fh-7O4" customClass="MainTableViewCell" customModule="FLog" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="RoutineViewCell" id="gX2-Fh-7O4" customClass="RoutineViewCell" customModule="FLog" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="78"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gX2-Fh-7O4" id="IwB-rm-TmJ">

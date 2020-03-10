@@ -10,7 +10,7 @@
         <!--New Routine-->
         <scene sceneID="QXs-JP-XqH">
             <objects>
-                <viewController title="New Routine" id="rUe-cU-XNQ" customClass="NewGroupViewController" customModule="FLog" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="New Routine" id="rUe-cU-XNQ" customClass="NewRoutineView" customModule="FLog" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bqY-Tb-E3m">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
