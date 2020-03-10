@@ -18,8 +18,12 @@ class MainTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        borderImageView.layer.borderColor = UIColor.opaqueSeparator.cgColor
-        borderImageView.layer.borderWidth = 1
-        borderImageView.layer.cornerRadius = 10
+        borderImageView.layer.cornerRadius = 5
+        borderImageView.layer.shadowColor = UIColor.black.cgColor
+        borderImageView.layer.shadowOpacity = 0.1
+        borderImageView.layer.shadowOffset = CGSize(width: 3, height: 10)
+        borderImageView.layer.shadowRadius = 5
+        borderImageView.layer.masksToBounds = false
+        
     }
 }

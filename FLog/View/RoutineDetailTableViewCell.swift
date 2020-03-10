@@ -161,7 +161,7 @@ class RoutineDetailTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         let newRepsLabel = UILabel()
         newRepsLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        newRepsLabel.text = Common.Define.routineDetailReps
+        newRepsLabel.text = "Reps"
         horizontalStack.addArrangedSubview(newRepsLabel)
         
         exerciseStackView.addArrangedSubview(horizontalStack)

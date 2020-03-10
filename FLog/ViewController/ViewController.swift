@@ -161,6 +161,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         routines.insert(item, at: destinationIndexPath.row)
         
         UserDefaults.standard.set(routines, forKey: Common.Define.mainRoutine)
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
