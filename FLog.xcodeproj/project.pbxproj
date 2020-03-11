@@ -24,10 +24,14 @@
 		FAA12C242417C51600736315 /* NewRoutineInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C232417C51600736315 /* NewRoutineInteractor.swift */; };
 		FAA12C2D2417D16C00736315 /* RoutineDetailProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C2C2417D16C00736315 /* RoutineDetailProtocol.swift */; };
 		FAA12C2F2417D17B00736315 /* RoutineDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C2E2417D17B00736315 /* RoutineDetailPresenter.swift */; };
-		FAA12C312417D18400736315 /* RoutineDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C302417D18300736315 /* RoutineDetailPresenter.swift */; };
+		FAA12C312417D18400736315 /* RoutineDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C302417D18300736315 /* RoutineDetailInteractor.swift */; };
 		FAA12C332417D19400736315 /* RoutineDetailWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C322417D19400736315 /* RoutineDetailWireFrame.swift */; };
-		FAC5BC3123FA57320069B016 /* RoutineDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC5BC3023FA57320069B016 /* RoutineDetailViewController.storyboard */; };
-		FAC5BC3323FA57410069B016 /* RoutineDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5BC3223FA57410069B016 /* RoutineDetailViewController.swift */; };
+		FABD9641241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD9640241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift */; };
+		FABD96442418A122007C868D /* SetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD96432418A122007C868D /* SetModel.swift */; };
+		FABD96462418A167007C868D /* ExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD96452418A167007C868D /* ExerciseModel.swift */; };
+		FABD96482418A2BA007C868D /* ExercisesOfDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD96472418A2BA007C868D /* ExercisesOfDayModel.swift */; };
+		FAC5BC3123FA57320069B016 /* RoutineDetailView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC5BC3023FA57320069B016 /* RoutineDetailView.storyboard */; };
+		FAC5BC3323FA57410069B016 /* RoutineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5BC3223FA57410069B016 /* RoutineDetailView.swift */; };
 		FAF661A523F6554B0003B589 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF661A423F6554B0003B589 /* AppDelegate.swift */; };
 		FAF661A923F6554B0003B589 /* RoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF661A823F6554B0003B589 /* RoutineView.swift */; };
 		FAF661AC23F6554B0003B589 /* RoutineView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAF661AA23F6554B0003B589 /* RoutineView.storyboard */; };
@@ -59,10 +63,14 @@
 		FAA12C232417C51600736315 /* NewRoutineInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoutineInteractor.swift; sourceTree = "<group>"; };
 		FAA12C2C2417D16C00736315 /* RoutineDetailProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailProtocol.swift; sourceTree = "<group>"; };
 		FAA12C2E2417D17B00736315 /* RoutineDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailPresenter.swift; sourceTree = "<group>"; };
-		FAA12C302417D18300736315 /* RoutineDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailPresenter.swift; sourceTree = "<group>"; };
+		FAA12C302417D18300736315 /* RoutineDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailInteractor.swift; sourceTree = "<group>"; };
 		FAA12C322417D19400736315 /* RoutineDetailWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailWireFrame.swift; sourceTree = "<group>"; };
-		FAC5BC3023FA57320069B016 /* RoutineDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RoutineDetailViewController.storyboard; sourceTree = "<group>"; };
-		FAC5BC3223FA57410069B016 /* RoutineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailViewController.swift; sourceTree = "<group>"; };
+		FABD9640241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutineDetailView+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		FABD96432418A122007C868D /* SetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetModel.swift; sourceTree = "<group>"; };
+		FABD96452418A167007C868D /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
+		FABD96472418A2BA007C868D /* ExercisesOfDayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesOfDayModel.swift; sourceTree = "<group>"; };
+		FAC5BC3023FA57320069B016 /* RoutineDetailView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RoutineDetailView.storyboard; sourceTree = "<group>"; };
+		FAC5BC3223FA57410069B016 /* RoutineDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailView.swift; sourceTree = "<group>"; };
 		FAF661A123F6554B0003B589 /* FLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAF661A423F6554B0003B589 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAF661A823F6554B0003B589 /* RoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineView.swift; sourceTree = "<group>"; };
@@ -183,6 +191,9 @@
 			children = (
 				FAA12C0E2417A56400736315 /* MainRoutineModel.swift */,
 				FAA12C102417A60900736315 /* RoutineDetailModel.swift */,
+				FABD96472418A2BA007C868D /* ExercisesOfDayModel.swift */,
+				FABD96452418A167007C868D /* ExerciseModel.swift */,
+				FABD96432418A122007C868D /* SetModel.swift */,
 				FAA12C122417A67300736315 /* RoutineBestModel.swift */,
 			);
 			path = Entity;
@@ -264,9 +275,10 @@
 		FAA12C272417D11300736315 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FAC5BC3223FA57410069B016 /* RoutineDetailViewController.swift */,
+				FAC5BC3223FA57410069B016 /* RoutineDetailView.swift */,
+				FABD9640241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift */,
 				FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */,
-				FAC5BC3023FA57320069B016 /* RoutineDetailViewController.storyboard */,
+				FAC5BC3023FA57320069B016 /* RoutineDetailView.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -274,7 +286,7 @@
 		FAA12C282417D11C00736315 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				FAA12C302417D18300736315 /* RoutineDetailPresenter.swift */,
+				FAA12C302417D18300736315 /* RoutineDetailInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -390,7 +402,7 @@
 			files = (
 				FAF661B123F6554F0003B589 /* LaunchScreen.storyboard in Resources */,
 				FAF661AE23F6554F0003B589 /* Assets.xcassets in Resources */,
-				FAC5BC3123FA57320069B016 /* RoutineDetailViewController.storyboard in Resources */,
+				FAC5BC3123FA57320069B016 /* RoutineDetailView.storyboard in Resources */,
 				FAF661BD23F686C20003B589 /* NewRoutineView.storyboard in Resources */,
 				FAF661AC23F6554B0003B589 /* RoutineView.storyboard in Resources */,
 			);
@@ -448,7 +460,7 @@
 				FAA12C1D2417C47E00736315 /* NewRoutineProtocol.swift in Sources */,
 				FAA12C0F2417A56400736315 /* MainRoutineModel.swift in Sources */,
 				FAA12C332417D19400736315 /* RoutineDetailWireFrame.swift in Sources */,
-				FAA12C312417D18400736315 /* RoutineDetailPresenter.swift in Sources */,
+				FAA12C312417D18400736315 /* RoutineDetailInteractor.swift in Sources */,
 				FAA12C112417A60900736315 /* RoutineDetailModel.swift in Sources */,
 				FAA12C0924179BF700736315 /* RoutineWireFrame.swift in Sources */,
 				FAA12C2F2417D17B00736315 /* RoutineDetailPresenter.swift in Sources */,
@@ -461,14 +473,18 @@
 				FAF661A923F6554B0003B589 /* RoutineView.swift in Sources */,
 				FAA12C0524179BD500736315 /* RoutineProtocol.swift in Sources */,
 				FAF661A523F6554B0003B589 /* AppDelegate.swift in Sources */,
+				FABD96442418A122007C868D /* SetModel.swift in Sources */,
 				FAA12C152417C0E400736315 /* RoutineView+UITableViewDelegate.swift in Sources */,
 				FAF661B923F674540003B589 /* RoutineViewCell.swift in Sources */,
 				FAA12C2D2417D16C00736315 /* RoutineDetailProtocol.swift in Sources */,
-				FAC5BC3323FA57410069B016 /* RoutineDetailViewController.swift in Sources */,
+				FAC5BC3323FA57410069B016 /* RoutineDetailView.swift in Sources */,
+				FABD96482418A2BA007C868D /* ExercisesOfDayModel.swift in Sources */,
 				FAA12C1F2417C48600736315 /* NewRoutinePresenter.swift in Sources */,
 				FAF661BF23F8D3DD0003B589 /* KUIViewController.swift in Sources */,
 				FA4A6AA923FA9079000E54C4 /* RoutineDetailTableViewCell.swift in Sources */,
 				FAA12C0C2417A46E00736315 /* RoutineInteractor.swift in Sources */,
+				FABD96462418A167007C868D /* ExerciseModel.swift in Sources */,
+				FABD9641241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

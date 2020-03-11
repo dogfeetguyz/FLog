@@ -10,9 +10,6 @@
  Structure that is used for holding Routine Detail Data.
  */
 public struct RoutineDetailModel {
-    /// How much weight
-    public var weight: String = ""
-    
-    /// How many reps
-    public var reps = ""
+    public var routine: MainRoutineModel
+    public var dailyExercises: [ExercisesOfDayModel]
 }

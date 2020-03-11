@@ -17,5 +17,5 @@ public struct MainRoutineModel {
     public var unit = "kg"
     
     /// Array of exercise
-    public var exercises = Array<String>()
+    public var exerciseTitles = Array<String>()
 }

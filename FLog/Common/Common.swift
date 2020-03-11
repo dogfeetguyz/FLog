@@ -18,6 +18,7 @@ class Common {
         static let mainRoutineExercises = "routine"
         
         static let routineDetail = "_detail"
+        static let routineDetailDateSection = "title"
         static let routineDetailWeight = "weight"
         static let routineDetailReps = "reps"
         
@@ -28,7 +29,6 @@ class Common {
         static let routineBestMaxWeightDate = "best_max_weight_date"
         
         static let checkBestCreatedBefore = "best_data_created"
-        static let notificationPersonalRecordUpdated = "personalRecordUpdated"
     }
     
     class View {

@@ -6,4 +6,32 @@
 //  Copyright © 2020 Yejun Park. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class RoutineDetailWireFrame: RoutineDetailWireFrameProtocol {
+    
+    class func createRoutineDetailModule(with routineModel:MainRoutineModel) -> UIViewController {
+        let routineDetailView = UIStoryboard(name: "RoutineDetailView", bundle: Bundle.main).instantiateInitialViewController()
+        if let view = routineDetailView as? RoutineDetailView {
+            let presenter: RoutineDetailPresenterProtocol & RoutineDetailInteractorOutputProtocol = RoutineDetailPresenter()
+            let interactor: RoutineDetailInteractorInputProtocol = RoutineDetailInteractor()
+            let wireFrame: RoutineDetailWireFrameProtocol = RoutineDetailWireFrame()
+
+            view.presenter = presenter
+            view.routineDetailData = RoutineDetailModel(routine: routineModel, dailyExercises: [])
+            presenter.view = view
+            presenter.interactor = interactor
+            presenter.wireFrame = wireFrame
+            interactor.presenter = presenter
+
+            return routineDetailView!
+        }
+        return UIViewController()
+    }
+    
+    func finishNewRoutineModule(from view: NewRoutineViewProtocol) {
+        if let sourceView = view as? UIViewController {
+            sourceView.navigationController!.popViewController(animated: true)
+        }
+    }
+}

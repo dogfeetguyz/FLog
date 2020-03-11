@@ -26,6 +26,8 @@ public protocol NewRoutinePresenterProtocol: class {
     // MARK: view -> presenter
     /// Should call after viewDidLoad called
     func viewDidLoad()
+    
+    /// Calls when create button clicked
     func clickCreateButton(title: String?, unitIndex: Int, routine:Array<String?>)
 }
 
@@ -84,5 +86,7 @@ public protocol NewRoutineViewProtocol: class {
 public protocol NewRoutineWireFrameProtocol: class {
     /// Creates New Routine Module
     static func createNewRoutineModule() -> UIViewController
+    
+    /// Dismiss New Routine Module
     func finishNewRoutineModule(from view: NewRoutineViewProtocol)
 }

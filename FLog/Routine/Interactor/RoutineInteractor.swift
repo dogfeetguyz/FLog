@@ -23,16 +23,50 @@ class RoutineInteractorInput: RoutineInteractorInputProtocol {
             twoweeksago.addTimeInterval(-(60*60*24*14))
             
             // detail array structure
-            UserDefaults.standard.set([[Common.Define.mainRoutineTitle:DateFormatter.localizedString(from: twoweeksago, dateStyle: .medium, timeStyle: .none),
-                                        "Back Squat":[[Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"], [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"], [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"], [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"], [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"10"]],
-                                        "Split Squat":[[Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"12"]],
-                                        "Walking Lunge":[[Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"15"]],
-                                        "Sled Push":[[Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"]] ],
-                                        [Common.Define.mainRoutineTitle:DateFormatter.localizedString(from: oneweekago, dateStyle: .medium, timeStyle: .none),
-                                        "Back Squat":[[Common.Define.routineDetailWeight:"140", Common.Define.routineDetailReps:"6"], [Common.Define.routineDetailWeight:"145", Common.Define.routineDetailReps:"5"], [Common.Define.routineDetailWeight:"150", Common.Define.routineDetailReps:"5"], [Common.Define.routineDetailWeight:"155", Common.Define.routineDetailReps:"4"], [Common.Define.routineDetailWeight:"160", Common.Define.routineDetailReps:"2"]],
-                                        "Split Squat":[[Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"95", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"95", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"100", Common.Define.routineDetailReps:"7"]],
-                                        "Walking Lunge":[[Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"10"], [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"10"], [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"10"], [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"], [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"7"]],
-                                        "Sled Push":[[Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"], [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"]] ]],
+            UserDefaults.standard.set([[Common.Define.routineDetailDateSection:DateFormatter.localizedString(from: twoweeksago, dateStyle: .medium, timeStyle: .none),
+                                        "Back Squat":[[Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"],
+                                                      [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"],
+                                                      [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"],
+                                                      [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"],
+                                                      [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"10"]],
+                                        "Split Squat":[[Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"],
+                                                       [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"],
+                                                       [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"],
+                                                       [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"],
+                                                       [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"12"]],
+                                        "Walking Lunge":[[Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"],
+                                                         [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"],
+                                                         [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"],
+                                                         [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"],
+                                                         [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"15"]],
+                                        "Sled Push":[[Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
+                                                     [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
+                                                     [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
+                                                     [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
+                                                     [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"]] ],
+                                       
+                                        [Common.Define.routineDetailDateSection:DateFormatter.localizedString(from: oneweekago, dateStyle: .medium, timeStyle: .none),
+                                        "Back Squat":[[Common.Define.routineDetailWeight:"140", Common.Define.routineDetailReps:"6"],
+                                                      [Common.Define.routineDetailWeight:"145", Common.Define.routineDetailReps:"5"],
+                                                      [Common.Define.routineDetailWeight:"150", Common.Define.routineDetailReps:"5"],
+                                                      [Common.Define.routineDetailWeight:"155", Common.Define.routineDetailReps:"4"],
+                                                      [Common.Define.routineDetailWeight:"160", Common.Define.routineDetailReps:"2"]],
+                                        "Split Squat":[[Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"],
+                                                       [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"8"],
+                                                       [Common.Define.routineDetailWeight:"95", Common.Define.routineDetailReps:"8"],
+                                                       [Common.Define.routineDetailWeight:"95", Common.Define.routineDetailReps:"8"],
+                                                       [Common.Define.routineDetailWeight:"100", Common.Define.routineDetailReps:"7"]],
+                                        "Walking Lunge":[[Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"10"],
+                                                         [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"10"],
+                                                         [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"10"],
+                                                         [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"8"],
+                                                         [Common.Define.routineDetailWeight:"40", Common.Define.routineDetailReps:"7"]],
+                                        "Sled Push":[[Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
+                                                     [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
+                                                     [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
+                                                     [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
+                                                     [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"]] ]],
+                                      
                                       forKey: "Leg Day(Sample)_detail")
         }
     }
@@ -103,7 +137,7 @@ class RoutineInteractorInput: RoutineInteractorInputProtocol {
         let loadedArray = UserDefaults.standard.array(forKey: Common.Define.mainRoutine) as! Array<Dictionary<String, Any>>
         var routines = Array<MainRoutineModel>()
         for loadedData in loadedArray {
-            let routine = MainRoutineModel(title: loadedData[Common.Define.mainRoutineTitle] as! String, unit: loadedData[Common.Define.mainRoutineUnit] as! String, exercises: loadedData[Common.Define.mainRoutineExercises] as! [String])
+            let routine = MainRoutineModel(title: loadedData[Common.Define.mainRoutineTitle] as! String, unit: loadedData[Common.Define.mainRoutineUnit] as! String, exerciseTitles: loadedData[Common.Define.mainRoutineExercises] as! [String])
             routines.append(routine)
         }
         

@@ -30,14 +30,14 @@ class RoutineWireFrame: RoutineWireFrameProtocol {
         return UIViewController()
     }
     
-//    func presentRoutineDetailViewScreen(from view: RoutineDetailViewProtocol, forRoutine routine: MainRoutineModel) {
-//        let routineDetailView = RoutineDetailWireFrame.createRoutineDetailModule(forAtm: atm)
-//
-//        if let sourceView = view as? UIViewController {
-//           sourceView.navigationController?.pushViewController(routineDetailView, animated: true)
-//        }
-//    }
-//
+    func presentRoutineDetailViewScreen(from view: RoutineViewProtocol, forRoutine routine: MainRoutineModel) {
+        let routineDetailView = RoutineDetailWireFrame.createRoutineDetailModule(with: routine)
+
+        if let sourceView = view as? UIViewController {
+           sourceView.navigationController?.pushViewController(routineDetailView, animated: true)
+        }
+    }
+
     
     func presentNewRoutineViewScreen(from view: RoutineViewProtocol) {
         let newRoutineView = NewRoutineWireFrame.createNewRoutineModule()

@@ -11,8 +11,8 @@ import UIKit
 class NewRoutineWireFrame: NewRoutineWireFrameProtocol {
     
     class func createNewRoutineModule() -> UIViewController {
-        let newRoutine = UIStoryboard(name: "NewRoutineView", bundle: Bundle.main).instantiateInitialViewController()
-        if let view = newRoutine as? NewRoutineView {
+        let newRoutineView = UIStoryboard(name: "NewRoutineView", bundle: Bundle.main).instantiateInitialViewController()
+        if let view = newRoutineView as? NewRoutineView {
             let presenter: NewRoutinePresenterProtocol & NewRoutineInteractorOutputProtocol = NewRoutinePresenter()
             let interactor: NewRoutineInteractorInputProtocol = NewRoutineInteractor()
             let wireFrame: NewRoutineWireFrameProtocol = NewRoutineWireFrame()
@@ -23,7 +23,7 @@ class NewRoutineWireFrame: NewRoutineWireFrameProtocol {
             presenter.wireFrame = wireFrame
             interactor.presenter = presenter
 
-            return newRoutine!
+            return newRoutineView!
         }
         return UIViewController()
     }

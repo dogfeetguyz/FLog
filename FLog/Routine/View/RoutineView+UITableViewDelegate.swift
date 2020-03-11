@@ -16,6 +16,8 @@ extension RoutineView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let routine = mainRoutineArray[indexPath.row]
+        presenter?.showRoutineDetail(forRoutine: routine)
 //        let storyboard = UIStoryboard(name: "RoutineDetailViewController", bundle: nil)
 //        let viewController = storyboard.instantiateInitialViewController() as! RoutineDetailViewController
 //        viewController.routineDictionary = UserDefaults.standard.array(forKey: Common.Define.mainRoutine)?[indexPath.row] as? Dictionary<String, Any>
@@ -49,7 +51,7 @@ extension RoutineView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RoutineViewCell", for: indexPath) as! RoutineViewCell
         let routine = mainRoutineArray[indexPath.row]
         
-        let exercises = routine.exercises
+        let exercises = routine.exerciseTitles
         let exercise: String = exercises.joined(separator: "\n")
         cell.contentLabel.numberOfLines = exercises.count
         

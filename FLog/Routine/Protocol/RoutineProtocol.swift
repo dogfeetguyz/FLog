@@ -39,7 +39,7 @@ public protocol RoutinePresenterProtocol: class {
     
     func modifyCellTitle(index: Int, newTitle: String)
     
-    
+    func showRoutineDetail(forRoutine routine: MainRoutineModel)
     func showCreateNewRoutine() 
 }
 
@@ -102,6 +102,6 @@ public protocol RoutineWireFrameProtocol: class {
     /// Creates Routine Module
     static func createRoutineModule() -> UIViewController
     
-//    func presentRoutineDetailViewScreen(from view: RoutineDetailViewProtocol, forRoutine routine: MainRoutineModel)
+    func presentRoutineDetailViewScreen(from view: RoutineViewProtocol, forRoutine routine: MainRoutineModel)
     func presentNewRoutineViewScreen(from view: RoutineViewProtocol)
 }
