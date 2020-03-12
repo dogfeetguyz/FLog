@@ -11,5 +11,5 @@
  */
 public struct RoutineDetailModel {
     public var routine: MainRoutineModel
-    public var dailyExercises: [ExercisesOfDayModel]
+    public var dailyLogs: [DailyLogModel]
 }

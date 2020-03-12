@@ -102,6 +102,7 @@ public protocol RoutineWireFrameProtocol: class {
     /// Creates Routine Module
     static func createRoutineModule() -> UIViewController
     
+    /// Presents Routine Detail Module
     func presentRoutineDetailViewScreen(from view: RoutineViewProtocol, forRoutine routine: MainRoutineModel)
     func presentNewRoutineViewScreen(from view: RoutineViewProtocol)
 }

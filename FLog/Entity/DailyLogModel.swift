@@ -9,10 +9,10 @@
 /**
  Structure that is used for holding Exercise Data.
  */
-public struct ExercisesOfDayModel {
+public struct DailyLogModel {
     
-    public var timeStamp: String = ""
+    public var logDate: String = ""
     
-    public var exercises: [ExerciseModel]
+    public var exerciseLogs: [ExerciseLogModel]
 }
 

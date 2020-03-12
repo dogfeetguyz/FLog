@@ -29,12 +29,12 @@ class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
         interactor?.loadMaxInfo(routineTitle: (view?.routineDetailData?.routine.title)!)
     }
     
-    func textfieldUpdated(tag: String, text: String, timeStamp: String, exerciseTitle: String) {
-        interactor?.updateSet(routineDetail: view!.routineDetailData!, tag: tag, text: text, timeStamp: timeStamp, exerciseTitle: exerciseTitle)
+    func textfieldUpdated(tag: String, text: String, logDate: String, exerciseTitle: String) {
+        interactor?.updateSet(routineDetail: view!.routineDetailData!, tag: tag, text: text, logDate: logDate, exerciseTitle: exerciseTitle)
     }
     
-    func finishedInputData(timeStamp: String) {
-        interactor?.checkNewMaxInfo(routineTitle: (view?.routineDetailData?.routine.title)!, timeStamp: timeStamp)
+    func finishedInputData(logDate: String) {
+        interactor?.checkNewMaxInfo(routineTitle: (view?.routineDetailData?.routine.title)!, logDate: logDate)
     }
     
     func newLogAction(date: Date) {
@@ -49,12 +49,12 @@ class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
         interactor?.refindMaxValue(routineTitle: view!.routineDetailData!.routine.title, exerciseTitle: exerciseTitle)
     }
     
-    func addSetAction(timeStamp: String, exerciseTitle: String) {
-        interactor?.createNewSet(routineDetail: view!.routineDetailData!, timeStamp: timeStamp, exerciseTitle: exerciseTitle)
+    func addSetAction(logDate: String, exerciseTitle: String) {
+        interactor?.createNewSet(routineDetail: view!.routineDetailData!, logDate: logDate, exerciseTitle: exerciseTitle)
     }
     
-    func removeSetAction(timeStamp: String, exerciseTitle: String) {
-        interactor?.removeSet(routineDetail: view!.routineDetailData!, timeStamp: timeStamp, exerciseTitle: exerciseTitle)
+    func removeSetAction(logDate: String, exerciseTitle: String) {
+        interactor?.removeSet(routineDetail: view!.routineDetailData!, logDate: logDate, exerciseTitle: exerciseTitle)
     }
 }
 

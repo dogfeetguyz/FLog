@@ -12,7 +12,7 @@ extension RoutineDetailView: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if routineDetailData?.dailyExercises.count == 0 {
+        if routineDetailData?.dailyLogs.count == 0 {
             return 0
         } else {
             return routineDetailData?.routine.exerciseTitles.count ?? 0
@@ -24,19 +24,19 @@ extension RoutineDetailView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RoutineDetailTableViewCell", for: indexPath) as! RoutineDetailTableViewCell
         
         let currentIndex = self.segmentedControl.numberOfSegments - 1 - self.segmentedControl.selectedSegmentIndex
-        let exerciseOfTheDay = routineDetailData?.dailyExercises[currentIndex]
-        let thisExercise = exerciseOfTheDay?.exercises[indexPath.row]
+        let exerciseOfTheDay = routineDetailData?.dailyLogs[currentIndex]
+        let thisExerciseLog = exerciseOfTheDay?.exerciseLogs[indexPath.row]
         
         
-        cell.titleLabel?.text = thisExercise?.title
+        cell.titleLabel?.text = thisExerciseLog?.exerciseTitle
         cell.weightUnitLabel?.text = routineDetailData?.routine.unit
         cell.addButton.addTarget(cell, action: #selector(cell.addButtonAction), for: .touchUpInside)
         cell.removeButton.addTarget(cell, action: #selector(cell.removeButtonAction), for: .touchUpInside)
         
         cell.presenter = presenter
         cell.maxInfoData = maxInfoData
-        cell.exerciseData = thisExercise!
-        cell.exerciseTimeStamp = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)
+        cell.exerciseLogData = thisExerciseLog!
+        cell.logDate = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)
         
         cell.buildStackView()
         

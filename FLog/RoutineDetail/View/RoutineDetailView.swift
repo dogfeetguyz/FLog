@@ -64,7 +64,7 @@ class RoutineDetailView: KUIViewController {
     
     override func keyboardWillHide(sender: NSNotification) {
         super.keyboardWillHide(sender: sender)
-        presenter?.finishedInputData(timeStamp: segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!)
+        presenter?.finishedInputData(logDate: segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!)
         
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -84,8 +84,8 @@ extension RoutineDetailView: RoutineDetailViewProtocol {
             }
         }
         
-        for dailyExercise in self.routineDetailData!.dailyExercises {
-            segmentedControl.insertSegment(withTitle: dailyExercise.timeStamp, at: 0)
+        for dailyLog in self.routineDetailData!.dailyLogs {
+            segmentedControl.insertSegment(withTitle: dailyLog.logDate, at: 0)
         }
     }
     
@@ -131,14 +131,14 @@ extension RoutineDetailView: RoutineDetailViewProtocol {
         
         if (moreButton.attributedTitle(for: .normal)?.string == "less") {
 
-            for exercise in routineDetailData!.routine.exerciseTitles {
-                let text1 = exercise
+            for exerciseTitle in routineDetailData!.routine.exerciseTitles {
+                let text1 = exerciseTitle
 
-                let unit = maxInfo[exercise]![Common.Define.mainRoutineUnit]!
-                let bestMaxVolume = maxInfo[exercise]![Common.Define.routineBestMaxVolume]!
-                let bestMaxVolumeDate = maxInfo[exercise]![Common.Define.routineBestMaxVolumeDate]!
-                let bestMaxWeight = maxInfo[exercise]![Common.Define.routineBestMaxWeight]!
-                let bestMaxWeightDate = maxInfo[exercise]![Common.Define.routineBestMaxWeightDate]!
+                let unit = maxInfo[exerciseTitle]![Common.Define.mainRoutineUnit]!
+                let bestMaxVolume = maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume]!
+                let bestMaxVolumeDate = maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate]!
+                let bestMaxWeight = maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!
+                let bestMaxWeightDate = maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate]!
                 let text2 = String(format: "Max Volume: %@%@ (%@)\nMax Weight: %@%@ (%@)", bestMaxVolume, unit, bestMaxVolumeDate, bestMaxWeight, unit, bestMaxWeightDate)
 
                 let text = text1 + "\n" + text2 as NSString

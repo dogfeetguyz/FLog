@@ -18,7 +18,7 @@ class RoutineDetailWireFrame: RoutineDetailWireFrameProtocol {
             let wireFrame: RoutineDetailWireFrameProtocol = RoutineDetailWireFrame()
 
             view.presenter = presenter
-            view.routineDetailData = RoutineDetailModel(routine: routineModel, dailyExercises: [])
+            view.routineDetailData = RoutineDetailModel(routine: routineModel, dailyLogs: [])
             presenter.view = view
             presenter.interactor = interactor
             presenter.wireFrame = wireFrame

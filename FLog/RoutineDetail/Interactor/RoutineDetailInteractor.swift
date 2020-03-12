@@ -24,11 +24,11 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
             presenter?.needsFirstLog()
         } else {
             
-            var dailyExercises = Array<ExercisesOfDayModel>()
+            var dailyLogs = Array<DailyLogModel>()
             for arrayItem in UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)! {
                 let dict: Dictionary<String, Any> = arrayItem as! Dictionary<String, Any>
                 
-                var exercises = Array<ExerciseModel>()
+                var exerciseLogs = Array<ExerciseLogModel>()
                 for exerciseTitle in routine.exerciseTitles {
                     let setArray: Array<Dictionary<String, String>> = dict[exerciseTitle] as! Array<Dictionary<String, String>>
                     
@@ -36,11 +36,11 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                     for setDictionary in setArray {
                         sets.append(SetModel(weight: setDictionary[Common.Define.routineDetailWeight]!, reps: setDictionary[Common.Define.routineDetailReps]!))
                     }
-                    exercises.append(ExerciseModel(title: exerciseTitle, set: sets))
+                    exerciseLogs.append(ExerciseLogModel(exerciseTitle: exerciseTitle, set: sets))
                 }
-                dailyExercises.append(ExercisesOfDayModel(timeStamp: dict[Common.Define.routineDetailDateSection] as! String, exercises: exercises))
+                dailyLogs.append(DailyLogModel(logDate: dict[Common.Define.routineDetailLogDate] as! String, exerciseLogs: exerciseLogs))
             }
-            presenter?.didLogLoaded(routineDetail: RoutineDetailModel(routine: routine, dailyExercises: dailyExercises))
+            presenter?.didLogLoaded(routineDetail: RoutineDetailModel(routine: routine, dailyLogs: dailyLogs))
         }
     }
     
@@ -49,12 +49,12 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
     }
     
     
-    func checkNewMaxInfo(routineTitle: String, timeStamp: String) {
+    func checkNewMaxInfo(routineTitle: String, logDate: String) {
         
         let logArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
 
         for (index, logDict) in logArray.enumerated() {
-            if logDict[Common.Define.mainRoutineTitle] as? String == timeStamp {
+            if logDict[Common.Define.mainRoutineTitle] as? String == logDate {
 
                 var newMaxInfoExists = false
                 var maxInfo = UserDefaults.standard.dictionary(forKey: routineTitle + Common.Define.routineBest) as! Dictionary<String, Dictionary<String, String>>
@@ -86,13 +86,13 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                     
                     if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume]!) ?? 0 < currentVolume {
                         maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume] = String(currentVolume)
-                        maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate] = timeStamp
+                        maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate] = logDate
                         newMaxInfoExists = true
                     }
 
                     if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!) ?? 0 < currentMaxWeight {
                         maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight] = String(currentMaxWeight)
-                        maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] = timeStamp
+                        maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] = logDate
                         newMaxInfoExists = true
                     }
                 }
@@ -108,11 +108,11 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
     
     func createNewFitnessLog(date: Date, routine: MainRoutineModel) {
 
-        let timestamp = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .none)
+        let logDate = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .none)
         var logArray = UserDefaults.standard.array(forKey: routine.title + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
         
         for existingLogDict in logArray {
-            if existingLogDict[Common.Define.routineDetailDateSection] as? String == timestamp {
+            if existingLogDict[Common.Define.routineDetailLogDate] as? String == logDate {
                 presenter?.onError(title: "Failed", message: "You've already created the log for\n", buttonTitle: "OK", handler: { (_) in
                 })
                 return
@@ -121,14 +121,14 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         
         
         var logDict: Dictionary<String, Any> = Dictionary<String, Any>()
-        logDict[Common.Define.routineDetailDateSection] = timestamp
+        logDict[Common.Define.routineDetailLogDate] = logDate
         
-        let exercises = routine.exerciseTitles
-        for exercise in exercises {
+        let exerciseTitles = routine.exerciseTitles
+        for exerciseTitle in exerciseTitles {
             var exerciseDict: Dictionary<String, String> = Dictionary<String, String>()
             exerciseDict[Common.Define.routineDetailWeight] = ""
             exerciseDict[Common.Define.routineDetailReps] = ""
-            logDict[exercise] = [exerciseDict]
+            logDict[exerciseTitle] = [exerciseDict]
         }
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -141,7 +141,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                 let entity = NSEntityDescription.entity(forEntityName: String(describing: Timeline.self ), in: managedOC)
                 let timeline = Timeline(entity: entity!, insertInto: managedOC)
                 timeline.id = Int32(count)
-                timeline.logDate = timestamp
+                timeline.logDate = logDate
                 timeline.routineTitle = routine.title
                 try managedOC.save()
             } catch {
@@ -159,7 +159,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
 
         var array = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)!
         let deletedLog = array[deleteIndex] as! Dictionary<String, Any>
-        let deletedTimeStamp = deletedLog[Common.Define.routineDetailDateSection] as! String
+        let deletedTimeStamp = deletedLog[Common.Define.routineDetailLogDate] as! String
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             do {
@@ -207,7 +207,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] = ""
         
         for routineDetail in routineDetailArray {
-            let date = (routineDetail as! Dictionary<String, Any>)[Common.Define.routineDetailDateSection] as! String
+            let date = (routineDetail as! Dictionary<String, Any>)[Common.Define.routineDetailLogDate] as! String
 
             var currentMaxWeight = 0
             var currentVolume = 0
@@ -237,27 +237,27 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         self.loadMaxInfo(routineTitle: routineTitle)
     }
     
-    func createNewSet(routineDetail: RoutineDetailModel, timeStamp: String, exerciseTitle: String) {
+    func createNewSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String) {
         
         let routineTitle = routineDetail.routine.title
         var logArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
-        var updatedRoutineDetail = RoutineDetailModel(routine: routineDetail.routine, dailyExercises: routineDetail.dailyExercises)
+        var updatedRoutineDetail = RoutineDetailModel(routine: routineDetail.routine, dailyLogs: routineDetail.dailyLogs)
 
         for (index, logDict) in logArray.enumerated() {
-            if logDict[Common.Define.mainRoutineTitle] as? String == timeStamp {
+            if logDict[Common.Define.mainRoutineTitle] as? String == logDate {
                 
-                for (exerciseIndex, exercise) in updatedRoutineDetail.dailyExercises[index].exercises.enumerated() {
-                    if exercise.title == exerciseTitle {
+                for (logIndex, log) in updatedRoutineDetail.dailyLogs[index].exerciseLogs.enumerated() {
+                    if log.exerciseTitle == exerciseTitle {
 
-                        var exerciseArray = logArray[index][exerciseTitle] as! Array<Dictionary<String, String>>
-                        var exerciseDict = Dictionary<String, String>()
-                        exerciseDict[Common.Define.routineDetailWeight] = ""
-                        exerciseDict[Common.Define.routineDetailReps] = ""
-                        exerciseArray.append(exerciseDict)
+                        var setArray = logArray[index][exerciseTitle] as! Array<Dictionary<String, String>>
+                        var setDict = Dictionary<String, String>()
+                        setDict[Common.Define.routineDetailWeight] = ""
+                        setDict[Common.Define.routineDetailReps] = ""
+                        setArray.append(setDict)
                         
-                        logArray[index][exerciseTitle] = exerciseArray
+                        logArray[index][exerciseTitle] = setArray
                         UserDefaults.standard.set(logArray, forKey: routineTitle + Common.Define.routineDetail)
-                        updatedRoutineDetail.dailyExercises[index].exercises[exerciseIndex].set.append(SetModel(weight: "", reps: ""))
+                        updatedRoutineDetail.dailyLogs[index].exerciseLogs[logIndex].set.append(SetModel(weight: "", reps: ""))
                         break
                     }
                 }
@@ -268,33 +268,33 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         presenter?.didUpdateLog(routineDetail: updatedRoutineDetail)
     }
     
-    func removeSet(routineDetail: RoutineDetailModel, timeStamp: String, exerciseTitle: String) {
+    func removeSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String) {
         
         let routineTitle = routineDetail.routine.title
         var logArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
-        var updatedRoutineDetail = RoutineDetailModel(routine: routineDetail.routine, dailyExercises: routineDetail.dailyExercises)
+        var updatedRoutineDetail = RoutineDetailModel(routine: routineDetail.routine, dailyLogs: routineDetail.dailyLogs)
 
         for (index, logDict) in logArray.enumerated() {
-            if logDict[Common.Define.mainRoutineTitle] as? String == timeStamp {
+            if logDict[Common.Define.mainRoutineTitle] as? String == logDate {
                 
-                for (exerciseIndex, exercise) in updatedRoutineDetail.dailyExercises[index].exercises.enumerated() {
-                    if exercise.title == exerciseTitle {
+                for (logIndex, log) in updatedRoutineDetail.dailyLogs[index].exerciseLogs.enumerated() {
+                    if log.exerciseTitle == exerciseTitle {
                         
-                        var exerciseArray = logArray[index][exerciseTitle] as! Array<Dictionary<String, String>>
+                        var setArray = logArray[index][exerciseTitle] as! Array<Dictionary<String, String>>
                         
-                        let lastWeight = Int(exerciseArray.last![Common.Define.routineDetailWeight]!) ?? 0
+                        let lastWeight = Int(setArray.last![Common.Define.routineDetailWeight]!) ?? 0
                         var totalVolume: Int = 0
-                        for exerciseDict in exerciseArray {
-                            let weight = Int(exerciseDict[Common.Define.routineDetailWeight] ?? "0") ?? 0
-                            let reps = Int(exerciseDict[Common.Define.routineDetailReps] ?? "0") ?? 0
+                        for setDict in setArray {
+                            let weight = Int(setDict[Common.Define.routineDetailWeight] ?? "0") ?? 0
+                            let reps = Int(setDict[Common.Define.routineDetailReps] ?? "0") ?? 0
                             
                             totalVolume = totalVolume + (weight * reps)
                         }
                         
-                        exerciseArray.removeLast()
-                        logArray[index][exerciseTitle] = exerciseArray
+                        setArray.removeLast()
+                        logArray[index][exerciseTitle] = setArray
                         UserDefaults.standard.set(logArray, forKey: routineTitle + Common.Define.routineDetail)
-                        updatedRoutineDetail.dailyExercises[index].exercises[exerciseIndex].set.removeLast()
+                        updatedRoutineDetail.dailyLogs[index].exerciseLogs[logIndex].set.removeLast()
                         
                         let maxInfo = UserDefaults.standard.dictionary(forKey: routineTitle + Common.Define.routineBest) as! Dictionary<String, Dictionary<String, String>>
                         let maxWeight = Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!) ?? 0
@@ -313,17 +313,17 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         presenter?.didUpdateLog(routineDetail: updatedRoutineDetail)
     }
     
-    func updateSet(routineDetail: RoutineDetailModel, tag: String, text: String, timeStamp: String, exerciseTitle: String) {
+    func updateSet(routineDetail: RoutineDetailModel, tag: String, text: String, logDate: String, exerciseTitle: String) {
         
         let routineTitle = routineDetail.routine.title
         var logArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
-        var updatedRoutineDetail = RoutineDetailModel(routine: routineDetail.routine, dailyExercises: routineDetail.dailyExercises)
+        var updatedRoutineDetail = RoutineDetailModel(routine: routineDetail.routine, dailyLogs: routineDetail.dailyLogs)
 
         for (index, logDict) in logArray.enumerated() {
-            if logDict[Common.Define.mainRoutineTitle] as? String == timeStamp {
+            if logDict[Common.Define.mainRoutineTitle] as? String == logDate {
                 
-                for (exerciseIndex, exercise) in updatedRoutineDetail.dailyExercises[index].exercises.enumerated() {
-                    if exercise.title == exerciseTitle {
+                for (logIndex, log) in updatedRoutineDetail.dailyLogs[index].exerciseLogs.enumerated() {
+                    if log.exerciseTitle == exerciseTitle {
 
                         let setIndex = Int(tag[tag.startIndex..<tag.index(before: tag.endIndex)]) ?? 0
                         let identifier = Int(String(tag[tag.index(before: tag.endIndex)])) ?? 0
@@ -337,7 +337,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                             exerciseArray[setIndex][Common.Define.routineDetailWeight] = text
                             logArray[index][exerciseTitle] = exerciseArray
                             UserDefaults.standard.set(logArray, forKey: routineTitle + Common.Define.routineDetail)
-                            updatedRoutineDetail.dailyExercises[index].exercises[exerciseIndex].set[setIndex].weight = text
+                            updatedRoutineDetail.dailyLogs[index].exerciseLogs[logIndex].set[setIndex].weight = text
                             
                             if (maxWeight == currentWeight) {
                                 let newWeight = Int(text) ?? 00
@@ -349,7 +349,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                             exerciseArray[setIndex][Common.Define.routineDetailReps] = text
                             logArray[index][exerciseTitle] = exerciseArray
                             UserDefaults.standard.set(logArray, forKey: routineTitle + Common.Define.routineDetail)
-                            updatedRoutineDetail.dailyExercises[index].exercises[exerciseIndex].set[setIndex].reps = text
+                            updatedRoutineDetail.dailyLogs[index].exerciseLogs[logIndex].set[setIndex].reps = text
                         }
                         
                         break

@@ -29,15 +29,15 @@ public protocol RoutineDetailPresenterProtocol: class {
     func loadLogs()
     func loadMaxInfo()
     
-    func textfieldUpdated(tag: String, text: String, timeStamp: String, exerciseTitle: String)
-    func finishedInputData(timeStamp: String)
+    func textfieldUpdated(tag: String, text: String, logDate: String, exerciseTitle: String)
+    func finishedInputData(logDate: String)
     
     func newLogAction(date: Date)
     func deleteLogAction(deleteIndex: Int)
     func updateMaxInfo(exerciseTitle: String)
     
-    func addSetAction(timeStamp: String, exerciseTitle: String)
-    func removeSetAction(timeStamp: String, exerciseTitle: String)
+    func addSetAction(logDate: String, exerciseTitle: String)
+    func removeSetAction(logDate: String, exerciseTitle: String)
 }
 
 /**
@@ -73,16 +73,16 @@ public protocol RoutineDetailInteractorInputProtocol: class {
     // MARK: prsenter -> interactor
     func loadLogs(routine: MainRoutineModel)
     func loadMaxInfo(routineTitle: String)
-    func checkNewMaxInfo(routineTitle: String, timeStamp: String)
+    func checkNewMaxInfo(routineTitle: String, logDate: String)
     
     /// Create new routine
     func createNewFitnessLog(date: Date, routine: MainRoutineModel)
     func deleteFitnessLog(deleteIndex: Int, routine: MainRoutineModel)
     func refindMaxValue(routineTitle: String, exerciseTitle: String)
     
-    func createNewSet(routineDetail: RoutineDetailModel, timeStamp: String, exerciseTitle: String)
-    func removeSet(routineDetail: RoutineDetailModel, timeStamp: String, exerciseTitle: String)
-    func updateSet(routineDetail: RoutineDetailModel, tag: String, text: String, timeStamp: String, exerciseTitle: String)
+    func createNewSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String)
+    func removeSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String)
+    func updateSet(routineDetail: RoutineDetailModel, tag: String, text: String, logDate: String, exerciseTitle: String)
 }
 
 /**

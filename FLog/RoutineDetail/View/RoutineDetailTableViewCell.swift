@@ -11,9 +11,9 @@ import UIKit
 class RoutineDetailTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var presenter: RoutineDetailPresenterProtocol?
-    var exerciseData: ExerciseModel?
+    var exerciseLogData: ExerciseLogModel?
     var maxInfoData: Dictionary<String, Dictionary<String, String>>?
-    var exerciseTimeStamp: String?
+    var logDate: String?
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var exerciseStackView: UIStackView!
@@ -58,7 +58,7 @@ class RoutineDetailTableViewCell: UITableViewCell, UITextFieldDelegate {
         resetStackView()
         var firstItem = true
         
-        for set in exerciseData!.set {
+        for set in exerciseLogData!.set {
             if firstItem {
                 firstItem = false
                 weightTextField.text = set.weight
@@ -169,7 +169,7 @@ class RoutineDetailTableViewCell: UITableViewCell, UITextFieldDelegate {
     func calculateTotalVolume() {
         var totalVolume: Int = 0
         
-        for set in exerciseData!.set {
+        for set in exerciseLogData!.set {
             let weight = Int(set.weight) ?? 0
             let reps = Int(set.reps) ?? 0
             
@@ -205,7 +205,7 @@ class RoutineDetailTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func addButtonAction() {
         addStackView(weight: "", reps: "")
         
-        presenter?.addSetAction(timeStamp: exerciseTimeStamp!, exerciseTitle: titleLabel.text!)
+        presenter?.addSetAction(logDate: logDate!, exerciseTitle: titleLabel.text!)
     }
     
     @IBAction func removeButtonAction() {
@@ -213,14 +213,14 @@ class RoutineDetailTableViewCell: UITableViewCell, UITextFieldDelegate {
         if (exerciseStackView.arrangedSubviews.count == 1) {
             removeButton.isEnabled = false
         }
-        presenter?.removeSetAction(timeStamp: exerciseTimeStamp!, exerciseTitle: titleLabel.text!)
+        presenter?.removeSetAction(logDate: logDate!, exerciseTitle: titleLabel.text!)
     }
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         let tagString = String(format: "%02d", textField.tag)
         let text = textField.text
         
-        presenter?.textfieldUpdated(tag: tagString, text: text!, timeStamp: exerciseTimeStamp!, exerciseTitle: titleLabel.text!)
+        presenter?.textfieldUpdated(tag: tagString, text: text!, logDate: logDate!, exerciseTitle: titleLabel.text!)
         
         return true
     }

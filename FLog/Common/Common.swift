@@ -18,7 +18,7 @@ class Common {
         static let mainRoutineExercises = "routine"
         
         static let routineDetail = "_detail"
-        static let routineDetailDateSection = "title"
+        static let routineDetailLogDate = "title"
         static let routineDetailWeight = "weight"
         static let routineDetailReps = "reps"
         

@@ -25,7 +25,7 @@ class RoutineInteractorInput: RoutineInteractorInputProtocol {
             twoweeksago.addTimeInterval(-(60*60*24*14))
             
             // detail array structure
-            UserDefaults.standard.set([[Common.Define.routineDetailDateSection:DateFormatter.localizedString(from: twoweeksago, dateStyle: .medium, timeStyle: .none),
+            UserDefaults.standard.set([[Common.Define.routineDetailLogDate:DateFormatter.localizedString(from: twoweeksago, dateStyle: .medium, timeStyle: .none),
                                         "Back Squat":[[Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"],
                                                       [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"],
                                                       [Common.Define.routineDetailWeight:"130", Common.Define.routineDetailReps:"5"],
@@ -47,7 +47,7 @@ class RoutineInteractorInput: RoutineInteractorInputProtocol {
                                                      [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"],
                                                      [Common.Define.routineDetailWeight:"90", Common.Define.routineDetailReps:"2"]] ],
                                        
-                                        [Common.Define.routineDetailDateSection:DateFormatter.localizedString(from: oneweekago, dateStyle: .medium, timeStyle: .none),
+                                        [Common.Define.routineDetailLogDate:DateFormatter.localizedString(from: oneweekago, dateStyle: .medium, timeStyle: .none),
                                         "Back Squat":[[Common.Define.routineDetailWeight:"140", Common.Define.routineDetailReps:"6"],
                                                       [Common.Define.routineDetailWeight:"145", Common.Define.routineDetailReps:"5"],
                                                       [Common.Define.routineDetailWeight:"150", Common.Define.routineDetailReps:"5"],

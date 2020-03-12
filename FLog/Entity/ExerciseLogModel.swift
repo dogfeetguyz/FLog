@@ -9,9 +9,9 @@
 /**
  Structure that is used for holding Exercise Data.
  */
-public struct ExerciseModel {
+public struct ExerciseLogModel {
     
-    public var title: String = ""
+    public var exerciseTitle: String = ""
     
     public var set: [SetModel]
 }

@@ -97,7 +97,7 @@ class TimelineInteractorInput: TimelineInteractorInputProtocol {
                     let unit = routine?.unit
                     for arrayItem in UserDefaults.standard.array(forKey: timeline.routineTitle! + Common.Define.routineDetail)! {
                         let dict: Dictionary<String, Any> = arrayItem as! Dictionary<String, Any>
-                        if (dict[Common.Define.routineDetailDateSection] as! String) == timeline.logDate! {
+                        if (dict[Common.Define.routineDetailLogDate] as! String) == timeline.logDate! {
                             for exerciseTitle in routine!.exerciseTitles {
                                 
                                 var setString = ""
