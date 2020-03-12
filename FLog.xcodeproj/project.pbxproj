@@ -206,8 +206,6 @@
 			children = (
 				FAF661BE23F8D3DD0003B589 /* KUIViewController.swift */,
 				FA33E88B2404DCBA000C99DC /* Common.swift */,
-				FA09FA2D2419DF8A006BE8A2 /* TabBarWireframe.swift */,
-				FA09FA2F2419DFB0006BE8A2 /* TabBarController.storyboard */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -417,6 +415,8 @@
 				FAA12C0D2417A4B900736315 /* Entity */,
 				FA33E88D2404DCC6000C99DC /* Common */,
 				FA33E8892404D45D000C99DC /* Supporting Files */,
+				FA09FA2D2419DF8A006BE8A2 /* TabBarWireframe.swift */,
+				FA09FA2F2419DFB0006BE8A2 /* TabBarController.storyboard */,
 				FAF661A423F6554B0003B589 /* AppDelegate.swift */,
 				FAF661B223F6554F0003B589 /* Info.plist */,
 				FA09FA222419C156006BE8A2 /* FLog.xcdatamodeld */,
