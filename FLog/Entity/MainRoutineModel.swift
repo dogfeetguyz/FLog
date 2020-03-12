@@ -7,15 +7,15 @@
 //
 
 /**
- Structure that is used for holding MainRoutine Data.
+ Structure that is used for holding Main Routine daata.
  */
 public struct MainRoutineModel {
-    /// Routine TItle
+    /// Routine Routine tItle
     public var title: String = ""
     
     /// Unit String. default: "kg"
     public var unit = "kg"
     
-    /// Array of exercise
+    /// Array of exercise titles
     public var exerciseTitles = Array<String>()
 }

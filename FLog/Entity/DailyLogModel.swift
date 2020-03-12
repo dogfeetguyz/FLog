@@ -7,12 +7,14 @@
 //
 
 /**
- Structure that is used for holding Exercise Data.
+ Structure that is used for holding Daily log data.
  */
 public struct DailyLogModel {
     
+    /// The date for this log
     public var logDate: String = ""
     
+    /// logs for each exercise in the date
     public var exerciseLogs: [ExerciseLogModel]
 }
 

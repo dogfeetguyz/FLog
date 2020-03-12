@@ -10,6 +10,10 @@
  Structure that is used for holding Routine Detail Data.
  */
 public struct RoutineDetailModel {
+    
+    /// Main Routine data for this Routine Detail data
     public var routine: MainRoutineModel
+    
+    /// Daily logs data that can be selected in SegmentedControl
     public var dailyLogs: [DailyLogModel]
 }
