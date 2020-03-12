@@ -121,7 +121,7 @@ class TimelineInteractorInput: TimelineInteractorInputProtocol {
                     }
                     
                     if contentString.count > 0 {
-                        contentString = "\(contentString)Total: \(totalWeight)"
+                        contentString = "\(contentString)Total: \(totalWeight)\(unit!)"
                         let string = NSAttributedString(string: contentString)
                         timelinelList.append(TimelineModel(timelineData: timeline, content: string))
                     }
