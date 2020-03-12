@@ -24,25 +24,31 @@ public protocol RoutinePresenterProtocol: class {
     
     
     // MARK: view -> presenter
-    /// Calls after viewDidLoad is called
+    /// Should call after viewDidLoad is called
     func viewDidLoad()
     
-    /// Calls after viewWillAppear is called
+    /// Should call after viewWillAppear is called
     func updateView()
     
-    /// Calls after a cell is deleted
+    /// Should call after a cell is deleted
+    /// - parameter index: the index of routine to delete
     func deleteCell(index: Int)
     
-    /// Calls after a cell is moved
+    /// Should call after a cell is moved
+    /// - parameter sourceIndex: the index of routine to left
+    /// - parameter destinationIndex: the index of routine to go
     func moveCell(sourceIndex: Int, destinationIndex: Int)
     
-    /// Calls when the title of a cell is requested to modify
+    /// Should call when the title of a cell is requested to modify
+    /// - parameter index: the index of routine to modify
+    /// - parameter newTitle: newly typed title
     func modifyCellTitle(index: Int, newTitle: String)
     
-    /// Calls when a cell is clicked
+    /// Should call when a cell is clicked
+    /// - parameter routine: Routine clicked
     func clickRoutineCell(forRoutine routine: MainRoutineModel)
     
-    /// Calls when 'New Button' is cllicked
+    /// Should call when 'New Button' is cllicked
     func clickNewButton()
 }
 
@@ -76,12 +82,17 @@ public protocol RoutineInteractorInputProtocol: class {
     func dispatchRoutines()
     
     /// Deletes Routines from UserDefaults
+    /// - parameter index: the index of routine to delete
     func deleteRoutine(index: Int)
     
     /// Replaces Routines from UserDefaults
+    /// - parameter sourceIndex: the index of routine to left
+    /// - parameter destinationIndex: the index of routine to go
     func replaceRoutines(sourceIndex: Int, destinationIndex: Int)
     
     /// Updates Routine Title from UserDefaults
+    /// - parameter index: the index of routine to modify
+    /// - parameter newTitle: newly typed title
     func updateRoutineTitle(index: Int, newTitle: String)
 }
 
@@ -96,6 +107,7 @@ public protocol RoutineViewProtocol: class {
     
     // MARK: presenter -> view
     /// Shows Routines on Main Screen
+    /// - parameter mainRoutineArray: loaded routines from UserDefaults
     func showRoutines(with mainRoutineArray: [MainRoutineModel])
 }
 
@@ -108,8 +120,11 @@ public protocol RoutineWireFrameProtocol: class {
     static func createRoutineModule() -> UIViewController
     
     /// Presents Routine Detail Module
+    /// - parameter view: this view
+    /// - parameter routine: targeted routine to go detail module
     func presentRoutineDetailViewScreen(from view: RoutineViewProtocol, forRoutine routine: MainRoutineModel)
     
     /// Presents New Routine Module
+    /// - parameter view: this view
     func presentNewRoutineViewScreen(from view: RoutineViewProtocol)
 }

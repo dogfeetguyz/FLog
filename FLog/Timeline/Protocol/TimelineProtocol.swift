@@ -24,7 +24,7 @@ public protocol TimelinePresenterProtocol: class {
     
     
     // MARK: view -> presenter
-    /// Should call after viewDidLoad called
+    /// Should call after viewDidLoad is called
     func viewDidLoad()
 }
 
@@ -33,8 +33,8 @@ public protocol TimelinePresenterProtocol: class {
  */
 public protocol TimelineInteractorOutputProtocol: class {
     // MARK: interactor -> presenter
-    /// Finished dispatching Timelines from UserDefaults
-    /// - parameter mainTimelineModelArray: An array of MainTimelineModel loaded from UserDefaults
+    /// Finished dispatching Timelines from Core Data
+    /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
     func didDispatchTimelines(with timelineArray: [TimelineModel])
 }
 
@@ -49,7 +49,7 @@ public protocol TimelineInteractorInputProtocol: class {
     func createTimelineData()
     
     // MARK: prsenter -> interactor
-    /// Dispatches Timeline from UserDefaults
+    /// Dispatches Timeline from Core Data
     func dispatchTimelines()
 }
 
@@ -63,6 +63,8 @@ public protocol TimelineViewProtocol: class {
     
     
     // MARK: presenter -> view
+    /// Shows timeline data on tableview
+    /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
     func showTimelines(with timelineArray: [TimelineModel])
 }
 
