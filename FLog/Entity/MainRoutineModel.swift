@@ -7,7 +7,7 @@
 //
 
 /**
- Structure that is used for holding Main Routine daata.
+ Structure that is used for holding Main Routine data.
  */
 public struct MainRoutineModel {
     /// Routine Routine tItle

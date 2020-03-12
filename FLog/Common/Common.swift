@@ -8,9 +8,12 @@
 
 import UIKit
 
-
+/// Unit is used for choose the unit of weight between kg and lb
 public enum Unit: Int {
+    /// Use kilogram for a routine
     case kg = 0
+    
+    /// Use pound for a routine
     case lb = 1
 }
 
