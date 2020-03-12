@@ -59,14 +59,14 @@ class NewRoutineView: KUIViewController  {
     
     @IBAction func createButtonAction() {
 
-        var array: Array<String?> = []
+        var exerciseTitles: Array<String?> = []
         for view in stackView.arrangedSubviews {
             let horizontalStackView = view as! UIStackView
             let textField = horizontalStackView.arrangedSubviews[1] as! UITextField
-            array.append(textField.text!)
+            exerciseTitles.append(textField.text!)
         }
         
-        presenter?.clickCreateButton(title: nameTextField.text!, unitIndex: unitSegmentedControl.selectedSegmentIndex, routine:array)
+        presenter?.clickCreateButton(title: nameTextField.text!, unit: Unit(rawValue: unitSegmentedControl.selectedSegmentIndex)!, exerciseTitles:exerciseTitles)
     }
 }
 

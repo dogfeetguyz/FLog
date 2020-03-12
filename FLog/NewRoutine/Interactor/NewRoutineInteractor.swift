@@ -11,7 +11,7 @@ import Foundation
 class NewRoutineInteractor: NewRoutineInteractorInputProtocol {
     var presenter: NewRoutineInteractorOutputProtocol?
     
-    func createNewRoutine(title: String?, unitIndex: Int, routine: Array<String?>) {
+    func createNewRoutine(title: String?, unit: Unit, exerciseTitles: Array<String?>) {
         if title!.count == 0 {
             presenter?.onError(title: "Failed", message: "Please fill the blanks", buttonTitle: "OK", handler: { (_) in
                 
@@ -32,14 +32,14 @@ class NewRoutineInteractor: NewRoutineInteractorInputProtocol {
             
             dict[Common.Define.mainRoutineTitle] = title
             
-            if unitIndex == 0 {
+            if unit == .kg {
                 dict[Common.Define.mainRoutineUnit] = Common.Define.mainRoutineUnitKg
             } else {
                 dict[Common.Define.mainRoutineUnit] = Common.Define.mainRoutineUnitLb
             }
             
-            for exercise in routine {
-                if exercise!.count == 0 {
+            for exerciseTitle in exerciseTitles {
+                if exerciseTitle!.count == 0 {
                     presenter?.onError(title: "Failed", message: "Please fill the blanks", buttonTitle: "OK", handler: { (_) in
                         
                     })
@@ -47,20 +47,20 @@ class NewRoutineInteractor: NewRoutineInteractorInputProtocol {
                 }
             }
             
-            dict[Common.Define.mainRoutineExercises] = routine
+            dict[Common.Define.mainRoutineExercises] = exerciseTitles
             routines?.append(dict)
             
             UserDefaults.standard.set(routines, forKey: Common.Define.mainRoutine)
             
 
             var bestDict = Dictionary<String, Dictionary<String, String>>()
-            for exercise in routine {
-                bestDict[exercise!] = Dictionary<String, String>()
-                bestDict[exercise!]![Common.Define.mainRoutineUnit] = dict[Common.Define.mainRoutineUnit] as? String
-                bestDict[exercise!]![Common.Define.routineBestMaxVolume] = "0"
-                bestDict[exercise!]![Common.Define.routineBestMaxVolumeDate] = ""
-                bestDict[exercise!]![Common.Define.routineBestMaxWeight] = "0"
-                bestDict[exercise!]![Common.Define.routineBestMaxWeightDate] = ""
+            for exerciseTitle in exerciseTitles {
+                bestDict[exerciseTitle!] = Dictionary<String, String>()
+                bestDict[exerciseTitle!]![Common.Define.mainRoutineUnit] = dict[Common.Define.mainRoutineUnit] as? String
+                bestDict[exerciseTitle!]![Common.Define.routineBestMaxVolume] = "0"
+                bestDict[exerciseTitle!]![Common.Define.routineBestMaxVolumeDate] = ""
+                bestDict[exerciseTitle!]![Common.Define.routineBestMaxWeight] = "0"
+                bestDict[exerciseTitle!]![Common.Define.routineBestMaxWeightDate] = ""
             }
             UserDefaults.standard.set(bestDict, forKey: title! + Common.Define.routineBest)
 

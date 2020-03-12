@@ -16,8 +16,8 @@ class NewRoutinePresenter: NewRoutinePresenterProtocol {
     func viewDidLoad() {
     }
     
-    func clickCreateButton(title: String?, unitIndex: Int, routine:Array<String?>) {
-        interactor?.createNewRoutine(title: title, unitIndex: unitIndex, routine: routine)
+    func clickCreateButton(title: String?, unit: Unit, exerciseTitles:Array<String?>) {
+        interactor?.createNewRoutine(title: title, unit: unit, exerciseTitles: exerciseTitles)
     }
 }
 

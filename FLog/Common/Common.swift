@@ -8,6 +8,12 @@
 
 import UIKit
 
+
+public enum Unit: Int {
+    case kg = 0
+    case lb = 1
+}
+
 class Common {
     class Define {
         static let mainRoutine = "main_routine"

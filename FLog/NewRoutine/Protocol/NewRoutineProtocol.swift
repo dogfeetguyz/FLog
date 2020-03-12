@@ -27,8 +27,11 @@ public protocol NewRoutinePresenterProtocol: class {
     /// Should call after viewDidLoad called
     func viewDidLoad()
     
-    /// Calls when create button clicked
-    func clickCreateButton(title: String?, unitIndex: Int, routine:Array<String?>)
+    /// Should call when 'Create Button' clicked
+    /// - parameter title: Routine Title
+    /// - parameter unit: Unit used for this routine between kg and lb
+    /// - parameter exerciseTitles: An array of exercise titles for this routine
+    func clickCreateButton(title: String?, unit: Unit, exerciseTitles:Array<String?>)
 }
 
 /**
@@ -58,7 +61,10 @@ public protocol NewRoutineInteractorInputProtocol: class {
     
     // MARK: prsenter -> interactor
     /// Create new routine
-    func createNewRoutine(title: String?, unitIndex: Int, routine:Array<String?>)
+    /// - parameter title: Routine Title
+    /// - parameter unit: Unit used for this routine between kg and lb
+    /// - parameter exerciseTitles: An array of exercise titles for this routine
+    func createNewRoutine(title: String?, unit: Unit, exerciseTitles:Array<String?>)
 }
 
 /**
@@ -88,5 +94,6 @@ public protocol NewRoutineWireFrameProtocol: class {
     static func createNewRoutineModule() -> UIViewController
     
     /// Dismiss New Routine Module
+    /// - parameter view: This view
     func finishNewRoutineModule(from view: NewRoutineViewProtocol)
 }

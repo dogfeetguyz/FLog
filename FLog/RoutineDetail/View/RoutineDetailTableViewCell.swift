@@ -198,7 +198,11 @@ class RoutineDetailTableViewCell: UITableViewCell, UITextFieldDelegate {
                 bestVolumeImageView.isHidden = true
             }
             volumeProportionLabel.isHidden = false
-            volumeProportionLabel.text = String(format: "(%d%%)", Int(100*(Float(currentVolume)/Float(maxVolume))))
+            if maxVolume > 0 {
+                volumeProportionLabel.text = String(format: "(%d%%)", Int(100*(Float(currentVolume)/Float(maxVolume))))
+            } else {
+                volumeProportionLabel.text = ""
+            }
         }
     }
         
