@@ -20,10 +20,9 @@ extension TimelineView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineViewCell", for: indexPath) as! TimelineViewCell
         let timeline = timelineArray[indexPath.row]
 
-        cell.titleLabel?.text = timeline.routineTitle
-        cell.dateLabel?.text = timeline.logDate
-        print(timeline)
-        
+        cell.titleLabel?.text = timeline.timelineData.routineTitle
+        cell.dateLabel?.text = timeline.timelineData.logDate        
+        cell.contentLabel?.attributedText = timeline.content
 //        let exercises = Timeline.exerciseTitles
 //        let exercise: String = exercises.joined(separator: "\n")
 //        cell.contentLabel.numberOfLines = exercises.count

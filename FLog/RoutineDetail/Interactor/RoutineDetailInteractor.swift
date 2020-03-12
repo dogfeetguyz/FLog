@@ -158,14 +158,14 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         let routineTitle = routine.title
 
         var array = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)!
-        let deletedLog = array[deleteIndex] as! Dictionary<String, String>
-        let deletedTimeStamp = deletedLog[Common.Define.routineDetailDateSection]
+        let deletedLog = array[deleteIndex] as! Dictionary<String, Any>
+        let deletedTimeStamp = deletedLog[Common.Define.routineDetailDateSection] as! String
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             do {
                 let managedOC = appDelegate.persistentContainer.viewContext
                 let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
-                request.predicate = NSPredicate(format: "routineTitle == %@ AND logDate == %@", routineTitle, deletedLog)
+                request.predicate = NSPredicate(format: "routineTitle == %@ AND logDate == %@", routineTitle, deletedTimeStamp)
                 let timelineList = try managedOC.fetch(request)
                 for timeline in timelineList {
                     managedOC.delete(timeline)

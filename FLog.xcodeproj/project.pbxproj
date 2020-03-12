@@ -14,11 +14,12 @@
 		FA09FA322419EE8A006BE8A2 /* TimelineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA312419EE8A006BE8A2 /* TimelineProtocol.swift */; };
 		FA09FA342419EE98006BE8A2 /* TimelinePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA332419EE98006BE8A2 /* TimelinePresenter.swift */; };
 		FA09FA362419EEAA006BE8A2 /* TimelineInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA352419EEAA006BE8A2 /* TimelineInteractor.swift */; };
-		FA09FA3D2419EEBA006BE8A2 /* TimelineView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA09FA382419EEBA006BE8A2 /* TimelineView.storyboard */; };
 		FA09FA3E2419EEBA006BE8A2 /* TimelineViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA3A2419EEBA006BE8A2 /* TimelineViewCell.swift */; };
 		FA09FA3F2419EEBA006BE8A2 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA3B2419EEBA006BE8A2 /* TimelineView.swift */; };
 		FA09FA402419EEBA006BE8A2 /* TimelineView+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA3C2419EEBA006BE8A2 /* TimelineView+UITableViewDelegate.swift */; };
 		FA09FA422419EEC3006BE8A2 /* TimelineWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA412419EEC3006BE8A2 /* TimelineWireFrame.swift */; };
+		FA09FA43241A0256006BE8A2 /* TimelineView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA09FA392419EEBA006BE8A2 /* TimelineView.storyboard */; };
+		FA09FA45241A3729006BE8A2 /* TimelineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA44241A3729006BE8A2 /* TimelineModel.swift */; };
 		FA33E88C2404DCBA000C99DC /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33E88B2404DCBA000C99DC /* Common.swift */; };
 		FA4A6AA923FA9079000E54C4 /* RoutineDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */; };
 		FAA12C0524179BD500736315 /* RoutineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0424179BD500736315 /* RoutineProtocol.swift */; };
@@ -64,11 +65,12 @@
 		FA09FA312419EE8A006BE8A2 /* TimelineProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineProtocol.swift; sourceTree = "<group>"; };
 		FA09FA332419EE98006BE8A2 /* TimelinePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelinePresenter.swift; sourceTree = "<group>"; };
 		FA09FA352419EEAA006BE8A2 /* TimelineInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineInteractor.swift; sourceTree = "<group>"; };
-		FA09FA392419EEBA006BE8A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = TimelineView.storyboard; sourceTree = "<group>"; };
+		FA09FA392419EEBA006BE8A2 /* TimelineView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TimelineView.storyboard; sourceTree = "<group>"; };
 		FA09FA3A2419EEBA006BE8A2 /* TimelineViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewCell.swift; sourceTree = "<group>"; };
 		FA09FA3B2419EEBA006BE8A2 /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		FA09FA3C2419EEBA006BE8A2 /* TimelineView+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimelineView+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		FA09FA412419EEC3006BE8A2 /* TimelineWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineWireFrame.swift; sourceTree = "<group>"; };
+		FA09FA44241A3729006BE8A2 /* TimelineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineModel.swift; sourceTree = "<group>"; };
 		FA33E88B2404DCBA000C99DC /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineDetailTableViewCell.swift; sourceTree = "<group>"; };
 		FAA12C0424179BD500736315 /* RoutineProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineProtocol.swift; sourceTree = "<group>"; };
@@ -161,7 +163,7 @@
 				FA09FA3B2419EEBA006BE8A2 /* TimelineView.swift */,
 				FA09FA3C2419EEBA006BE8A2 /* TimelineView+UITableViewDelegate.swift */,
 				FA09FA3A2419EEBA006BE8A2 /* TimelineViewCell.swift */,
-				FA09FA382419EEBA006BE8A2 /* TimelineView.storyboard */,
+				FA09FA392419EEBA006BE8A2 /* TimelineView.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -274,6 +276,7 @@
 				FABD96452418A167007C868D /* ExerciseModel.swift */,
 				FABD96432418A122007C868D /* SetModel.swift */,
 				FAA12C122417A67300736315 /* RoutineBestModel.swift */,
+				FA09FA44241A3729006BE8A2 /* TimelineModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -482,7 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA09FA302419DFB0006BE8A2 /* TabBarController.storyboard in Resources */,
-				FA09FA3D2419EEBA006BE8A2 /* TimelineView.storyboard in Resources */,
+				FA09FA43241A0256006BE8A2 /* TimelineView.storyboard in Resources */,
 				FAF661B123F6554F0003B589 /* LaunchScreen.storyboard in Resources */,
 				FAF661AE23F6554F0003B589 /* Assets.xcassets in Resources */,
 				FAC5BC3123FA57320069B016 /* RoutineDetailView.storyboard in Resources */,
@@ -542,6 +545,7 @@
 			files = (
 				FAA12C1D2417C47E00736315 /* NewRoutineProtocol.swift in Sources */,
 				FAA12C0F2417A56400736315 /* MainRoutineModel.swift in Sources */,
+				FA09FA45241A3729006BE8A2 /* TimelineModel.swift in Sources */,
 				FAA12C332417D19400736315 /* RoutineDetailWireFrame.swift in Sources */,
 				FAA12C312417D18400736315 /* RoutineDetailInteractor.swift in Sources */,
 				FAA12C112417A60900736315 /* RoutineDetailModel.swift in Sources */,
@@ -583,14 +587,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FA09FA382419EEBA006BE8A2 /* TimelineView.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA09FA392419EEBA006BE8A2 /* Base */,
-			);
-			name = TimelineView.storyboard;
-			sourceTree = "<group>";
-		};
 		FAF661AA23F6554B0003B589 /* RoutineView.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

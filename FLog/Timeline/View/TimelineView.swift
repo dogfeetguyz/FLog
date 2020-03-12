@@ -13,7 +13,7 @@ class TimelineView: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var presenter: TimelinePresenterProtocol?
-    var timelineArray = Array<Timeline>()
+    var timelineArray = Array<TimelineModel>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class TimelineView: UIViewController {
 }
 
 extension TimelineView: TimelineViewProtocol {
-    func showTimelines(with timelineArray: [Timeline]) {
+    func showTimelines(with timelineArray: [TimelineModel]) {
         self.timelineArray = timelineArray
         
         tableView.reloadData()

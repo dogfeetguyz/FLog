@@ -35,7 +35,7 @@ public protocol TimelineInteractorOutputProtocol: class {
     // MARK: interactor -> presenter
     /// Finished dispatching Timelines from UserDefaults
     /// - parameter mainTimelineModelArray: An array of MainTimelineModel loaded from UserDefaults
-    func didDispatchTimelines(with timelineArray: [Timeline])
+    func didDispatchTimelines(with timelineArray: [TimelineModel])
 }
 
 /**
@@ -63,7 +63,7 @@ public protocol TimelineViewProtocol: class {
     
     
     // MARK: presenter -> view
-    func showTimelines(with timelineArray: [Timeline])
+    func showTimelines(with timelineArray: [TimelineModel])
 }
 
 /**
