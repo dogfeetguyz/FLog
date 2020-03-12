@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import CoreData
 
 
 class RoutineInteractorInput: RoutineInteractorInputProtocol {
@@ -149,10 +151,24 @@ class RoutineInteractorInput: RoutineInteractorInputProtocol {
     }
     
     func deleteRoutine(index: Int) {
-
+        
         var routineArray = UserDefaults.standard.array(forKey: Common.Define.mainRoutine) as! Array<Dictionary<String, Any>>
         let data: Dictionary<String, Any> = routineArray[index]
         let title: String = data[Common.Define.mainRoutineTitle] as! String
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            do {
+                let managedOC = appDelegate.persistentContainer.viewContext
+                let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
+                request.predicate = NSPredicate(format: "routineTitle == %@", title)
+                let timelineList = try managedOC.fetch(request)
+                for timeline in timelineList {
+                    managedOC.delete(timeline)
+                }
+            } catch {
+            }
+        }
+
         UserDefaults.standard.removeObject(forKey: title + Common.Define.routineDetail)
         UserDefaults.standard.removeObject(forKey: title + Common.Define.routineBest)
 
@@ -161,6 +177,7 @@ class RoutineInteractorInput: RoutineInteractorInputProtocol {
 
         dispatchRoutines()
     }
+    
     
     func replaceRoutines(sourceIndex: Int, destinationIndex: Int) {
         var routineArray = UserDefaults.standard.array(forKey: Common.Define.mainRoutine) as! Array<Dictionary<String, Any>>

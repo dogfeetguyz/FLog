@@ -82,8 +82,6 @@ class RoutineView: UIViewController {
     }
 }
 
-
-
 extension RoutineView: RoutineViewProtocol {
     func showRoutines(with mainRoutineArray: [MainRoutineModel]) {
         self.mainRoutineArray = mainRoutineArray

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import CoreData
 
 class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
     
@@ -129,6 +131,23 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
             logDict[exercise] = [exerciseDict]
         }
         
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            do {
+                let managedOC = appDelegate.persistentContainer.viewContext
+                let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
+                request.includesSubentities = false
+                let count = try managedOC.count(for: request)
+                
+                let entity = NSEntityDescription.entity(forEntityName: String(describing: Timeline.self ), in: managedOC)
+                let timeline = Timeline(entity: entity!, insertInto: managedOC)
+                timeline.id = Int32(count)
+                timeline.logDate = timestamp
+                timeline.routineTitle = routine.title
+                try managedOC.save()
+            } catch {
+            }
+        }
+        
         logArray.append(logDict)
         UserDefaults.standard.set(logArray, forKey: routine.title + Common.Define.routineDetail)
         
@@ -141,6 +160,19 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         var array = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)!
         let deletedLog = array[deleteIndex] as! Dictionary<String, String>
         let deletedTimeStamp = deletedLog[Common.Define.routineDetailDateSection]
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            do {
+                let managedOC = appDelegate.persistentContainer.viewContext
+                let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
+                request.predicate = NSPredicate(format: "routineTitle == %@ AND logDate == %@", routineTitle, deletedLog)
+                let timelineList = try managedOC.fetch(request)
+                for timeline in timelineList {
+                    managedOC.delete(timeline)
+                }
+            } catch {
+            }
+        }
         
         array.remove(at: deleteIndex)
         UserDefaults.standard.set(array, forKey: routineTitle + Common.Define.routineDetail)

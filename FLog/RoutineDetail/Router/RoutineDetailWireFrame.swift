@@ -11,8 +11,8 @@ import UIKit
 class RoutineDetailWireFrame: RoutineDetailWireFrameProtocol {
     
     class func createRoutineDetailModule(with routineModel:MainRoutineModel) -> UIViewController {
-        let routineDetailView = UIStoryboard(name: "RoutineDetailView", bundle: Bundle.main).instantiateInitialViewController()
-        if let view = routineDetailView as? RoutineDetailView {
+        let viewController = UIStoryboard(name: "RoutineDetailView", bundle: Bundle.main).instantiateInitialViewController()
+        if let view = viewController as? RoutineDetailView {
             let presenter: RoutineDetailPresenterProtocol & RoutineDetailInteractorOutputProtocol = RoutineDetailPresenter()
             let interactor: RoutineDetailInteractorInputProtocol = RoutineDetailInteractor()
             let wireFrame: RoutineDetailWireFrameProtocol = RoutineDetailWireFrame()
@@ -24,7 +24,7 @@ class RoutineDetailWireFrame: RoutineDetailWireFrameProtocol {
             presenter.wireFrame = wireFrame
             interactor.presenter = presenter
 
-            return routineDetailView!
+            return viewController!
         }
         return UIViewController()
     }

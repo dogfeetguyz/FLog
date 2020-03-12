@@ -29,6 +29,7 @@ class Common {
         static let routineBestMaxWeightDate = "best_max_weight_date"
         
         static let checkBestCreatedBefore = "best_data_created"
+        static let checkTimelineCreatedBefore = "timeline_data_created"
     }
     
     class View {

@@ -18,11 +18,6 @@ extension RoutineView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let routine = mainRoutineArray[indexPath.row]
         presenter?.showRoutineDetail(forRoutine: routine)
-//        let storyboard = UIStoryboard(name: "RoutineDetailViewController", bundle: nil)
-//        let viewController = storyboard.instantiateInitialViewController() as! RoutineDetailViewController
-//        viewController.routineDictionary = UserDefaults.standard.array(forKey: Common.Define.mainRoutine)?[indexPath.row] as? Dictionary<String, Any>
-//
-//        navigationController?.pushViewController(viewController, animated: true)  // 업데이트
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
