@@ -164,6 +164,7 @@ class RoutineInteractorInput: RoutineInteractorInputProtocol {
                 let timelineList = try managedOC.fetch(request)
                 for timeline in timelineList {
                     managedOC.delete(timeline)
+                    try managedOC.save()
                 }
             } catch {
             }

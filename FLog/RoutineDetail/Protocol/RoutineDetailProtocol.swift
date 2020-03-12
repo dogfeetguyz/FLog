@@ -28,14 +28,11 @@ public protocol RoutineDetailPresenterProtocol: class {
     func viewDidLoad()
     func loadLogs()
     func loadMaxInfo()
-    
     func textfieldUpdated(tag: String, text: String, logDate: String, exerciseTitle: String)
     func finishedInputData(logDate: String)
-    
     func newLogAction(date: Date)
     func deleteLogAction(deleteIndex: Int)
     func updateMaxInfo(exerciseTitle: String)
-    
     func addSetAction(logDate: String, exerciseTitle: String)
     func removeSetAction(logDate: String, exerciseTitle: String)
 }
@@ -79,7 +76,6 @@ public protocol RoutineDetailInteractorInputProtocol: class {
     func createNewFitnessLog(date: Date, routine: MainRoutineModel)
     func deleteFitnessLog(deleteIndex: Int, routine: MainRoutineModel)
     func refindMaxValue(routineTitle: String, exerciseTitle: String)
-    
     func createNewSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String)
     func removeSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String)
     func updateSet(routineDetail: RoutineDetailModel, tag: String, text: String, logDate: String, exerciseTitle: String)
@@ -94,13 +90,14 @@ public protocol RoutineDetailViewProtocol: class {
     var presenter: RoutineDetailPresenterProtocol? {get set}
     var routineDetailData: RoutineDetailModel? {get set}
     
+    // MARK: presenter -> view
+    
     func showRoutineDetail(routineDetail: RoutineDetailModel)
     func showCreateDialog(isFirst: Bool)
     func updateLogView(segmentIndex: Int)
     func updateMaxInfoView(maxInfo: Dictionary<String, Dictionary<String, String>>)
     func updateTableView(routineDetail: RoutineDetailModel)
     
-    // MARK: presenter -> view
     /// Shows error message on the view
     /// - parameter title: title for the alert
     /// - parameter message: message for the alert
