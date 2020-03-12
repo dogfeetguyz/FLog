@@ -17,7 +17,7 @@ extension RoutineView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let routine = mainRoutineArray[indexPath.row]
-        presenter?.showRoutineDetail(forRoutine: routine)
+        presenter?.clickRoutineCell(forRoutine: routine)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

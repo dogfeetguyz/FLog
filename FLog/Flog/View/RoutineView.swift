@@ -42,7 +42,7 @@ class RoutineView: UIViewController {
     
     // MARK: ButtonAction
     @IBAction func newButtonAction() {
-        presenter?.showCreateNewRoutine()
+        presenter?.clickNewButton()
     }
     
     @IBAction func editButtonAction() {

@@ -34,11 +34,11 @@ class RoutinePresenter: RoutinePresenterProtocol {
         interactor?.updateRoutineTitle(index: index, newTitle: newTitle)
     }
     
-    func showRoutineDetail(forRoutine routine: MainRoutineModel) {
+    func clickRoutineCell(forRoutine routine: MainRoutineModel) {
         wireFrame?.presentRoutineDetailViewScreen(from: view!, forRoutine: routine)
     }
     
-    func showCreateNewRoutine() {
+    func clickNewButton() {
         wireFrame?.presentNewRoutineViewScreen(from: view!)
     }
 }

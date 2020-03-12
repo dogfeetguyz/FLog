@@ -8,9 +8,14 @@
 import Foundation
 import UIKit
 
-class TabBarWireframe {
+/**
+TabBarWireframe is responsible for navigation between AppDelegate and Initial View Controller.
+This provides navigation to tabs on TabBarController.
+ */
+public class TabBarWireframe {
     
-    class func createModule() -> UIViewController {
+    /// Creates initial modules of each tab
+    public class func createInitialModule() -> UIViewController {
         
         let tabbarController = UIStoryboard(name: "TabBarController", bundle: Bundle.main).instantiateInitialViewController() as? UITabBarController
         
@@ -22,6 +27,7 @@ class TabBarWireframe {
         tabbarController!.tabBar.items![0].title = "FLOG"
         tabbarController!.tabBar.items![0].image = UIImage(systemName: "rectangle.split.3x3")
         tabbarController!.tabBar.items![0].selectedImage = UIImage(systemName: "rectangle.split.3x3")
+        
         tabbarController!.tabBar.items![1].title = "TIMELINE"
         tabbarController!.tabBar.items![1].image = UIImage(systemName: "clock")
         tabbarController!.tabBar.items![1].selectedImage = UIImage(systemName: "clock")

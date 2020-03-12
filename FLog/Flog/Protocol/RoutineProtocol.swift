@@ -24,23 +24,26 @@ public protocol RoutinePresenterProtocol: class {
     
     
     // MARK: view -> presenter
-    /// Should call after viewDidLoad called
+    /// Calls after viewDidLoad is called
     func viewDidLoad()
     
-    /// Should call after viewWillAppear called
+    /// Calls after viewWillAppear is called
     func updateView()
     
-    
+    /// Calls after a cell is deleted
     func deleteCell(index: Int)
     
-    
+    /// Calls after a cell is moved
     func moveCell(sourceIndex: Int, destinationIndex: Int)
     
-    
+    /// Calls when the title of a cell is requested to modify
     func modifyCellTitle(index: Int, newTitle: String)
     
-    func showRoutineDetail(forRoutine routine: MainRoutineModel)
-    func showCreateNewRoutine() 
+    /// Calls when a cell is clicked
+    func clickRoutineCell(forRoutine routine: MainRoutineModel)
+    
+    /// Calls when 'New Button' is cllicked
+    func clickNewButton()
 }
 
 /**
@@ -72,12 +75,13 @@ public protocol RoutineInteractorInputProtocol: class {
     /// Dispatches Routine from UserDefaults
     func dispatchRoutines()
     
+    /// Deletes Routines from UserDefaults
     func deleteRoutine(index: Int)
     
-    
+    /// Replaces Routines from UserDefaults
     func replaceRoutines(sourceIndex: Int, destinationIndex: Int)
     
-    
+    /// Updates Routine Title from UserDefaults
     func updateRoutineTitle(index: Int, newTitle: String)
 }
 
@@ -91,6 +95,7 @@ public protocol RoutineViewProtocol: class {
     
     
     // MARK: presenter -> view
+    /// Shows Routines on Main Screen
     func showRoutines(with mainRoutineArray: [MainRoutineModel])
 }
 
@@ -104,5 +109,7 @@ public protocol RoutineWireFrameProtocol: class {
     
     /// Presents Routine Detail Module
     func presentRoutineDetailViewScreen(from view: RoutineViewProtocol, forRoutine routine: MainRoutineModel)
+    
+    /// Presents New Routine Module
     func presentNewRoutineViewScreen(from view: RoutineViewProtocol)
 }
