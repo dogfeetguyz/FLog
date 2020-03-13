@@ -9,9 +9,29 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>FLogTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>FLogUITests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>FA90ABCD241B2F92007F7249</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FA90ABDB241B2F9B007F7249</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>FAF661A023F6554B0003B589</key>
 		<dict>
 			<key>primary</key>

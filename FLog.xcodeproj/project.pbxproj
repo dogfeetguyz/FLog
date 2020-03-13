@@ -24,6 +24,8 @@
 		FA4A6AA923FA9079000E54C4 /* RoutineDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */; };
 		FA60DB70241A69C400298427 /* Timeline+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */; };
 		FA60DB71241A69C400298427 /* Timeline+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */; };
+		FA90ABD1241B2F92007F7249 /* FLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABD0241B2F92007F7249 /* FLogTests.swift */; };
+		FA90ABDF241B2F9B007F7249 /* FLogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABDE241B2F9B007F7249 /* FLogUITests.swift */; };
 		FAA12C0524179BD500736315 /* RoutineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0424179BD500736315 /* RoutineProtocol.swift */; };
 		FAA12C0724179BE100736315 /* RoutinePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0624179BE100736315 /* RoutinePresenter.swift */; };
 		FAA12C0924179BF700736315 /* RoutineWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0824179BF700736315 /* RoutineWireFrame.swift */; };
@@ -57,6 +59,23 @@
 		FAF661BF23F8D3DD0003B589 /* KUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF661BE23F8D3DD0003B589 /* KUIViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		FA90ABD3241B2F92007F7249 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAF6619923F6554B0003B589 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAF661A023F6554B0003B589;
+			remoteInfo = FLog;
+		};
+		FA90ABE1241B2F9B007F7249 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAF6619923F6554B0003B589 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAF661A023F6554B0003B589;
+			remoteInfo = FLog;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		32A6CF0A84C575F8709E76F6 /* Pods-FLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLog.debug.xcconfig"; path = "Target Support Files/Pods-FLog/Pods-FLog.debug.xcconfig"; sourceTree = "<group>"; };
 		494C7D577AEC416D6DDAC898 /* Pods-FLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLog.release.xcconfig"; path = "Target Support Files/Pods-FLog/Pods-FLog.release.xcconfig"; sourceTree = "<group>"; };
@@ -77,6 +96,12 @@
 		FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineDetailTableViewCell.swift; sourceTree = "<group>"; };
 		FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Timeline+CoreDataProperties.swift"; path = "/Users/yejunpark/Workspace/FLog/FLog/Entity/Timeline+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Timeline+CoreDataClass.swift"; path = "/Users/yejunpark/Workspace/FLog/FLog/Entity/Timeline+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		FA90ABCE241B2F92007F7249 /* FLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA90ABD0241B2F92007F7249 /* FLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogTests.swift; sourceTree = "<group>"; };
+		FA90ABD2241B2F92007F7249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA90ABDC241B2F9B007F7249 /* FLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA90ABDE241B2F9B007F7249 /* FLogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogUITests.swift; sourceTree = "<group>"; };
+		FA90ABE0241B2F9B007F7249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAA12C0424179BD500736315 /* RoutineProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineProtocol.swift; sourceTree = "<group>"; };
 		FAA12C0624179BE100736315 /* RoutinePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutinePresenter.swift; sourceTree = "<group>"; };
 		FAA12C0824179BF700736315 /* RoutineWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineWireFrame.swift; sourceTree = "<group>"; };
@@ -113,6 +138,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FA90ABCB241B2F92007F7249 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA90ABD9241B2F9B007F7249 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAF6619E23F6554B0003B589 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -212,6 +251,24 @@
 				FA33E88B2404DCBA000C99DC /* Common.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		FA90ABCF241B2F92007F7249 /* FLogTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA90ABD0241B2F92007F7249 /* FLogTests.swift */,
+				FA90ABD2241B2F92007F7249 /* Info.plist */,
+			);
+			path = FLogTests;
+			sourceTree = "<group>";
+		};
+		FA90ABDD241B2F9B007F7249 /* FLogUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FA90ABDE241B2F9B007F7249 /* FLogUITests.swift */,
+				FA90ABE0241B2F9B007F7249 /* Info.plist */,
+			);
+			path = FLogUITests;
 			sourceTree = "<group>";
 		};
 		FAA12BFF24179B4300736315 /* Flog */ = {
@@ -397,6 +454,8 @@
 			isa = PBXGroup;
 			children = (
 				FAF661A323F6554B0003B589 /* FLog */,
+				FA90ABCF241B2F92007F7249 /* FLogTests */,
+				FA90ABDD241B2F9B007F7249 /* FLogUITests */,
 				FAF661A223F6554B0003B589 /* Products */,
 				C59F60DCF3EE7899EBA53697 /* Pods */,
 				453753E50A50E45AEA80C799 /* Frameworks */,
@@ -407,6 +466,8 @@
 			isa = PBXGroup;
 			children = (
 				FAF661A123F6554B0003B589 /* FLog.app */,
+				FA90ABCE241B2F92007F7249 /* FLogTests.xctest */,
+				FA90ABDC241B2F9B007F7249 /* FLogUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -433,6 +494,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FA90ABCD241B2F92007F7249 /* FLogTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA90ABD7241B2F92007F7249 /* Build configuration list for PBXNativeTarget "FLogTests" */;
+			buildPhases = (
+				FA90ABCA241B2F92007F7249 /* Sources */,
+				FA90ABCB241B2F92007F7249 /* Frameworks */,
+				FA90ABCC241B2F92007F7249 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA90ABD4241B2F92007F7249 /* PBXTargetDependency */,
+			);
+			name = FLogTests;
+			productName = FLogTests;
+			productReference = FA90ABCE241B2F92007F7249 /* FLogTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FA90ABDB241B2F9B007F7249 /* FLogUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA90ABE3241B2F9B007F7249 /* Build configuration list for PBXNativeTarget "FLogUITests" */;
+			buildPhases = (
+				FA90ABD8241B2F9B007F7249 /* Sources */,
+				FA90ABD9241B2F9B007F7249 /* Frameworks */,
+				FA90ABDA241B2F9B007F7249 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA90ABE2241B2F9B007F7249 /* PBXTargetDependency */,
+			);
+			name = FLogUITests;
+			productName = FLogUITests;
+			productReference = FA90ABDC241B2F9B007F7249 /* FLogUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		FAF661A023F6554B0003B589 /* FLog */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAF661B523F6554F0003B589 /* Build configuration list for PBXNativeTarget "FLog" */;
@@ -462,6 +559,14 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Yejun Park";
 				TargetAttributes = {
+					FA90ABCD241B2F92007F7249 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = FAF661A023F6554B0003B589;
+					};
+					FA90ABDB241B2F9B007F7249 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = FAF661A023F6554B0003B589;
+					};
 					FAF661A023F6554B0003B589 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -481,11 +586,27 @@
 			projectRoot = "";
 			targets = (
 				FAF661A023F6554B0003B589 /* FLog */,
+				FA90ABCD241B2F92007F7249 /* FLogTests */,
+				FA90ABDB241B2F9B007F7249 /* FLogUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		FA90ABCC241B2F92007F7249 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA90ABDA241B2F9B007F7249 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAF6619F23F6554B0003B589 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -545,6 +666,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FA90ABCA241B2F92007F7249 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA90ABD1241B2F92007F7249 /* FLogTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA90ABD8241B2F9B007F7249 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA90ABDF241B2F9B007F7249 /* FLogUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAF6619D23F6554B0003B589 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -594,6 +731,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		FA90ABD4241B2F92007F7249 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAF661A023F6554B0003B589 /* FLog */;
+			targetProxy = FA90ABD3241B2F92007F7249 /* PBXContainerItemProxy */;
+		};
+		FA90ABE2241B2F9B007F7249 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAF661A023F6554B0003B589 /* FLog */;
+			targetProxy = FA90ABE1241B2F9B007F7249 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		FAF661AA23F6554B0003B589 /* RoutineView.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -614,6 +764,88 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		FA90ABD5241B2F92007F7249 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B78Z6M42G4;
+				INFOPLIST_FILE = FLogTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dogfeetguyz.FLogTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FLog.app/FLog";
+			};
+			name = Debug;
+		};
+		FA90ABD6241B2F92007F7249 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B78Z6M42G4;
+				INFOPLIST_FILE = FLogTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dogfeetguyz.FLogTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FLog.app/FLog";
+			};
+			name = Release;
+		};
+		FA90ABE4241B2F9B007F7249 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B78Z6M42G4;
+				INFOPLIST_FILE = FLogUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dogfeetguyz.FLogUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FLog;
+			};
+			name = Debug;
+		};
+		FA90ABE5241B2F9B007F7249 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B78Z6M42G4;
+				INFOPLIST_FILE = FLogUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dogfeetguyz.FLogUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FLog;
+			};
+			name = Release;
+		};
 		FAF661B323F6554F0003B589 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -775,6 +1007,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FA90ABD7241B2F92007F7249 /* Build configuration list for PBXNativeTarget "FLogTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA90ABD5241B2F92007F7249 /* Debug */,
+				FA90ABD6241B2F92007F7249 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA90ABE3241B2F9B007F7249 /* Build configuration list for PBXNativeTarget "FLogUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA90ABE4241B2F9B007F7249 /* Debug */,
+				FA90ABE5241B2F9B007F7249 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FAF6619C23F6554B0003B589 /* Build configuration list for PBXProject "FLog" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

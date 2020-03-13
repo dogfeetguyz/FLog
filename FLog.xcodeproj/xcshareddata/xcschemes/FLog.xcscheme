@@ -28,6 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA90ABCD241B2F92007F7249"
+               BuildableName = "FLogTests.xctest"
+               BlueprintName = "FLogTests"
+               ReferencedContainer = "container:FLog.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA90ABDB241B2F9B007F7249"
+               BuildableName = "FLogUITests.xctest"
+               BlueprintName = "FLogUITests"
+               ReferencedContainer = "container:FLog.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
