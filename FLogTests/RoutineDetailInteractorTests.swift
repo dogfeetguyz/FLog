@@ -29,7 +29,6 @@ class RoutineDetailInteractorTests: QuickSpec {
             self.sut.presenter = self.routineDetailPresenterMock
         }
         
-        
         afterSuite {
             UserDefaults.standard.setPersistentDomain(self.userDefaultsValues!, forName: Bundle.main.bundleIdentifier!)
             
