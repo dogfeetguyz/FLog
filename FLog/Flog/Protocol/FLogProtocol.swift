@@ -1,5 +1,5 @@
 //
-//  RoutineProtocol.swift
+//  FLogProtocol.swift
 //  FLog
 //
 //  Created by Yejun Park on 10/3/20.
@@ -12,15 +12,15 @@ import UIKit
  Protocol that defines the commands sent from the View to the Presenter.
  The Presenter is responsible for connecting the other objects inside a VIPER module.
  */
-public protocol RoutinePresenterProtocol: class {
+public protocol FLogPresenterProtocol: class {
     /// Reference to the View (weak to avoid retain cycle).
-    var view: RoutineViewProtocol? {get set}
+    var view: FLogViewProtocol? {get set}
     
     /// Reference to the Interactor's interface.
-    var interactor: RoutineInteractorInputProtocol? {get set}
+    var interactor: FLogInteractorInputProtocol? {get set}
     
     /// Reference to the Router.
-    var wireFrame: RoutineWireFrameProtocol? {get set}
+    var wireFrame: FLogWireFrameProtocol? {get set}
     
     
     // MARK: view -> presenter
@@ -55,7 +55,7 @@ public protocol RoutinePresenterProtocol: class {
 /**
  Protocol that defines the commands sent from the Interactor to the Presenter.
  */
-public protocol RoutineInteractorOutputProtocol: class {
+public protocol FLogInteractorOutputProtocol: class {
     // MARK: interactor -> presenter
     /// Finished dispatching Routines from UserDefaults
     /// - parameter mainRoutineModelArray: An array of MainRoutineModel loaded from UserDefaults
@@ -66,9 +66,9 @@ public protocol RoutineInteractorOutputProtocol: class {
  Protocol that defines the Interactor's use case.
  The Interactor is responsible for implementing business logics of the module.
  */
-public protocol RoutineInteractorInputProtocol: class {
+public protocol FLogInteractorInputProtocol: class {
     /// Reference to the Presenter's interface.
-    var presenter: RoutineInteractorOutputProtocol? {get set}
+    var presenter: FLogInteractorOutputProtocol? {get set}
     
     /// Create Sample Data for the first execution
     func createSampleData()
@@ -100,9 +100,9 @@ public protocol RoutineInteractorInputProtocol: class {
  Protocol that defines the view input methods.
  The View is responsible for displaying Routine Screen.
  */
-public protocol RoutineViewProtocol: class {
+public protocol FLogViewProtocol: class {
     /// Reference to the Presenter's interface.
-    var presenter: RoutinePresenterProtocol? {get set}
+    var presenter: FLogPresenterProtocol? {get set}
     
     
     // MARK: presenter -> view
@@ -115,16 +115,16 @@ public protocol RoutineViewProtocol: class {
  Protocol that defines the possible routes from the Routine Module.
  The Router is responsible for navigation between modules.
  */
-public protocol RoutineWireFrameProtocol: class {
+public protocol FLogWireFrameProtocol: class {
     /// Creates Routine Module
     static func createRoutineModule() -> UIViewController
     
     /// Presents Routine Detail Module
     /// - parameter view: this view
     /// - parameter routine: targeted routine to go detail module
-    func presentRoutineDetailViewScreen(from view: RoutineViewProtocol, forRoutine routine: MainRoutineModel)
+    func presentRoutineDetailViewScreen(from view: FLogViewProtocol, forRoutine routine: MainRoutineModel)
     
     /// Presents New Routine Module
     /// - parameter view: this view
-    func presentNewRoutineViewScreen(from view: RoutineViewProtocol)
+    func presentNewRoutineViewScreen(from view: FLogViewProtocol)
 }

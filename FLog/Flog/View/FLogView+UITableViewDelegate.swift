@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension RoutineView: UITableViewDelegate, UITableViewDataSource {
+extension FLogView: UITableViewDelegate, UITableViewDataSource {
         
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -43,7 +43,7 @@ extension RoutineView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RoutineViewCell", for: indexPath) as! RoutineViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FLogViewCell", for: indexPath) as! FLogViewCell
         let routine = mainRoutineArray[indexPath.row]
         
         let exercises = routine.exerciseTitles

@@ -1,20 +1,28 @@
 PODS:
   - DatePickerDialog (3.0)
+  - Nimble (8.0.5)
+  - Quick (2.2.0)
   - ScrollableSegmentedControl (1.5.0)
 
 DEPENDENCIES:
   - DatePickerDialog
+  - Nimble
+  - Quick
   - ScrollableSegmentedControl (~> 1.5.0)
 
 SPEC REPOS:
   trunk:
     - DatePickerDialog
+    - Nimble
+    - Quick
     - ScrollableSegmentedControl
 
 SPEC CHECKSUMS:
   DatePickerDialog: 03dbb8350bfa80302ab2a8c83cee1fec70184444
+  Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   ScrollableSegmentedControl: 2e64bbe8968a7fcd8aae5014434481464fcdfe60
 
-PODFILE CHECKSUM: 5098a3ee4d7e07dbf9b7a23a8fa83e3e7f72939d
+PODFILE CHECKSUM: 3cc0488efbef24d71da35b28b371a99b2aea4212
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.0

@@ -115,7 +115,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="FLOG" image="rectangle.split.3x3" catalog="system" id="ZfY-p6-YAS"/>
+                    <tabBarItem key="tabBarItem" title="TIMELINE" image="clock" catalog="system" id="ZfY-p6-YAS"/>
                     <navigationItem key="navigationItem" title="FLog" id="uRZ-Dc-k4C"/>
                     <connections>
                         <outlet property="tableView" destination="VrN-L0-DN3" id="iEb-cA-kBj"/>
@@ -127,6 +127,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="rectangle.split.3x3" catalog="system" width="64" height="46"/>
+        <image name="clock" catalog="system" width="64" height="60"/>
     </resources>
 </document>

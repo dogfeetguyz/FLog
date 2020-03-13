@@ -8,13 +8,13 @@
 
 import UIKit
 
-class RoutineView: UIViewController {
+class FLogView: UIViewController {
     
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    var presenter: RoutinePresenterProtocol?
+    var presenter: FLogPresenterProtocol?
     var mainRoutineArray = Array<MainRoutineModel>()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +82,7 @@ class RoutineView: UIViewController {
     }
 }
 
-extension RoutineView: RoutineViewProtocol {
+extension FLogView: FLogViewProtocol {
     func showRoutines(with mainRoutineArray: [MainRoutineModel]) {
         self.mainRoutineArray = mainRoutineArray
         

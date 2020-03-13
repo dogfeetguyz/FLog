@@ -1,5 +1,5 @@
 //
-//  RoutineInteractor.swift
+//  FLogInteractor.swift
 //  FLog
 //
 //  Created by Yejun Park on 10/3/20.
@@ -11,8 +11,8 @@ import UIKit
 import CoreData
 
 
-class RoutineInteractorInput: RoutineInteractorInputProtocol {
-    var presenter: RoutineInteractorOutputProtocol?
+class FLogInteractorInput: FLogInteractorInputProtocol {
+    var presenter: FLogInteractorOutputProtocol?
     
     func createSampleData() {
         if UserDefaults.standard.value(forKey: Common.Define.mainRoutine) == nil {

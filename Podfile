@@ -6,4 +6,16 @@ target 'FLog' do
   use_frameworks!
   pod 'ScrollableSegmentedControl', '~> 1.5.0'
   pod 'DatePickerDialog'
+  
+  target 'FLogTests' do
+    inherit! :search_paths
+    pod 'Quick'
+    pod 'Nimble'
+  end
+  
+  target 'FLogUITests' do
+    inherit! :search_paths
+    pod 'Quick'
+    pod 'Nimble'
+  end
 end

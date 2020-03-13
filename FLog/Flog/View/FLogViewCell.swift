@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RoutineViewCell: UITableViewCell {
+class FLogViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!

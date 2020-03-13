@@ -1,5 +1,5 @@
 //
-//  RoutinePresenter.swift
+//  FLogPresenter.swift
 //  FLog
 //
 //  Created by Yejun Park on 10/3/20.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class RoutinePresenter: RoutinePresenterProtocol {
-    weak var view: RoutineViewProtocol?
-    var wireFrame: RoutineWireFrameProtocol?
-    var interactor: RoutineInteractorInputProtocol?
+class FLogPresenter: FLogPresenterProtocol {
+    weak var view: FLogViewProtocol?
+    var wireFrame: FLogWireFrameProtocol?
+    var interactor: FLogInteractorInputProtocol?
     
     func viewDidLoad() {
         interactor?.createSampleData()
@@ -43,7 +43,7 @@ class RoutinePresenter: RoutinePresenterProtocol {
     }
 }
 
-extension RoutinePresenter: RoutineInteractorOutputProtocol {
+extension FLogPresenter: FLogInteractorOutputProtocol {
     // MARK: interactor -> presenter
     /// Finished dispatching Routines from UserDefaults
     /// - parameter mainRoutineModelArray: An array of MainRoutineModel loaded from UserDefaults
