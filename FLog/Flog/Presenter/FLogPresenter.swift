@@ -15,7 +15,6 @@ class FLogPresenter: FLogPresenterProtocol {
     
     func viewDidLoad() {
         interactor?.createSampleData()
-        interactor?.createBestData()
     }
     
     func updateView() {
@@ -49,5 +48,9 @@ extension FLogPresenter: FLogInteractorOutputProtocol {
     /// - parameter mainRoutineModelArray: An array of MainRoutineModel loaded from UserDefaults
     func didDispatchRoutines(with mainRoutineArray: [MainRoutineModel]) {
         view?.showRoutines(with: mainRoutineArray)
+    }
+
+    func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
+        view?.showError(title: title, message: message, buttonTitle: buttonTitle, handler: handler)
     }
 }

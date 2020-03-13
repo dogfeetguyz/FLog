@@ -60,6 +60,13 @@ public protocol FLogInteractorOutputProtocol: class {
     /// Finished dispatching Routines from UserDefaults
     /// - parameter mainRoutineModelArray: An array of MainRoutineModel loaded from UserDefaults
     func didDispatchRoutines(with mainRoutineArray: [MainRoutineModel])
+    
+    /// Handles error occurred during dispatching Account Detail
+    /// - parameter title: title for the alert
+    /// - parameter message: message for the alert
+    /// - parameter buttonTitle: OK Button title for the alert
+    /// - parameter handler: OK Button action for the alert
+    func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?)
 }
 
 /**
@@ -72,9 +79,6 @@ public protocol FLogInteractorInputProtocol: class {
     
     /// Create Sample Data for the first execution
     func createSampleData()
-    
-    /// Create Best Data for the first execution
-    func createBestData()
     
     
     // MARK: prsenter -> interactor
@@ -109,6 +113,14 @@ public protocol FLogViewProtocol: class {
     /// Shows Routines on Main Screen
     /// - parameter mainRoutineArray: loaded routines from UserDefaults
     func showRoutines(with mainRoutineArray: [MainRoutineModel])
+    
+    // MARK: presenter -> view
+    /// Shows error message on the view
+    /// - parameter title: title for the alert
+    /// - parameter message: message for the alert
+    /// - parameter buttonTitle: OK Button title for the alert
+    /// - parameter handler: OK Button action for the alert
+    func showError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?)
 }
 
 /**

@@ -88,4 +88,9 @@ extension FLogView: FLogViewProtocol {
         
         tableView.reloadData()
     }
+    
+    func showError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
+        Common.View.showAlertWithOneButton(viewController: self, title: title, message: message, buttonTitle: buttonTitle, handler: handler)
+    }
+    
 }

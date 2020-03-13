@@ -71,9 +71,7 @@ class FLogInteractorInput: FLogInteractorInputProtocol {
                                       
                                       forKey: "Leg Day(Sample)_detail")
         }
-    }
-    
-    func createBestData() {
+        
         if !UserDefaults.standard.bool(forKey: Common.Define.checkBestCreatedBefore) {
             UserDefaults.standard.set(true, forKey: Common.Define.checkBestCreatedBefore)
             
@@ -196,22 +194,40 @@ class FLogInteractorInput: FLogInteractorInputProtocol {
         var item: Dictionary<String, Any> = routineArray[index]
         let originalTitle = item[Common.Define.mainRoutineTitle] as? String
         
-        item[Common.Define.mainRoutineTitle] = newTitle
+        if originalTitle == newTitle {
+            return
+        } else {
+            
+            for (i, routine) in routineArray.enumerated() {
+                if i == index {
+                    continue
+                }
+                
+                let routineDict = routine
+                if routineDict[Common.Define.mainRoutineTitle] as? String == newTitle {
+                    presenter?.onError(title: "Failed", message: newTitle + " already exists\nPlease enter another name", buttonTitle: "OK", handler: { (_) in
+                    })
+                    return
+                }
+            }
+            
+            item[Common.Define.mainRoutineTitle] = newTitle
 
-        routineArray.remove(at: index)
-        routineArray.insert(item, at: index)
-        updateRoutine(routineArray: routineArray)
+            routineArray.remove(at: index)
+            routineArray.insert(item, at: index)
+            updateRoutine(routineArray: routineArray)
 
 
-        let detailArray = UserDefaults.standard.array(forKey: originalTitle! + Common.Define.routineDetail)
-        let bestDictionary = UserDefaults.standard.dictionary(forKey: originalTitle! + Common.Define.routineBest)
+            let detailArray = UserDefaults.standard.array(forKey: originalTitle! + Common.Define.routineDetail)
+            let bestDictionary = UserDefaults.standard.dictionary(forKey: originalTitle! + Common.Define.routineBest)
 
-        UserDefaults.standard.removeObject(forKey: originalTitle! + Common.Define.routineDetail)
-        UserDefaults.standard.removeObject(forKey: originalTitle! + Common.Define.routineBest)
+            UserDefaults.standard.removeObject(forKey: originalTitle! + Common.Define.routineDetail)
+            UserDefaults.standard.removeObject(forKey: originalTitle! + Common.Define.routineBest)
 
-        UserDefaults.standard.set(detailArray, forKey: newTitle + Common.Define.routineDetail)
-        UserDefaults.standard.set(bestDictionary, forKey: newTitle + Common.Define.routineBest)
-        
-        dispatchRoutines()
+            UserDefaults.standard.set(detailArray, forKey: newTitle + Common.Define.routineDetail)
+            UserDefaults.standard.set(bestDictionary, forKey: newTitle + Common.Define.routineBest)
+            
+            dispatchRoutines()
+        }
     }
 }
