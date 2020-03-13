@@ -101,19 +101,22 @@ class TimelineInteractorInput: TimelineInteractorInputProtocol {
                             for exerciseTitle in routine!.exerciseTitles {
                                 
                                 var setString = ""
+                                var totalSetWeight = 0
                                 let setArray: Array<Dictionary<String, String>> = dict[exerciseTitle] as! Array<Dictionary<String, String>>
                                 for setDictionary in setArray {
                                     let weight = Int(setDictionary[Common.Define.routineDetailWeight]!) ?? 0
                                     let reps = Int(setDictionary[Common.Define.routineDetailReps]!) ?? 0
                                     
                                     if weight > 0 && reps > 0 {
-                                        totalWeight = totalWeight + (weight*reps)
+                                        totalSetWeight = totalSetWeight + (weight*reps)
                                         setString = "\(setString) - \(setDictionary[Common.Define.routineDetailWeight]!)\(unit!) x \(setDictionary[Common.Define.routineDetailReps]!)reps\n"
                                     }
                                 }
                                 
                                 if setString.count > 0 {
-                                    contentString = contentString + exerciseTitle + "\n" + setString + "\n"
+                                    setString = "\(setString) - Total \(exerciseTitle): \(totalSetWeight)\(unit!)\n\n"
+                                    contentString = contentString + exerciseTitle + "\n" + setString
+                                    totalWeight = totalWeight + totalSetWeight
                                 }
                             }
                             break
