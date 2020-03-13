@@ -46,6 +46,7 @@ public protocol TimelineInteractorInputProtocol: class {
     /// Reference to the Presenter's interface.
     var presenter: TimelineInteractorOutputProtocol? {get set}
     
+    /// Creates TImeline data for the first execute
     func createTimelineData()
     
     // MARK: prsenter -> interactor
