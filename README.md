@@ -4,9 +4,9 @@
 ## About FLog
 FLog is an iOS based fitness logging app written in Swift5 and Storyboard<br />
 Also, Flog is a good example of
-1) Viper Architecture
-2) BDD (with Unit Test and UI Test)
-3) Core Data
+- Viper Architecture
+- BDD (with Unit Test and UI Test)
+- Core Data
 
 
 ## Version
