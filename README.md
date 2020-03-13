@@ -2,8 +2,7 @@
 
 
 ## About FLog
-FLog is an iOS based fitness logging app written in Swift5 and Storyboard
-
+FLog is an iOS based fitness logging app written in Swift5 and Storyboard<br />
 Also, Flog is a good example of
 1) Viper Architecture
 2) BDD (with Unit Test and UI Test)
@@ -29,7 +28,7 @@ Configuring the Xcode project requires a few steps in Terminal.
 
 3) Install pods into the project by typing in terminal
 
-pod install
+> **pod install**
 
 4) Open FLog.xcworkspace in Finder
 
@@ -37,9 +36,9 @@ pod install
 
 
 ## Unit Tests
-FLog has unit tests that can be run on an iOS target. These tests are in FLogTests and FLogUITests group. To run the unit tests, select either the FLogTests or FLogUITests scheme in the Scheme menu. Then hold the Run button down and select the "Test" option, or press Command+u to run the tests.
+FLog has unit tests that can be run on an iOS target. These tests are in **FLogTests** and **FLogUITests group**. To run the unit tests, select either the **FLogTests** or **FLogUITests scheme** in the Scheme menu. Then hold the Run button down and select the "**Test**" option, or press **Command+u** to run the tests.
 
 
 ## Release
-You can find this on App Store
+You can find this on App Store<br />
 https://apps.apple.com/app/log-your-fitness-flog/id1499437027
