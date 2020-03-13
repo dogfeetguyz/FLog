@@ -16,7 +16,7 @@ class TimelineWireFrame: TimelineWireFrameProtocol {
         if let view = navigationController!.children.first as? TimelineView {
             
             let presenter: TimelinePresenterProtocol & TimelineInteractorOutputProtocol = TimelinePresenter()
-            let interactor: TimelineInteractorInputProtocol = TimelineInteractorInput()
+            let interactor: TimelineInteractorInputProtocol = TimelineInteractor()
             let wireFrame: TimelineWireFrameProtocol = TimelineWireFrame()
 
             view.presenter = presenter

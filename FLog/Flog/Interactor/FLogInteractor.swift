@@ -11,7 +11,7 @@ import UIKit
 import CoreData
 
 
-class FLogInteractorInput: FLogInteractorInputProtocol {
+class FLogInteractor: FLogInteractorInputProtocol {
     var presenter: FLogInteractorOutputProtocol?
     
     func createSampleData() {

@@ -9,7 +9,7 @@
 import CoreData
 import UIKit
 
-class TimelineInteractorInput: TimelineInteractorInputProtocol {
+class TimelineInteractor: TimelineInteractorInputProtocol {
     var presenter: TimelineInteractorOutputProtocol?
     
     func createTimelineData() {

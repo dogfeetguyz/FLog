@@ -16,7 +16,7 @@ class FLogWireFrame: FLogWireFrameProtocol {
         if let view = navigationController!.children.first as? FLogView {
             
             let presenter: FLogPresenterProtocol & FLogInteractorOutputProtocol = FLogPresenter()
-            let interactor: FLogInteractorInputProtocol = FLogInteractorInput()
+            let interactor: FLogInteractorInputProtocol = FLogInteractor()
             let wireFrame: FLogWireFrameProtocol = FLogWireFrame()
 
             view.presenter = presenter

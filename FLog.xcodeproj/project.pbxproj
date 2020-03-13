@@ -28,6 +28,9 @@
 		FA60DB71241A69C400298427 /* Timeline+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */; };
 		FA90ABD1241B2F92007F7249 /* FLogInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABD0241B2F92007F7249 /* FLogInteractorTests.swift */; };
 		FA90ABDF241B2F9B007F7249 /* FLogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABDE241B2F9B007F7249 /* FLogUITests.swift */; };
+		FA90ABE9241B77A5007F7249 /* NewRoutineInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABE6241B77A4007F7249 /* NewRoutineInteractorTests.swift */; };
+		FA90ABEA241B77A5007F7249 /* RoutineDetailInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABE7241B77A4007F7249 /* RoutineDetailInteractorTests.swift */; };
+		FA90ABEB241B77A5007F7249 /* TimelineInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABE8241B77A5007F7249 /* TimelineInteractorTests.swift */; };
 		FAA12C0524179BD500736315 /* FLogProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0424179BD500736315 /* FLogProtocol.swift */; };
 		FAA12C0724179BE100736315 /* FLogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0624179BE100736315 /* FLogPresenter.swift */; };
 		FAA12C0924179BF700736315 /* FLogWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0824179BF700736315 /* FLogWireFrame.swift */; };
@@ -110,6 +113,9 @@
 		FA90ABDC241B2F9B007F7249 /* FLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA90ABDE241B2F9B007F7249 /* FLogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogUITests.swift; sourceTree = "<group>"; };
 		FA90ABE0241B2F9B007F7249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA90ABE6241B77A4007F7249 /* NewRoutineInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRoutineInteractorTests.swift; sourceTree = "<group>"; };
+		FA90ABE7241B77A4007F7249 /* RoutineDetailInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineDetailInteractorTests.swift; sourceTree = "<group>"; };
+		FA90ABE8241B77A5007F7249 /* TimelineInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineInteractorTests.swift; sourceTree = "<group>"; };
 		FAA12C0424179BD500736315 /* FLogProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogProtocol.swift; sourceTree = "<group>"; };
 		FAA12C0624179BE100736315 /* FLogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogPresenter.swift; sourceTree = "<group>"; };
 		FAA12C0824179BF700736315 /* FLogWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogWireFrame.swift; sourceTree = "<group>"; };
@@ -272,6 +278,9 @@
 		FA90ABCF241B2F92007F7249 /* FLogTests */ = {
 			isa = PBXGroup;
 			children = (
+				FA90ABE7241B77A4007F7249 /* RoutineDetailInteractorTests.swift */,
+				FA90ABE6241B77A4007F7249 /* NewRoutineInteractorTests.swift */,
+				FA90ABE8241B77A5007F7249 /* TimelineInteractorTests.swift */,
 				FA90ABD0241B2F92007F7249 /* FLogInteractorTests.swift */,
 				FA90ABD2241B2F92007F7249 /* Info.plist */,
 			);
@@ -768,6 +777,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA90ABEA241B77A5007F7249 /* RoutineDetailInteractorTests.swift in Sources */,
+				FA90ABEB241B77A5007F7249 /* TimelineInteractorTests.swift in Sources */,
+				FA90ABE9241B77A5007F7249 /* NewRoutineInteractorTests.swift in Sources */,
 				FA90ABD1241B2F92007F7249 /* FLogInteractorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,11 +10,11 @@
 import Quick
 import Nimble
 
-class FLogTests: QuickSpec {
+class FLogInteractorTests: QuickSpec {
     let userDefaultsSuiteName = "TestDefaults"
     var userDefaultsValues: Dictionary<String, Any>?
     
-    var sut: FLogInteractorInput!
+    var sut: FLogInteractor!
     var fLogPresenterMock: FLogPresenterMock!
     
     var oldRoutineArray:Array<MainRoutineModel>?
@@ -25,7 +25,7 @@ class FLogTests: QuickSpec {
             UserDefaults.standard.setPersistentDomain(Dictionary(), forName: Bundle.main.bundleIdentifier!)
             
             self.fLogPresenterMock = FLogPresenterMock()
-            self.sut = FLogInteractorInput()
+            self.sut = FLogInteractor()
             self.sut.presenter = self.fLogPresenterMock
         }
         
