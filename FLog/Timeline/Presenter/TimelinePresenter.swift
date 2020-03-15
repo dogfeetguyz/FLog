@@ -15,15 +15,17 @@ class TimelinePresenter: TimelinePresenterProtocol {
     
     func viewDidLoad() {
         interactor?.createTimelineData()
-        interactor?.dispatchTimelines()
+        interactor?.dispatchTimelines(isInitial: true)
     }
 }
 
 extension TimelinePresenter: TimelineInteractorOutputProtocol {
-    // MARK: interactor -> presenter
-    /// Finished dispatching Timelines from UserDefaults
-    /// - parameter mainTimelineModelArray: An array of MainTimelineModel loaded from UserDefaults
     func didDispatchTimelines(with timelineArray: [TimelineModel]) {
         view?.showTimelines(with: timelineArray)
     }
+    
+    func onError() {
+        view?.onError()
+    }
+    
 }

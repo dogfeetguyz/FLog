@@ -36,6 +36,9 @@ public protocol TimelineInteractorOutputProtocol: class {
     /// Finished dispatching Timelines from Core Data
     /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
     func didDispatchTimelines(with timelineArray: [TimelineModel])
+    
+    /// Handles error occurred during dispatching Timeline
+    func onError()
 }
 
 /**
@@ -45,13 +48,14 @@ public protocol TimelineInteractorOutputProtocol: class {
 public protocol TimelineInteractorInputProtocol: class {
     /// Reference to the Presenter's interface.
     var presenter: TimelineInteractorOutputProtocol? {get set}
+    var fetchOffset: Int {get set}
     
     /// Creates TImeline data for the first execute
     func createTimelineData()
     
     // MARK: prsenter -> interactor
     /// Dispatches Timeline from Core Data
-    func dispatchTimelines()
+    func dispatchTimelines(isInitial: Bool)
 }
 
 /**
@@ -67,6 +71,9 @@ public protocol TimelineViewProtocol: class {
     /// Shows timeline data on tableview
     /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
     func showTimelines(with timelineArray: [TimelineModel])
+    
+    /// Handles error occurred during dispatching Timeline
+    func onError()
 }
 
 /**

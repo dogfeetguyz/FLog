@@ -15,6 +15,8 @@ class TimelineView: UIViewController {
     var presenter: TimelinePresenterProtocol?
     var timelineArray = Array<TimelineModel>()
     
+    var canCallNextTimeline = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setLogo()
@@ -40,8 +42,14 @@ class TimelineView: UIViewController {
 
 extension TimelineView: TimelineViewProtocol {
     func showTimelines(with timelineArray: [TimelineModel]) {
-        self.timelineArray = timelineArray
+        canCallNextTimeline = true
         
+        self.timelineArray = timelineArray
+//        self.timelineArray.append(contentsOf: timelineArray)
         tableView.reloadData()
+    }
+    
+    func onError() {
+        canCallNextTimeline = false
     }
 }

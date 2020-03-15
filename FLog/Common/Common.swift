@@ -37,8 +37,12 @@ class Common {
         static let routineBestMaxWeight = "best_max_weight"
         static let routineBestMaxWeightDate = "best_max_weight_date"
         
+        static let checkSampleCreatedBefore = "sample_data_created"
         static let checkBestCreatedBefore = "best_data_created"
         static let checkTimelineCreatedBefore = "timeline_data_created"
+        
+        static let dbResultLimit = 10
+        static let dbRequestLimit = 100
     }
     
     class View {
