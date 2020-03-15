@@ -33,6 +33,12 @@ extension RoutineDetailView: UITableViewDelegate, UITableViewDataSource {
         cell.addButton.addTarget(cell, action: #selector(cell.addButtonAction), for: .touchUpInside)
         cell.removeButton.addTarget(cell, action: #selector(cell.removeButtonAction), for: .touchUpInside)
         
+        if (thisExerciseLog?.set.count)! > 1 {
+            cell.removeButton.isEnabled = true
+        } else {
+            cell.removeButton.isEnabled = false
+        }
+        
         cell.presenter = presenter
         cell.maxInfoData = maxInfoData
         cell.exerciseLogData = thisExerciseLog!

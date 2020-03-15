@@ -282,6 +282,11 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                     if log.exerciseTitle == exerciseTitle {
                         
                         var setArray = logArray[index][exerciseTitle] as! Array<Dictionary<String, String>>
+                        if setArray.count <= 1 {
+                            // does not allow the removal of a set when an exercise has one set
+                            presenter?.didUpdateLog(routineDetail: updatedRoutineDetail)
+                            return
+                        }
                         
                         let lastWeight = Int(setArray.last![Common.Define.routineDetailWeight]!) ?? 0
                         var totalVolume: Int = 0
