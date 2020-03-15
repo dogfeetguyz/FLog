@@ -73,8 +73,6 @@ class FLogInteractor: FLogInteractorInputProtocol {
         }
         
         if !UserDefaults.standard.bool(forKey: Common.Define.checkBestCreatedBefore) {
-            UserDefaults.standard.set(true, forKey: Common.Define.checkBestCreatedBefore)
-            
             let mainRoutine = UserDefaults.standard.array(forKey: Common.Define.mainRoutine)!
             for dict in mainRoutine {
                 let routineDict = dict as! Dictionary<String, Any>
@@ -129,6 +127,7 @@ class FLogInteractor: FLogInteractorInputProtocol {
                 
                 UserDefaults.standard.set(bestDict, forKey: routineTitle + Common.Define.routineBest)
             }
+            UserDefaults.standard.set(true, forKey: Common.Define.checkBestCreatedBefore)
         }
     }
     
