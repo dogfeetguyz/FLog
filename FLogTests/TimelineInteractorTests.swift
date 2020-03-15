@@ -23,7 +23,7 @@ class TimelineInteractorTests: QuickSpec {
             self.sut.presenter = self.timelinePresenterMock
         }
         
-        describe("t001 Dispatch Timeline data") {
+        describe("Dispatch Timeline data") {
             beforeEach {
                 self.sut.createTimelineData()
                 
@@ -45,7 +45,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
             }
             
-            context("002 When the every timeline data is loaded") {
+            context("When the every timeline data is loaded") {
                 beforeEach {
                     while true {
                         let currentFetchOffset = self.sut.fetchOffset
@@ -58,7 +58,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
                 
                 it("Should indicate the occurrenc of an error") {
-                    expect(self.timelinePresenterMock.error == true).toEventually(beTrue())
+                    expect(self.timelinePresenterMock.errorOccurred == true).toEventually(beTrue())
                 }
             }
             
@@ -67,7 +67,7 @@ class TimelineInteractorTests: QuickSpec {
             }
         }
         
-        describe("t002 Create a routine") {
+        describe("Create a routine") {
             context("When a user creates a routine") {
                 beforeEach {
                     self.sut.dispatchTimelines(isInitial: true)
@@ -87,7 +87,7 @@ class TimelineInteractorTests: QuickSpec {
             }
         }
         
-        describe("t003 Create a log") {
+        describe("Create a log") {
             beforeEach {
                 self.createRoutine()
             }
@@ -111,7 +111,7 @@ class TimelineInteractorTests: QuickSpec {
             }
         }
         
-        describe("t004 Create a set") {
+        describe("Create a set") {
             beforeEach {
                 self.createRoutine()
                 self.createLog()
@@ -136,14 +136,14 @@ class TimelineInteractorTests: QuickSpec {
             }
         }
         
-        describe("t005 Update set on a log") {
+        describe("Update set on a log") {
             beforeEach {
                 self.createRoutine()
                 self.createLog()
                 self.createSet()
             }
             
-            context("001 When a user sets only weight data on a log") {
+            context("When a user sets only weight data on a log") {
                 beforeEach {
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -157,7 +157,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
             }
             
-            context("002 When a user sets only reps data on a log") {
+            context("When a user sets only reps data on a log") {
                 beforeEach {
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -171,7 +171,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
             }
             
-            context("003 When a user sets Weight and reps data on a log") {
+            context("When a user sets Weight and reps data on a log") {
                 beforeEach {
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -185,7 +185,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
             }
             
-            context("004 When a user removes weight on a set on a log") {
+            context("When a user removes weight on a set on a log") {
                 beforeEach {
                     self.updateSet(at: 1, weight: "10", reps:"10")
                     self.sut.dispatchTimelines(isInitial: true)
@@ -200,7 +200,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
             }
             
-            context("005 When a user removes reps on a set on a log") {
+            context("When a user removes reps on a set on a log") {
                 beforeEach {
                     self.updateSet(at: 1, weight: "10", reps:"10")
                     self.sut.dispatchTimelines(isInitial: true)
@@ -220,13 +220,13 @@ class TimelineInteractorTests: QuickSpec {
             }
         }
         
-        describe("t006 Remove a set") {
+        describe("Remove a set") {
             beforeEach {
                 self.createRoutine()
                 self.createLog()
             }
             
-            context("001 When a user remove a set having no data") {
+            context("When a user remove a set having no data") {
                 beforeEach {
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -240,7 +240,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
             }
             
-            context("002 When a user removes a set having weight and reps data") {
+            context("When a user removes a set having weight and reps data") {
                 beforeEach {
                     self.updateSet(at: 0, weight: "10", reps:"10")
                     self.sut.dispatchTimelines(isInitial: true)
@@ -260,13 +260,13 @@ class TimelineInteractorTests: QuickSpec {
             }
         }
         
-        describe("t007 Remove a log") {
+        describe("Remove a log") {
             beforeEach {
                 self.createRoutine()
                 self.createLog()
             }
             
-            context("001 When a user removes a log having no data") {
+            context("When a user removes a log having no data") {
                 beforeEach {
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -280,7 +280,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
             }
             
-            context("002 When a user removes a log having valid set data") {
+            context("When a user removes a log having valid set data") {
                 beforeEach {
                     self.updateSet(at: 0, weight: "10", reps:"10")
                     self.sut.dispatchTimelines(isInitial: true)
@@ -300,7 +300,7 @@ class TimelineInteractorTests: QuickSpec {
             }
         }
         
-        describe("t008 Remove a routine") {
+        describe("Remove a routine") {
             beforeEach {
                 self.createRoutine()
                 self.createLog()
@@ -320,7 +320,7 @@ class TimelineInteractorTests: QuickSpec {
                 }
             }
             
-            context("002 When a user removes a routine having valid log data") {
+            context("When a user removes a routine having valid log data") {
                 beforeEach {
                     self.updateSet(at: 0, weight: "10", reps: "10")
                     self.sut.dispatchTimelines(isInitial: true)
@@ -419,16 +419,18 @@ class TimelineInteractorTests: QuickSpec {
 
 class TimelinePresenterMock: TimelineInteractorOutputProtocol {
     var dispatched = false
-    var error = false
+    var errorOccurred = false
     var loadedArray:Array<TimelineModel> = []
     
     func didDispatchTimelines(with timelineArray: [TimelineModel]) {
         loadedArray = timelineArray
         dispatched = true
+        errorOccurred = false
     }
     
     func onError() {
         loadedArray = []
-        error = true
+        dispatched = false
+        errorOccurred = true
     }
 }

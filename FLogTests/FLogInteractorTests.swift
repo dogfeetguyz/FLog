@@ -24,7 +24,7 @@ class FLogInteractorTests: QuickSpec {
             self.sut.presenter = self.fLogPresenterMock
         }
         
-        describe("t001 Sample Data") {
+        describe("Sample Data") {
             context("When app lunches more than twice") {
                 beforeEach {
                     self.sut.createSampleData()
@@ -41,11 +41,13 @@ class FLogInteractorTests: QuickSpec {
             }
         }
         
-        describe("t002 replace the routines") {
+        describe("Replace the routines") {
+            beforeEach {
+                NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+            }
+            
             context("When a routine moved to the other position") {
                 beforeEach {
-                    NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
-                    
                     self.sut.dispatchRoutines()
                     self.oldLoadedArray = self.fLogPresenterMock.loadedArray
                     
@@ -57,13 +59,19 @@ class FLogInteractorTests: QuickSpec {
                     expect(self.oldLoadedArray![self.oldLoadedArray!.count-1].title == self.fLogPresenterMock.loadedArray[0].title).toEventually(beTrue())
                 }
             }
+            
+            afterEach {
+                self.sut.deleteRoutine(index: 0)
+            }
         }
 
-        describe("t003 remove a routine") {
+        describe("Remove a routine") {
+            beforeEach {
+                NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+            }
+            
             context("When a routine is removed") {
                 beforeEach {
-                    NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
-                    
                     self.sut.dispatchRoutines()
                     self.oldLoadedArray = self.fLogPresenterMock.loadedArray
                     
@@ -77,29 +85,36 @@ class FLogInteractorTests: QuickSpec {
             }
         }
         
-        describe("t003 update routine title") {
-            context("001 When the name of a routine is changed to a name not existing") {
+        describe("Update routine title") {
+            beforeEach {
+                NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+                self.sut.dispatchRoutines()
+                self.oldLoadedArray = self.fLogPresenterMock.loadedArray
+                self.sut.replaceRoutines(sourceIndex: self.oldLoadedArray!.count-1, destinationIndex: 0)
+            }
+            
+            context("When the name of a routine is changed to a name not existing") {
                 beforeEach {
                     self.sut.updateRoutineTitle(index: 0, newTitle: "new_test_flog")
                     self.sut.dispatchRoutines()
                 }
                 
-                it("Should be changed to 'new_test_flog'") {
+                it("Should be changed to intended name") {
                     expect(self.fLogPresenterMock.loadedArray[0].title == "new_test_flog").toEventually(beTrue())
                 }
             }
             
-            context("002 When the name trying to change is the same as its own name") {
+            context("When the name trying to change is the same as its own name") {
                 beforeEach {
-                    self.sut.updateRoutineTitle(index: 0, newTitle: "new_test_flog")
+                    self.sut.updateRoutineTitle(index: 0, newTitle: "test_flog")
                 }
                 
                 it("Should happen nothing") {
-                    expect(self.fLogPresenterMock.loadedArray[0].title == "new_test_flog" && self.fLogPresenterMock.errorOccurred == false).toEventually(beTrue())
+                    expect(self.fLogPresenterMock.loadedArray[0].title == "test_flog" && self.fLogPresenterMock.errorOccurred == false).toEventually(beTrue())
                 }
             }
             
-            context("003 When the name trying to change already exists") {
+            context("When the name trying to change already exists") {
                 beforeEach {
                     NewRoutineInteractor().createNewRoutine(title: "test_flog2", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
                     self.sut.updateRoutineTitle(index: 0, newTitle: "test_flog2")
@@ -112,8 +127,11 @@ class FLogInteractorTests: QuickSpec {
                 afterEach {
                     self.sut.dispatchRoutines()
                     self.sut.deleteRoutine(index: self.fLogPresenterMock.loadedArray.count-1)
-                    self.sut.deleteRoutine(index: 0)
                 }
+            }
+            
+            afterEach {                
+                self.sut.deleteRoutine(index: 0)
             }
         }
         
@@ -131,12 +149,14 @@ class FLogPresenterMock: FLogInteractorOutputProtocol {
     var loadedArray: Array<MainRoutineModel> = []
     
     func didDispatchRoutines(with mainRoutineArray: [MainRoutineModel]) {
-        dispatched = true
         loadedArray = mainRoutineArray
+        dispatched = true
+        errorOccurred = false
     }
     
     func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
-        errorOccurred = true
         loadedArray = []
+        dispatched = false
+        errorOccurred = true
     }
 }
