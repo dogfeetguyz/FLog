@@ -63,6 +63,7 @@ class NewRoutineInteractor: NewRoutineInteractorInputProtocol {
                 bestDict[exerciseTitle!]![Common.Define.routineBestMaxWeightDate] = ""
             }
             UserDefaults.standard.set(bestDict, forKey: title! + Common.Define.routineBest)
+            UserDefaults.standard.set([], forKey: title! + Common.Define.routineDetail)
 
             presenter?.didCreateNewRoutine()
         }
