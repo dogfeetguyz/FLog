@@ -35,18 +35,18 @@ class FLogInteractorTests: QuickSpec {
                     self.sut.dispatchRoutines()
                 }
                 
-                it("Should not create sample data more than once") {
+                it("Should not be created more than once") {
                     expect(self.oldLoadedArray!.count == self.fLogPresenterMock.loadedArray.count).toEventually(beTrue())
                 }
             }
         }
         
-        describe("Replace the routines") {
+        describe("Routine") {
             beforeEach {
                 NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
             }
             
-            context("When a routine moved to the other position") {
+            context("When the routine moved to the other position") {
                 beforeEach {
                     self.sut.dispatchRoutines()
                     self.oldLoadedArray = self.fLogPresenterMock.loadedArray
@@ -55,22 +55,16 @@ class FLogInteractorTests: QuickSpec {
                     self.sut.dispatchRoutines()
                 }
                 
-                it("Should moved to the target position") {
+                it("Should be moved to the target position") {
                     expect(self.oldLoadedArray![self.oldLoadedArray!.count-1].title == self.fLogPresenterMock.loadedArray[0].title).toEventually(beTrue())
+                }
+                
+                afterEach {
+                    self.sut.deleteRoutine(index: 0)
                 }
             }
             
-            afterEach {
-                self.sut.deleteRoutine(index: 0)
-            }
-        }
-
-        describe("Remove a routine") {
-            beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
-            }
-            
-            context("When a routine is removed") {
+            context("When the routine is removed") {
                 beforeEach {
                     self.sut.dispatchRoutines()
                     self.oldLoadedArray = self.fLogPresenterMock.loadedArray
@@ -79,13 +73,13 @@ class FLogInteractorTests: QuickSpec {
                     self.sut.dispatchRoutines()
                 }
 
-                it("Should have less count than before deletion") {
+                it("Should have less count than before removal") {
                     expect(self.oldLoadedArray!.count - 1 == self.fLogPresenterMock.loadedArray.count).toEventually(beTrue())
                 }
             }
         }
         
-        describe("Update routine title") {
+        describe("Routine Name") {
             beforeEach {
                 NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
                 self.sut.dispatchRoutines()
@@ -93,7 +87,7 @@ class FLogInteractorTests: QuickSpec {
                 self.sut.replaceRoutines(sourceIndex: self.oldLoadedArray!.count-1, destinationIndex: 0)
             }
             
-            context("When the name of a routine is changed to a name not existing") {
+            context("When the name is changed to a name not existing") {
                 beforeEach {
                     self.sut.updateRoutineTitle(index: 0, newTitle: "new_test_flog")
                     self.sut.dispatchRoutines()
@@ -138,6 +132,7 @@ class FLogInteractorTests: QuickSpec {
         afterSuite {
             self.fLogPresenterMock = nil
             self.sut = nil
+            self.oldLoadedArray = nil
         }
     }
 }

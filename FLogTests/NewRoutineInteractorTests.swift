@@ -23,7 +23,7 @@ class NewRoutineInteractorTests: QuickSpec {
             self.sut.presenter = self.newRoutinePresenterMock
         }
         
-        describe("Creation") {
+        describe("Creation Result") {
             context("When NAME field and EXERCISE fields are empty") {
                 beforeEach {
                     self.sut.createNewRoutine(title: "", unit: .kg, exerciseTitles: [])
@@ -139,7 +139,7 @@ class NewRoutineInteractorTests: QuickSpec {
                     self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
                 }
 
-                it("Should have the same number of exercises in the routine") {
+                it("Should have the same number of exercises as request") {
                     expect(self.routineArray?.last?.exerciseTitles.count == 5).toEventually(beTrue())
                 }
             }
