@@ -21,8 +21,6 @@ class RoutineDetailInteractorTests: QuickSpec {
     
     override func spec() {
         beforeSuite {
-            self.userDefaultsValues = UserDefaults.standard.persistentDomain(forName: Bundle.main.bundleIdentifier!)
-            UserDefaults.standard.setPersistentDomain(Dictionary(), forName: Bundle.main.bundleIdentifier!)
             
             self.routineDetailPresenterMock = RoutineDetailPresenterMock()
             self.sut = RoutineDetailInteractor()
@@ -30,7 +28,6 @@ class RoutineDetailInteractorTests: QuickSpec {
         }
         
         afterSuite {
-            UserDefaults.standard.setPersistentDomain(self.userDefaultsValues!, forName: Bundle.main.bundleIdentifier!)
             
             self.routineDetailPresenterMock = nil
             self.sut = nil
@@ -41,16 +38,19 @@ class RoutineDetailInteractorTests: QuickSpec {
 class RoutineDetailPresenterMock: RoutineDetailInteractorOutputProtocol {
     var dispatched = false
     var errorOccurred = false
+    var loadedData: RoutineDetailModel?
     
     func needsFirstLog() {
         dispatched = true
     }
     
     func didLogLoaded(routineDetail: RoutineDetailModel) {
+        loadedData = routineDetail
         dispatched = true
     }
     
     func didUpdateLog(routineDetail: RoutineDetailModel) {
+        loadedData = routineDetail
         dispatched = true
     }
     

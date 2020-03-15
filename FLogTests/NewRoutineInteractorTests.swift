@@ -30,8 +30,6 @@ class NewRoutineInteractorTests: QuickSpec {
         }
         
         afterSuite {
-            UserDefaults.standard.setPersistentDomain(self.userDefaultsValues!, forName: Bundle.main.bundleIdentifier!)
-            
             self.newRoutinePresenterMock = nil
             self.sut = nil
         }

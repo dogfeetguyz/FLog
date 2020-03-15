@@ -11,121 +11,113 @@ import Quick
 import Nimble
 
 class FLogInteractorTests: QuickSpec {
-    let userDefaultsSuiteName = "TestDefaults"
-    var userDefaultsValues: Dictionary<String, Any>?
     
     var sut: FLogInteractor!
     var fLogPresenterMock: FLogPresenterMock!
     
-    var oldRoutineArray:Array<MainRoutineModel>?
+    var oldLoadedArray:Array<MainRoutineModel>?
     
     override func spec() {
         beforeSuite {
-            self.userDefaultsValues = UserDefaults.standard.persistentDomain(forName: Bundle.main.bundleIdentifier!)
-            UserDefaults.standard.setPersistentDomain(Dictionary(), forName: Bundle.main.bundleIdentifier!)
-            
             self.fLogPresenterMock = FLogPresenterMock()
             self.sut = FLogInteractor()
             self.sut.presenter = self.fLogPresenterMock
         }
         
-        describe("t001 First execution") {
-            context("When this app is executed for the first time") {
+        describe("t001 Sample Data") {
+            context("When app lunches more than twice") {
                 beforeEach {
+                    self.sut.createSampleData()
+                    self.sut.dispatchRoutines()
+                    self.oldLoadedArray = self.fLogPresenterMock.loadedArray
+                    
                     self.sut.createSampleData()
                     self.sut.dispatchRoutines()
                 }
                 
-                it("Should have 1 sample routine in the list") {
-                    expect(self.fLogPresenterMock.mainRoutineArray != nil && self.fLogPresenterMock.mainRoutineArray?.count == 1).toEventually(beTrue())
+                it("Should not create sample data more than once") {
+                    expect(self.oldLoadedArray!.count == self.fLogPresenterMock.loadedArray.count).toEventually(beTrue())
                 }
             }
         }
         
-        describe("t002 Second execution") {
-            context("When this app is executed for the second time") {
-                beforeEach {
-                    self.sut.createSampleData()
-                    self.sut.dispatchRoutines()
-                }
-                
-                it("Should have 1 sample routine in the list") {
-                    expect(self.fLogPresenterMock.mainRoutineArray != nil && self.fLogPresenterMock.mainRoutineArray?.count == 1).toEventually(beTrue())
-                }
-            }
-        }
-        
-        describe("t003 remove the sample routine") {
-            context("When the sample routine is removed") {
-                beforeEach {
-                    self.sut.deleteRoutine(index: 0)
-                    self.sut.dispatchRoutines()
-                }
-                
-                it("Should have 0 sample routines in the list") {
-                    expect(self.fLogPresenterMock.mainRoutineArray != nil && self.fLogPresenterMock.mainRoutineArray?.count == 0).toEventually(beTrue())
-                }
-            }
-        }
-        
-        describe("t004 replace the routines") {
+        describe("t002 replace the routines") {
             context("When a routine moved to the other position") {
                 beforeEach {
+                    NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
                     
-                    let newRoutineInteractor = NewRoutineInteractor()
-                    newRoutineInteractor.createNewRoutine(title: "test1", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
-                    newRoutineInteractor.createNewRoutine(title: "test2", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
-                    newRoutineInteractor.createNewRoutine(title: "test3", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
-                    newRoutineInteractor.createNewRoutine(title: "test4", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
                     self.sut.dispatchRoutines()
+                    self.oldLoadedArray = self.fLogPresenterMock.loadedArray
                     
-                    self.oldRoutineArray = self.fLogPresenterMock.mainRoutineArray
-                    self.sut.replaceRoutines(sourceIndex: 0, destinationIndex: self.oldRoutineArray!.count-1)
+                    self.sut.replaceRoutines(sourceIndex: self.oldLoadedArray!.count-1, destinationIndex: 0)
                     self.sut.dispatchRoutines()
                 }
                 
                 it("Should moved to the target position") {
-                    expect(self.oldRoutineArray![0].title == self.fLogPresenterMock.mainRoutineArray![self.oldRoutineArray!.count-1].title).toEventually(beTrue())
+                    expect(self.oldLoadedArray![self.oldLoadedArray!.count-1].title == self.fLogPresenterMock.loadedArray[0].title).toEventually(beTrue())
+                }
+            }
+        }
+
+        describe("t003 remove a routine") {
+            context("When a routine is removed") {
+                beforeEach {
+                    NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+                    
+                    self.sut.dispatchRoutines()
+                    self.oldLoadedArray = self.fLogPresenterMock.loadedArray
+                    
+                    self.sut.deleteRoutine(index: self.oldLoadedArray!.count-1)
+                    self.sut.dispatchRoutines()
+                }
+
+                it("Should have less count than before deletion") {
+                    expect(self.oldLoadedArray!.count - 1 == self.fLogPresenterMock.loadedArray.count).toEventually(beTrue())
                 }
             }
         }
         
-        describe("t005 update routine title") {
-            context("t005_1 When the name of a routine is changed to a name not existing") {
+        describe("t003 update routine title") {
+            context("001 When the name of a routine is changed to a name not existing") {
                 beforeEach {
-                    self.sut.updateRoutineTitle(index: 0, newTitle: "test5")
+                    self.sut.updateRoutineTitle(index: 0, newTitle: "new_test_flog")
                     self.sut.dispatchRoutines()
                 }
                 
-                it("Should be changed to 'test5'") {
-                    expect(self.fLogPresenterMock.mainRoutineArray![0].title == "test5").toEventually(beTrue())
+                it("Should be changed to 'new_test_flog'") {
+                    expect(self.fLogPresenterMock.loadedArray[0].title == "new_test_flog").toEventually(beTrue())
                 }
             }
             
-            context("t005_2 When the name trying to change is the same as its own name") {
+            context("002 When the name trying to change is the same as its own name") {
                 beforeEach {
-                    self.sut.updateRoutineTitle(index: 0, newTitle: "test5")
+                    self.sut.updateRoutineTitle(index: 0, newTitle: "new_test_flog")
                 }
                 
                 it("Should happen nothing") {
-                    expect(self.fLogPresenterMock.mainRoutineArray![0].title == "test5" && self.fLogPresenterMock.errorOccurred == false).toEventually(beTrue())
+                    expect(self.fLogPresenterMock.loadedArray[0].title == "new_test_flog" && self.fLogPresenterMock.errorOccurred == false).toEventually(beTrue())
                 }
             }
             
-            context("t005_3 When the name trying to change already exists") {
+            context("003 When the name trying to change already exists") {
                 beforeEach {
-                    self.sut.updateRoutineTitle(index: 0, newTitle: "test4")
+                    NewRoutineInteractor().createNewRoutine(title: "test_flog2", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+                    self.sut.updateRoutineTitle(index: 0, newTitle: "test_flog2")
                 }
                 
                 it("Should notify the Presenter about the failure of the operation") {
                     expect(self.fLogPresenterMock.errorOccurred).toEventually(beTrue())
                 }
+                
+                afterEach {
+                    self.sut.dispatchRoutines()
+                    self.sut.deleteRoutine(index: self.fLogPresenterMock.loadedArray.count-1)
+                    self.sut.deleteRoutine(index: 0)
+                }
             }
         }
         
         afterSuite {
-            UserDefaults.standard.setPersistentDomain(self.userDefaultsValues!, forName: Bundle.main.bundleIdentifier!)
-            
             self.fLogPresenterMock = nil
             self.sut = nil
         }
@@ -136,14 +128,15 @@ class FLogPresenterMock: FLogInteractorOutputProtocol {
     
     var dispatched = false
     var errorOccurred = false
-    var mainRoutineArray: Array<MainRoutineModel>?
+    var loadedArray: Array<MainRoutineModel> = []
     
     func didDispatchRoutines(with mainRoutineArray: [MainRoutineModel]) {
         dispatched = true
-        self.mainRoutineArray = mainRoutineArray
+        loadedArray = mainRoutineArray
     }
     
     func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
         errorOccurred = true
+        loadedArray = []
     }
 }
