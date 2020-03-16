@@ -25,6 +25,9 @@ class TimelineView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter?.viewDidLoad()
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }
     }
     
     func setLogo() {
@@ -41,11 +44,14 @@ class TimelineView: UIViewController {
 }
 
 extension TimelineView: TimelineViewProtocol {
-    func showTimelines(with timelineArray: [TimelineModel]) {
+    func showTimelines(with timelineArray: [TimelineModel], isInitial: Bool) {
         canCallNextTimeline = true
         
-        self.timelineArray = timelineArray
-//        self.timelineArray.append(contentsOf: timelineArray)
+        if isInitial {
+            self.timelineArray = timelineArray
+        } else {
+            self.timelineArray.append(contentsOf: timelineArray)
+        }
         tableView.reloadData()
     }
     

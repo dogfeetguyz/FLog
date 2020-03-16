@@ -23,23 +23,18 @@ extension TimelineView: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel?.text = timeline.timelineData.routineTitle
         cell.dateLabel?.text = timeline.timelineData.logDate        
         cell.contentLabel?.attributedText = timeline.content
-//        let exercises = Timeline.exerciseTitles
-//        let exercise: String = exercises.joined(separator: "\n")
-//        cell.contentLabel.numberOfLines = exercises.count
-//        
-//        cell.titleLabel?.text = Timeline.title
-//
-//        let paragraphStyle = NSMutableParagraphStyle()
-//        paragraphStyle.lineSpacing = 5
-//
-//        let attrString = NSMutableAttributedString(string: exercise)
-//        attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
-//
-//        cell.editButton.tag = indexPath.row
-//        cell.contentLabel?.attributedText = attrString
-//        
-//        cell.editButton.isHidden = !tableView.isEditing
         
         return cell
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == tableView {
+            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
+                if canCallNextTimeline {
+                    presenter?.tableViewScrollToBottom()
+                }
+            }
+        }
+    }
 }
+

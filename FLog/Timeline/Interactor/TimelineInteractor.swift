@@ -75,12 +75,13 @@ class TimelineInteractor: TimelineInteractorInputProtocol {
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let managedOC = appDelegate.persistentContainer.viewContext
-            let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
-            request.fetchLimit = Common.Define.dbRequestLimit
-            request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-            request.fetchOffset = fetchOffset
             do {
                 while true {
+                    let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
+                    request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+                    request.fetchLimit = Common.Define.dbRequestLimit
+                    request.fetchOffset = fetchOffset
+                    
                     let fetchedList = try managedOC.fetch(request)
                     
                     var timelinelList = Array<TimelineModel>()
@@ -126,11 +127,11 @@ class TimelineInteractor: TimelineInteractorInputProtocol {
                             }
                         }
                         
+                        fetchOffset += 1
                         if contentString.count > 0 {
                             contentString = "\(contentString)Total: \(totalWeight)\(unit!)"
                             let string = NSAttributedString(string: contentString)
                             timelinelList.append(TimelineModel(timelineData: timeline, content: string))
-                            fetchOffset += 1
                             
                             if timelinelList.count == Common.Define.dbResultLimit {
                                 break
@@ -142,12 +143,12 @@ class TimelineInteractor: TimelineInteractorInputProtocol {
                         if timelinelList.count == 0 {
                             presenter?.onError()
                         } else {
-                            presenter?.didDispatchTimelines(with: timelinelList)
+                            presenter?.didDispatchTimelines(with: timelinelList, isInitial: isInitial)
                         }
                         break
                     } else {
                         if timelinelList.count == Common.Define.dbResultLimit {
-                            presenter?.didDispatchTimelines(with: timelinelList)
+                            presenter?.didDispatchTimelines(with: timelinelList, isInitial: isInitial)
                             break
                         } else {
                             continue

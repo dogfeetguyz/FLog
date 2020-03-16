@@ -17,11 +17,15 @@ class TimelinePresenter: TimelinePresenterProtocol {
         interactor?.createTimelineData()
         interactor?.dispatchTimelines(isInitial: true)
     }
+    
+    func tableViewScrollToBottom() {
+        interactor?.dispatchTimelines(isInitial: false)
+    }
 }
 
 extension TimelinePresenter: TimelineInteractorOutputProtocol {
-    func didDispatchTimelines(with timelineArray: [TimelineModel]) {
-        view?.showTimelines(with: timelineArray)
+    func didDispatchTimelines(with timelineArray: [TimelineModel], isInitial: Bool) {
+        view?.showTimelines(with: timelineArray, isInitial: isInitial)
     }
     
     func onError() {

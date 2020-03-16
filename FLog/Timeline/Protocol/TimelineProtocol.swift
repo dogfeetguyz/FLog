@@ -26,6 +26,9 @@ public protocol TimelinePresenterProtocol: class {
     // MARK: view -> presenter
     /// Should call after viewDidLoad is called
     func viewDidLoad()
+    
+    /// Should call after the user scrolls the tableview to the bottom
+    func tableViewScrollToBottom()
 }
 
 /**
@@ -35,7 +38,7 @@ public protocol TimelineInteractorOutputProtocol: class {
     // MARK: interactor -> presenter
     /// Finished dispatching Timelines from Core Data
     /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
-    func didDispatchTimelines(with timelineArray: [TimelineModel])
+    func didDispatchTimelines(with timelineArray: [TimelineModel], isInitial: Bool)
     
     /// Handles error occurred during dispatching Timeline
     func onError()
@@ -70,7 +73,7 @@ public protocol TimelineViewProtocol: class {
     // MARK: presenter -> view
     /// Shows timeline data on tableview
     /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
-    func showTimelines(with timelineArray: [TimelineModel])
+    func showTimelines(with timelineArray: [TimelineModel], isInitial: Bool)
     
     /// Handles error occurred during dispatching Timeline
     func onError()
