@@ -28,9 +28,26 @@ class TimelineInteractorTests: QuickSpec {
                 self.sut.createTimelineData()
                 
                 self.createRoutine()
-                for _ in Range(0 ... 100) {
-                    self.createLog()
-                    self.updateSet(at: 0, weight: "10", reps: "10")
+                for i in Range(0 ... 100) {
+                    
+                    var date = Date()
+                    date.addTimeInterval(TimeInterval(-(60*60*24*i)))
+                    self.createLog(date: date)
+
+                    let flogInteractor = FLogInteractor()
+                    flogInteractor.presenter = FLogPresenterMock()
+                    flogInteractor.dispatchRoutines()
+                    
+                    let routineDetailInteractor = RoutineDetailInteractor()
+                    routineDetailInteractor.presenter = RoutineDetailPresenterMock()
+                    routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+                    
+                    let weight = Int.random(in: Range(0 ... 100)) % 2 == 0 ? "10" : ""
+                    let reps = Int.random(in: Range(0 ... 100)) % 2 == 0 ? "10" : ""
+                    
+                    let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData
+                    routineDetailInteractor.updateSet(routineDetail: routineDetailData!, tag: "00", text: weight, logDate: (routineDetailData?.dailyLogs[i].logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
+                    routineDetailInteractor.updateSet(routineDetail: routineDetailData!, tag: "01", text: reps, logDate: (routineDetailData?.dailyLogs[i].logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
                 }
 
             }
@@ -92,7 +109,7 @@ class TimelineInteractorTests: QuickSpec {
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.sut.dispatchTimelines(isInitial: true)
                 }
                 
@@ -108,7 +125,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user creates a set") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
@@ -128,7 +145,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user sets only weight data on a log") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.createSet()
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -149,7 +166,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user sets only reps data on a log") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.createSet()
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -170,7 +187,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user sets Weight and reps data on a log") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.createSet()
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -191,7 +208,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user removes weight on a set on a log") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.createSet()
                     self.updateSet(at: 1, weight: "10", reps:"10")
                     self.sut.dispatchTimelines(isInitial: true)
@@ -213,7 +230,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user removes reps on a set on a log") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.createSet()
                     self.updateSet(at: 1, weight: "10", reps:"10")
                     self.sut.dispatchTimelines(isInitial: true)
@@ -235,7 +252,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user remove a set having no data") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
@@ -255,8 +272,9 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user removes a set having weight and reps data") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
-                    self.updateSet(at: 0, weight: "10", reps:"10")
+                    self.createLog(date: Date())
+                    self.createSet()
+                    self.updateSet(at: 1, weight: "10", reps:"10")
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
@@ -276,7 +294,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user removes a log having no data") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
@@ -296,7 +314,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user removes a log having valid set data") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.updateSet(at: 0, weight: "10", reps:"10")
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -317,7 +335,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user remove a routine having no data") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
@@ -339,7 +357,7 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user removes a routine having valid log data") {
                 beforeEach {
                     self.createRoutine()
-                    self.createLog()
+                    self.createLog(date: Date())
                     self.updateSet(at: 0, weight: "10", reps: "10")
                     self.sut.dispatchTimelines(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
@@ -373,13 +391,13 @@ class TimelineInteractorTests: QuickSpec {
         flogInteractor.deleteRoutine(index: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.count) - 1)
     }
     
-    func createLog() {
+    func createLog(date: Date) {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
         flogInteractor.dispatchRoutines()
         
         let routineDetailInteractor = RoutineDetailInteractor()
-        routineDetailInteractor.createNewFitnessLog(date: Date(), routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+        routineDetailInteractor.createLog(date: date, routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
     }
     
     func removeLog() {
@@ -388,7 +406,7 @@ class TimelineInteractorTests: QuickSpec {
         flogInteractor.dispatchRoutines()
 
         let routineDetailInteractor = RoutineDetailInteractor()
-        routineDetailInteractor.deleteFitnessLog(deleteIndex: 0, routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+        routineDetailInteractor.removeLog(removeIndex: 0, routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
 
     }
     
@@ -402,7 +420,7 @@ class TimelineInteractorTests: QuickSpec {
         routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
         
         let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData
-        routineDetailInteractor.createNewSet(routineDetail: routineDetailData!, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
+        routineDetailInteractor.createSet(routineDetail: routineDetailData!, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
     }
     
     func updateSet(at index:Int, weight: String, reps: String) {
