@@ -141,7 +141,7 @@ class TimelineInteractor: TimelineInteractorInputProtocol {
                     
                     if fetchedList.count < Common.Define.dbRequestLimit {
                         if timelinelList.count == 0 {
-                            presenter?.onError()
+                            presenter?.onError(isInitial: isInitial)
                         } else {
                             presenter?.didDispatchTimelines(with: timelinelList, isInitial: isInitial)
                         }
@@ -156,10 +156,10 @@ class TimelineInteractor: TimelineInteractorInputProtocol {
                     }
                 }
             } catch {
-                presenter?.onError()
+                presenter?.onError(isInitial: isInitial)
             }
         } else {
-            presenter?.onError()
+            presenter?.onError(isInitial: isInitial)
         }
     }
 }

@@ -28,8 +28,8 @@ extension TimelinePresenter: TimelineInteractorOutputProtocol {
         view?.showTimelines(with: timelineArray, isInitial: isInitial)
     }
     
-    func onError() {
-        view?.onError()
+    func onError(isInitial: Bool) {
+        view?.onError(isInitial: isInitial)
     }
     
 }

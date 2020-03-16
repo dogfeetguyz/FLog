@@ -26,7 +26,9 @@ class TimelineView: UIViewController {
         super.viewWillAppear(animated)
         presenter?.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: .now()) {
-            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            if self.timelineArray.count > 0 {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
         }
     }
     
@@ -55,7 +57,12 @@ extension TimelineView: TimelineViewProtocol {
         tableView.reloadData()
     }
     
-    func onError() {
+    func onError(isInitial: Bool) {
         canCallNextTimeline = false
+        
+        if isInitial {
+            self.timelineArray = []
+            tableView.reloadData()
+        }
     }
 }

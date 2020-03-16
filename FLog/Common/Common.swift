@@ -17,7 +17,6 @@ public enum Unit: Int {
     case lb = 1
 }
 
-
 /// Slot is used to choose which slot was typed among weight slot and reps slot
 public enum Slot: Int {
     /// Weight slot is selected

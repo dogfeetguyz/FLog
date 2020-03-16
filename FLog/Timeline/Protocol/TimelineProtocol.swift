@@ -38,10 +38,12 @@ public protocol TimelineInteractorOutputProtocol: class {
     // MARK: interactor -> presenter
     /// Finished dispatching Timelines from Core Data
     /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
+    /// - parameter isInitial: check If it is an initial request or paging request
     func didDispatchTimelines(with timelineArray: [TimelineModel], isInitial: Bool)
     
     /// Handles error occurred during dispatching Timeline
-    func onError()
+    /// - parameter isInitial: check If it is an initial request or paging request 
+    func onError(isInitial: Bool)
 }
 
 /**
@@ -58,6 +60,7 @@ public protocol TimelineInteractorInputProtocol: class {
     
     // MARK: prsenter -> interactor
     /// Dispatches Timeline from Core Data
+    /// - parameter isInitial: check If it is an initial request or paging request
     func dispatchTimelines(isInitial: Bool)
 }
 
@@ -73,10 +76,12 @@ public protocol TimelineViewProtocol: class {
     // MARK: presenter -> view
     /// Shows timeline data on tableview
     /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
+    /// - parameter isInitial: check If it is an initial request or paging request
     func showTimelines(with timelineArray: [TimelineModel], isInitial: Bool)
     
     /// Handles error occurred during dispatching Timeline
-    func onError()
+    /// - parameter isInitial: check If it is an initial request or paging request
+    func onError(isInitial: Bool)
 }
 
 /**

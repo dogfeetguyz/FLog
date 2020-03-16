@@ -30,7 +30,7 @@ extension TimelineView: UITableViewDelegate, UITableViewDataSource {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == tableView {
             if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
-                if canCallNextTimeline {
+                if timelineArray.count > 0 && canCallNextTimeline {
                     presenter?.tableViewScrollToBottom()
                 }
             }
