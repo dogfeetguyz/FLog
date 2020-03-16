@@ -48,9 +48,9 @@ public protocol RoutineDetailPresenterProtocol: class {
     /// - parameter date: The date of a newly created log
     func newLogAction(date: Date)
     
-    /// Should call when a log is deleted
-    /// - parameter deleteIndex: The index of log to be deleted
-    func deleteLogAction(deleteIndex: Int)
+    /// Should call when a log is removed
+    /// - parameter removeIndex: The index of log to be removed
+    func removeLogAction(removeIndex: Int)
     
     /// Should call when the contents of logs were updated so that update max info
     /// - parameter exerciseTitle: The title of an exercise related to this update
@@ -61,7 +61,7 @@ public protocol RoutineDetailPresenterProtocol: class {
     /// - parameter exerciseTitle: The title of an exercise related to this update
     func addSetAction(logDate: String, exerciseTitle: String)
     
-    /// Should call when a set is deleted
+    /// Should call when a set is removed
     /// - parameter logDate: The date of a log related to this update
     /// - parameter exerciseTitle: The title of an exercise related to this update
     func removeSetAction(logDate: String, exerciseTitle: String)
@@ -73,34 +73,31 @@ public protocol RoutineDetailPresenterProtocol: class {
 public protocol RoutineDetailInteractorOutputProtocol: class {
     // MARK: interactor -> presenter
     
-    ///Notifies this routine doesn't contain any logs, so it needs the first log
-    func needsFirstLog()
+    /// Finished load max info
+    /// - parameter maxInfo: The information of max data
+    func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>)
     
     /// Finished load logs
     /// - parameter routineDetail: Routine detail data to draw the screen
     func didLogLoaded(routineDetail: RoutineDetailModel)
     
-    /// Finished updating the log
-    /// - parameter routineDetail: Routine detail data to update the screen
-    func didUpdateLog(routineDetail: RoutineDetailModel)
-    
-    /// Finished load max info
-    /// - parameter maxInfo: The information of max data
-    func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>)
-    
     /// finished creating new log
-    func didCreateNewFitnessLog()
+    func didCreateLog()
     
-    /// finished deleteing the targeted log
-    /// - parameter deletedIndex: The index deleted
-    func didDeleteFitnessLog(deletedIndex: Int)
-    
-    /// Handles error occurred during dispatching Account Detail
+    /// Handles error occurred during create a log
     /// - parameter title: title for the alert
     /// - parameter message: message for the alert
     /// - parameter buttonTitle: OK Button title for the alert
     /// - parameter handler: OK Button action for the alert
     func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?)
+    
+    /// finished removing the targeted log
+    /// - parameter removedIndex: The index removed
+    func didRemoveLog(removedIndex: Int)
+    
+    /// Finished updating the set in exercises of a log
+    /// - parameter routineDetail: Routine the updated detail data to update the screen
+    func didUpdateSetData(routineDetail: RoutineDetailModel)
 }
 
 /**
@@ -121,20 +118,20 @@ public protocol RoutineDetailInteractorInputProtocol: class {
     /// - parameter routineTitle: The routine title related to this loading
     func loadMaxInfo(routineTitle: String)
     
-    /// Checks if max info needs updating
+    /// Checks if max info needs update
     /// - parameter routineTitle: The routine title related to this checking
     /// - parameter logDate: The date of a log to check the targeted max info
-    func checkNewMaxInfo(routineTitle: String, logDate: String)
+    func checkIfMaxinfoNeedsUpdate(routineTitle: String, logDate: String)
     
-    /// Creates new routine
+    /// Creates new Log for the selected routine
     /// - parameter date: The date of a newly created log
     /// - parameter routine: Routine Data for this routine
-    func createNewFitnessLog(date: Date, routine: MainRoutineModel)
+    func createLog(date: Date, routine: MainRoutineModel)
     
-    /// Deletes the targeted log
-    /// - parameter deleteIndex: The index of log to be deleted
+    /// Removes the targeted log
+    /// - parameter removeIndex: The index of log to be removed
     /// - parameter routine: Routine Data for this routine
-    func deleteFitnessLog(deleteIndex: Int, routine: MainRoutineModel)
+    func removeLog(removeIndex: Int, routine: MainRoutineModel)
     
     /// Refinds the max info when it is needed
     /// - parameter routineTitle: The routine title related to this refinding
@@ -145,7 +142,7 @@ public protocol RoutineDetailInteractorInputProtocol: class {
     /// - parameter routineDetail:Routine detail data related to this update
     /// - parameter logDate: The date of a log related to this update
     /// - parameter exerciseTitle: The title of an exercise related to this update
-    func createNewSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String)
+    func createSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String)
     
     /// Removes a targeted set
     /// - parameter routineDetail: Routine detail data related to this update
@@ -184,7 +181,7 @@ public protocol RoutineDetailViewProtocol: class {
     func showCreateDialog(isFirst: Bool)
     
     /// Updates the targeted log
-    /// - parameter segmentIndex: Current segment index after create or delete
+    /// - parameter segmentIndex: Current segment index after create, update, and remove
     func updateLogView(segmentIndex: Int)
     
     /// Update max info view

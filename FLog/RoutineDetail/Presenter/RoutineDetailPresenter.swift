@@ -34,15 +34,15 @@ class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
     }
     
     func finishedInputData(logDate: String) {
-        interactor?.checkNewMaxInfo(routineTitle: (view?.routineDetailData?.routine.title)!, logDate: logDate)
+        interactor?.checkIfMaxinfoNeedsUpdate(routineTitle: (view?.routineDetailData?.routine.title)!, logDate: logDate)
     }
     
     func newLogAction(date: Date) {
-        interactor?.createNewFitnessLog(date: date, routine: view!.routineDetailData!.routine)
+        interactor?.createLog(date: date, routine: view!.routineDetailData!.routine)
     }
     
-    func deleteLogAction(deleteIndex: Int) {
-        interactor?.deleteFitnessLog(deleteIndex: deleteIndex, routine: view!.routineDetailData!.routine)
+    func removeLogAction(removeIndex: Int) {
+        interactor?.removeLog(removeIndex: removeIndex, routine: view!.routineDetailData!.routine)
     }
     
     func updateMaxInfo(exerciseTitle: String) {
@@ -50,7 +50,7 @@ class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
     }
     
     func addSetAction(logDate: String, exerciseTitle: String) {
-        interactor?.createNewSet(routineDetail: view!.routineDetailData!, logDate: logDate, exerciseTitle: exerciseTitle)
+        interactor?.createSet(routineDetail: view!.routineDetailData!, logDate: logDate, exerciseTitle: exerciseTitle)
     }
     
     func removeSetAction(logDate: String, exerciseTitle: String) {
@@ -68,23 +68,23 @@ extension RoutineDetailPresenter: RoutineDetailInteractorOutputProtocol {
         view?.showRoutineDetail(routineDetail: routineDetail)
     }
     
-    func didUpdateLog(routineDetail: RoutineDetailModel) {
-        view?.updateTableView(routineDetail: routineDetail)
-    }
-    
-    func needsFirstLog() {
-        view?.showCreateDialog(isFirst: true)
-    }
-    
-    func didCreateNewFitnessLog() {
+    func didCreateLog() {
         view?.updateLogView(segmentIndex: 0)
     }
     
-    func didDeleteFitnessLog(deletedIndex: Int) {
-        view?.updateLogView(segmentIndex: deletedIndex)
+    func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
+        if title == "" && message == "" && buttonTitle == "" && handler == nil {
+            view?.showCreateDialog(isFirst: true)
+        } else {
+            view?.showError(title: title, message: message, buttonTitle: buttonTitle, handler: handler)
+        }
     }
     
-    func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
-        view?.showError(title: title, message: message, buttonTitle: buttonTitle, handler: handler)
+    func didRemoveLog(removedIndex: Int) {
+        view?.updateLogView(segmentIndex: removedIndex)
+    }
+    
+    func didUpdateSetData(routineDetail: RoutineDetailModel) {
+        view?.updateTableView(routineDetail: routineDetail)
     }
 }

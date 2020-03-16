@@ -11,9 +11,7 @@ import UIKit
 import CoreData
 
 class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
-    
     var presenter: RoutineDetailInteractorOutputProtocol?
-    
     
     func loadLogs(routine: MainRoutineModel) {
         
@@ -21,7 +19,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         
         if UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) == nil || UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)?.count == 0 {
             UserDefaults.standard.set([], forKey: routineTitle + Common.Define.routineDetail)
-            presenter?.needsFirstLog()
+            presenter?.onError(title: "", message: "", buttonTitle: "", handler: nil)
         } else {
             
             var dailyLogs = Array<DailyLogModel>()
@@ -49,7 +47,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
     }
     
     
-    func checkNewMaxInfo(routineTitle: String, logDate: String) {
+    func checkIfMaxinfoNeedsUpdate(routineTitle: String, logDate: String) {
         
         let logArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
 
@@ -106,7 +104,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         }
     }
     
-    func createNewFitnessLog(date: Date, routine: MainRoutineModel) {
+    func createLog(date: Date, routine: MainRoutineModel) {
 
         let logDate = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .none)
         var logArray = UserDefaults.standard.array(forKey: routine.title + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
@@ -118,7 +116,6 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                 return
             }
         }
-        
         
         var logDict: Dictionary<String, Any> = Dictionary<String, Any>()
         logDict[Common.Define.routineDetailLogDate] = logDate
@@ -151,21 +148,21 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         logArray.append(logDict)
         UserDefaults.standard.set(logArray, forKey: routine.title + Common.Define.routineDetail)
         
-        presenter?.didCreateNewFitnessLog()
+        presenter?.didCreateLog()
     }
     
-    func deleteFitnessLog(deleteIndex: Int, routine: MainRoutineModel) {
+    func removeLog(removeIndex: Int, routine: MainRoutineModel) {
         let routineTitle = routine.title
 
         var array = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)!
-        let deletedLog = array[deleteIndex] as! Dictionary<String, Any>
-        let deletedTimeStamp = deletedLog[Common.Define.routineDetailLogDate] as! String
+        let removedLog = array[removeIndex] as! Dictionary<String, Any>
+        let removedLogDate = removedLog[Common.Define.routineDetailLogDate] as! String
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             do {
                 let managedOC = appDelegate.persistentContainer.viewContext
                 let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
-                request.predicate = NSPredicate(format: "routineTitle == %@ AND logDate == %@", routineTitle, deletedTimeStamp)
+                request.predicate = NSPredicate(format: "routineTitle == %@ AND logDate == %@", routineTitle, removedLogDate)
                 let timelineList = try managedOC.fetch(request)
                 for timeline in timelineList {
                     managedOC.delete(timeline)
@@ -175,10 +172,10 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
             }
         }
         
-        array.remove(at: deleteIndex)
+        array.remove(at: removeIndex)
         UserDefaults.standard.set(array, forKey: routineTitle + Common.Define.routineDetail)
         
-        var newIndex = array.count - deleteIndex
+        var newIndex = array.count - removeIndex
         newIndex = newIndex > array.count-1 ? array.count-1 : newIndex
         
         for exerciseTitle in routine.exerciseTitles {
@@ -186,16 +183,12 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
             let maxWeightDate = bestDict[exerciseTitle]![Common.Define.routineBestMaxWeightDate]
             let maxVolumeDate = bestDict[exerciseTitle]![Common.Define.routineBestMaxVolumeDate]
 
-            if maxWeightDate == deletedTimeStamp || maxVolumeDate == deletedTimeStamp {
+            if maxWeightDate == removedLogDate || maxVolumeDate == removedLogDate {
                 self.refindMaxValue(routineTitle: routineTitle, exerciseTitle: exerciseTitle)
             }
         }
-        
-        if array.count == 0 {
-            presenter?.needsFirstLog()
-        } else {
-            presenter?.didDeleteFitnessLog(deletedIndex: newIndex)
-        }
+
+        presenter?.didRemoveLog(removedIndex: newIndex)
     }
     
     func refindMaxValue(routineTitle: String, exerciseTitle: String) {
@@ -238,7 +231,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         self.loadMaxInfo(routineTitle: routineTitle)
     }
     
-    func createNewSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String) {
+    func createSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String) {
         
         let routineTitle = routineDetail.routine.title
         var logArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
@@ -266,7 +259,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
             }
         }
         
-        presenter?.didUpdateLog(routineDetail: updatedRoutineDetail)
+        presenter?.didUpdateSetData(routineDetail: updatedRoutineDetail)
     }
     
     func removeSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String) {
@@ -284,7 +277,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                         var setArray = logArray[index][exerciseTitle] as! Array<Dictionary<String, String>>
                         if setArray.count <= 1 {
                             // does not allow the removal of a set when an exercise has one set
-                            presenter?.didUpdateLog(routineDetail: updatedRoutineDetail)
+                            presenter?.didUpdateSetData(routineDetail: updatedRoutineDetail)
                             return
                         }
                         
@@ -316,7 +309,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
             }
         }
         
-        presenter?.didUpdateLog(routineDetail: updatedRoutineDetail)
+        presenter?.didUpdateSetData(routineDetail: updatedRoutineDetail)
     }
     
     func updateSet(routineDetail: RoutineDetailModel, tag: String, text: String, logDate: String, exerciseTitle: String) {
@@ -365,6 +358,6 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
             }
         }
         
-        presenter?.didUpdateLog(routineDetail: updatedRoutineDetail)
+        presenter?.didUpdateSetData(routineDetail: updatedRoutineDetail)
     }
 }

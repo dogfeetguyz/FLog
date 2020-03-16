@@ -40,8 +40,8 @@ class RoutineDetailView: KUIViewController {
     @IBAction func deleteButtonAction() {
         
         Common.View.showAlertWithTwoButtons(viewController: self, title: "Delete the fitness log?", message: "", cancelButtonTitle: "Cancel", OKButtonTitle: "Delete", OKHandler: { (_) in
-            let deleteIndex = self.segmentedControl.numberOfSegments - 1 - self.segmentedControl.selectedSegmentIndex
-            self.presenter?.deleteLogAction(deleteIndex: deleteIndex)
+            let removeIndex = self.segmentedControl.numberOfSegments - 1 - self.segmentedControl.selectedSegmentIndex
+            self.presenter?.removeLogAction(removeIndex: removeIndex)
         })
     }
     
@@ -110,9 +110,12 @@ extension RoutineDetailView: RoutineDetailViewProtocol {
     
     func updateLogView(segmentIndex: Int) {
         presenter?.loadLogs()
-        self.segmentedControl.selectedSegmentIndex = segmentIndex
-        DispatchQueue.main.async {  // to scroll the segmentControll, it needs to be called again as an async call
+        
+        if segmentIndex >= 0 {
             self.segmentedControl.selectedSegmentIndex = segmentIndex
+            DispatchQueue.main.async {  // to scroll the segmentControll, it needs to be called again as an async call
+                self.segmentedControl.selectedSegmentIndex = segmentIndex
+            }
         }
         
     }
