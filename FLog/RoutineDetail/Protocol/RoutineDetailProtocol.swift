@@ -34,11 +34,12 @@ public protocol RoutineDetailPresenterProtocol: class {
     func loadMaxInfo()
     
     /// Should call when the textfield is updated
-    /// - parameter tag: A tag to indicate which textfield is updated
+    /// - parameter setIndex: The index to indicate which set is updated
+    /// - parameter slotIdentifier :An identifier to indicate selected slot among Weight slot and Reps slot
     /// - parameter text: Updated text
     /// - parameter logDate: The date of a log related to this update
     /// - parameter exerciseTitle: The title of an exercise related to this update
-    func textfieldUpdated(tag: String, text: String, logDate: String, exerciseTitle: String)
+    func textfieldUpdated(setIndex: Int, slotIdentifier:Slot, text: String, logDate: String, exerciseTitle: String)
     
     /// Should call when typing on textfields is finished
     /// - parameter logDate: The date of a log related to this update
@@ -51,10 +52,6 @@ public protocol RoutineDetailPresenterProtocol: class {
     /// Should call when a log is removed
     /// - parameter removeIndex: The index of log to be removed
     func removeLogAction(removeIndex: Int)
-    
-    /// Should call when the contents of logs were updated so that update max info
-    /// - parameter exerciseTitle: The title of an exercise related to this update
-    func updateMaxInfo(exerciseTitle: String)
     
     /// Should call when a new set is created
     /// - parameter logDate: The date of a log related to this update
@@ -118,11 +115,6 @@ public protocol RoutineDetailInteractorInputProtocol: class {
     /// - parameter routineTitle: The routine title related to this loading
     func loadMaxInfo(routineTitle: String)
     
-    /// Checks if max info needs update
-    /// - parameter routineTitle: The routine title related to this checking
-    /// - parameter logDate: The date of a log to check the targeted max info
-    func checkIfMaxinfoNeedsUpdate(routineTitle: String, logDate: String)
-    
     /// Creates new Log for the selected routine
     /// - parameter date: The date of a newly created log
     /// - parameter routine: Routine Data for this routine
@@ -132,6 +124,11 @@ public protocol RoutineDetailInteractorInputProtocol: class {
     /// - parameter removeIndex: The index of log to be removed
     /// - parameter routine: Routine Data for this routine
     func removeLog(removeIndex: Int, routine: MainRoutineModel)
+    
+    /// Updates max value if needed
+    /// - parameter routineTitle: The routine title related to this checking
+    /// - parameter logDate: The date of a log to check the targeted max info
+    func updateMaxValueIfNeeded(routineTitle: String, logDate: String)
     
     /// Refinds the max info when it is needed
     /// - parameter routineTitle: The routine title related to this refinding
@@ -152,11 +149,12 @@ public protocol RoutineDetailInteractorInputProtocol: class {
     
     /// Updates the content of a set
     /// - parameter routineDetail: Routine detail data related to this update
-    /// - parameter tag: A tag to indicate which textfield is updated
+    /// - parameter setIndex: The index to indicate which set is updated
+    /// - parameter slotIdentifier :An identifier to indicate selected slot among Weight slot and Reps slot
     /// - parameter text: Updated text
     /// - parameter logDate: The date of a log related to this update
     /// - parameter exerciseTitle: The title of an exercise related to this update
-    func updateSet(routineDetail: RoutineDetailModel, tag: String, text: String, logDate: String, exerciseTitle: String)
+    func updateSet(routineDetail: RoutineDetailModel, setIndex: Int, slotIdentifier:Slot, text: String, logDate: String, exerciseTitle: String)
 }
 
 /**

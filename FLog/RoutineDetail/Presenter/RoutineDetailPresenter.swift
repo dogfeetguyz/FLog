@@ -29,12 +29,12 @@ class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
         interactor?.loadMaxInfo(routineTitle: (view?.routineDetailData?.routine.title)!)
     }
     
-    func textfieldUpdated(tag: String, text: String, logDate: String, exerciseTitle: String) {
-        interactor?.updateSet(routineDetail: view!.routineDetailData!, tag: tag, text: text, logDate: logDate, exerciseTitle: exerciseTitle)
+    func textfieldUpdated(setIndex: Int, slotIdentifier:Slot, text: String, logDate: String, exerciseTitle: String) {
+        interactor?.updateSet(routineDetail: view!.routineDetailData!, setIndex: setIndex, slotIdentifier: slotIdentifier, text: text, logDate: logDate, exerciseTitle: exerciseTitle)
     }
     
     func finishedInputData(logDate: String) {
-        interactor?.checkIfMaxinfoNeedsUpdate(routineTitle: (view?.routineDetailData?.routine.title)!, logDate: logDate)
+        interactor?.updateMaxValueIfNeeded(routineTitle: (view?.routineDetailData?.routine.title)!, logDate: logDate)
     }
     
     func newLogAction(date: Date) {
@@ -43,10 +43,6 @@ class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
     
     func removeLogAction(removeIndex: Int) {
         interactor?.removeLog(removeIndex: removeIndex, routine: view!.routineDetailData!.routine)
-    }
-    
-    func updateMaxInfo(exerciseTitle: String) {
-        interactor?.refindMaxValue(routineTitle: view!.routineDetailData!.routine.title, exerciseTitle: exerciseTitle)
     }
     
     func addSetAction(logDate: String, exerciseTitle: String) {

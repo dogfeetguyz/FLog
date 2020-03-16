@@ -221,10 +221,12 @@ class RoutineDetailTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        let tagString = String(format: "%02d", textField.tag)
         let text = textField.text
         
-        presenter?.textfieldUpdated(tag: tagString, text: text!, logDate: logDate!, exerciseTitle: titleLabel.text!)
+        let index: Int = textField.tag / 10
+        let slot: Slot = (textField.tag % 10 == 0) ? .weight : .reps
+        
+        presenter?.textfieldUpdated(setIndex: index, slotIdentifier: slot, text: text!, logDate: logDate!, exerciseTitle: titleLabel.text!)
         
         return true
     }

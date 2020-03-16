@@ -117,7 +117,6 @@ extension RoutineDetailView: RoutineDetailViewProtocol {
                 self.segmentedControl.selectedSegmentIndex = segmentIndex
             }
         }
-        
     }
     
     func updateMaxInfoView(maxInfo: Dictionary<String, Dictionary<String, String>>) {

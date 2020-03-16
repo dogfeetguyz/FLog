@@ -46,8 +46,15 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         presenter?.didMaxInfoLoaded(maxInfo: UserDefaults.standard.dictionary(forKey: routineTitle + Common.Define.routineBest) as! Dictionary<String, Dictionary<String, String>>)
     }
     
-    
-    func checkIfMaxinfoNeedsUpdate(routineTitle: String, logDate: String) {
+    func updateMaxValueIfNeeded(routineTitle: String, logDate: String) {
+        let routineArray = UserDefaults.standard.array(forKey: Common.Define.mainRoutine) as! Array<Dictionary<String, Any>>
+        var exerciseTitles: Array<String>?
+        
+        for routineDict in routineArray {
+            if routineDict[Common.Define.mainRoutineTitle] as! String == routineTitle {
+                exerciseTitles = (routineDict[Common.Define.mainRoutineExercises] as! Array<String>)
+            }
+        }
         
         let logArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
 
@@ -55,13 +62,9 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
             if logDict[Common.Define.mainRoutineTitle] as? String == logDate {
 
                 var newMaxInfoExists = false
-                var maxInfo = UserDefaults.standard.dictionary(forKey: routineTitle + Common.Define.routineBest) as! Dictionary<String, Dictionary<String, String>>
+                let maxInfo = UserDefaults.standard.dictionary(forKey: routineTitle + Common.Define.routineBest) as! Dictionary<String, Dictionary<String, String>>
                 
-                for exerciseTitle in logArray[index].keys {
-                    if exerciseTitle == "title" {
-                        continue
-                    }
-                    
+                for exerciseTitle in exerciseTitles! {
                     let exerciseArray = logArray[index][exerciseTitle] as! Array<Dictionary<String, String>>
 
                     var currentMaxWeight = 0
@@ -80,28 +83,75 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                             currentMaxWeight = currentWeight
                         }
                     }
-
                     
-                    if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume]!) ?? 0 < currentVolume {
-                        maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume] = String(currentVolume)
-                        maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate] = logDate
-                        newMaxInfoExists = true
+                    if maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate] == logDate {
+                        if maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume] != String(currentVolume){
+                            newMaxInfoExists = true
+                        }
+                    } else {
+                        if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume]!) ?? 0 < currentVolume {
+                            newMaxInfoExists = true
+                        }
+                    }
+                    
+                    if maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] == logDate {
+                        if maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight] != String(currentMaxWeight) {
+                            newMaxInfoExists = true
+                        }
+                    } else {
+                        if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!) ?? 0 < currentMaxWeight {
+                            newMaxInfoExists = true
+                        }
                     }
 
-                    if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!) ?? 0 < currentMaxWeight {
-                        maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight] = String(currentMaxWeight)
-                        maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] = logDate
-                        newMaxInfoExists = true
+                    if (newMaxInfoExists) {
+                        refindMaxValue(routineTitle: routineTitle, exerciseTitle: exerciseTitle)
+                        break
                     }
-                }
-
-                if (newMaxInfoExists) {
-                    UserDefaults.standard.set(maxInfo, forKey: routineTitle + Common.Define.routineBest)
-                    presenter?.didMaxInfoLoaded(maxInfo: maxInfo)
                 }
                 break
             }
         }
+    }
+    
+    func refindMaxValue(routineTitle: String, exerciseTitle: String) {
+        var maxInfo = UserDefaults.standard.dictionary(forKey: routineTitle + Common.Define.routineBest) as! Dictionary<String, Dictionary<String, String>>
+        let routineDetailArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)!
+
+        maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume] = "0"
+        maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate] = ""
+        maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight] = "0"
+        maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] = ""
+        
+        for routineDetail in routineDetailArray {
+            let date = (routineDetail as! Dictionary<String, Any>)[Common.Define.routineDetailLogDate] as! String
+
+            var currentMaxWeight = 0
+            var currentVolume = 0
+            
+            for detailedLog in (routineDetail as! Dictionary<String, Any>)[exerciseTitle] as! Array<Dictionary<String,String>> {
+                let currentWeight = Int(detailedLog[Common.Define.routineDetailWeight]!) ?? 0
+                let currentReps = Int(detailedLog[Common.Define.routineDetailReps]!) ?? 0
+                currentVolume = currentVolume + (currentWeight*currentReps)
+                
+                if currentMaxWeight < currentWeight {
+                    currentMaxWeight = currentWeight
+                }
+            }
+            
+            if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume]!) ?? 0 < currentVolume {
+                maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume] = String(currentVolume)
+                maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate] = date
+            }
+            
+            if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!) ?? 0 < currentMaxWeight {
+                maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight] = String(currentMaxWeight)
+                maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] = date
+            }
+        }
+
+        UserDefaults.standard.set(maxInfo, forKey: routineTitle + Common.Define.routineBest)
+        self.loadMaxInfo(routineTitle: routineTitle)
     }
     
     func createLog(date: Date, routine: MainRoutineModel) {
@@ -191,46 +241,6 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         presenter?.didRemoveLog(removedIndex: newIndex)
     }
     
-    func refindMaxValue(routineTitle: String, exerciseTitle: String) {
-        var maxInfo = UserDefaults.standard.dictionary(forKey: routineTitle + Common.Define.routineBest) as! Dictionary<String, Dictionary<String, String>>
-        let routineDetailArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)!
-
-        maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume] = "0"
-        maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate] = ""
-        maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight] = "0"
-        maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] = ""
-        
-        for routineDetail in routineDetailArray {
-            let date = (routineDetail as! Dictionary<String, Any>)[Common.Define.routineDetailLogDate] as! String
-
-            var currentMaxWeight = 0
-            var currentVolume = 0
-            
-            for detailedLog in (routineDetail as! Dictionary<String, Any>)[exerciseTitle] as! Array<Dictionary<String,String>> {
-                let currentWeight = Int(detailedLog[Common.Define.routineDetailWeight]!) ?? 0
-                let currentReps = Int(detailedLog[Common.Define.routineDetailReps]!) ?? 0
-                currentVolume = currentVolume + (currentWeight*currentReps)
-                
-                if currentMaxWeight < currentWeight {
-                    currentMaxWeight = currentWeight
-                }
-            }
-            
-            if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume]!) ?? 0 < currentVolume {
-                maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume] = String(currentVolume)
-                maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate] = date
-            }
-            
-            if Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!) ?? 0 < currentMaxWeight {
-                maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight] = String(currentMaxWeight)
-                maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate] = date
-            }
-        }
-
-        UserDefaults.standard.set(maxInfo, forKey: routineTitle + Common.Define.routineBest)
-        self.loadMaxInfo(routineTitle: routineTitle)
-    }
-    
     func createSet(routineDetail: RoutineDetailModel, logDate: String, exerciseTitle: String) {
         
         let routineTitle = routineDetail.routine.title
@@ -312,7 +322,7 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         presenter?.didUpdateSetData(routineDetail: updatedRoutineDetail)
     }
     
-    func updateSet(routineDetail: RoutineDetailModel, tag: String, text: String, logDate: String, exerciseTitle: String) {
+    func updateSet(routineDetail: RoutineDetailModel, setIndex: Int, slotIdentifier:Slot, text: String, logDate: String, exerciseTitle: String) {
         
         let routineTitle = routineDetail.routine.title
         var logArray = UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) as! Array<Dictionary<String, Any>>
@@ -323,34 +333,19 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
                 
                 for (logIndex, log) in updatedRoutineDetail.dailyLogs[index].exerciseLogs.enumerated() {
                     if log.exerciseTitle == exerciseTitle {
-
-                        let setIndex = Int(tag[tag.startIndex..<tag.index(before: tag.endIndex)]) ?? 0
-                        let identifier = Int(String(tag[tag.index(before: tag.endIndex)])) ?? 0
                         var exerciseArray = logArray[index][exerciseTitle] as! Array<Dictionary<String, String>>
                         
-                        if identifier == 0 {
-                            let maxInfo = UserDefaults.standard.dictionary(forKey: routineTitle + Common.Define.routineBest) as! Dictionary<String, Dictionary<String, String>>
-                            let maxWeight = Int(maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!) ?? 0
-                            let currentWeight = Int(exerciseArray[setIndex][Common.Define.routineDetailWeight]!) ?? 0
-
+                        if slotIdentifier == .weight {
                             exerciseArray[setIndex][Common.Define.routineDetailWeight] = text
                             logArray[index][exerciseTitle] = exerciseArray
                             UserDefaults.standard.set(logArray, forKey: routineTitle + Common.Define.routineDetail)
                             updatedRoutineDetail.dailyLogs[index].exerciseLogs[logIndex].set[setIndex].weight = text
-                            
-                            if (maxWeight == currentWeight) {
-                                let newWeight = Int(text) ?? 00
-                                if (currentWeight > newWeight) {
-                                    refindMaxValue(routineTitle: routineTitle, exerciseTitle: exerciseTitle)
-                                }
-                            }
                         } else {
                             exerciseArray[setIndex][Common.Define.routineDetailReps] = text
                             logArray[index][exerciseTitle] = exerciseArray
                             UserDefaults.standard.set(logArray, forKey: routineTitle + Common.Define.routineDetail)
                             updatedRoutineDetail.dailyLogs[index].exerciseLogs[logIndex].set[setIndex].reps = text
                         }
-                        
                         break
                     }
                 }
