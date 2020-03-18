@@ -36,7 +36,7 @@ class TimelineInteractorTests: QuickSpec {
 
                     let flogInteractor = FLogInteractor()
                     flogInteractor.presenter = FLogPresenterMock()
-                    flogInteractor.dispatchRoutines()
+                    flogInteractor.loadData()
                     
                     let routineDetailInteractor = RoutineDetailInteractor()
                     routineDetailInteractor.presenter = RoutineDetailPresenterMock()
@@ -387,14 +387,14 @@ class TimelineInteractorTests: QuickSpec {
     func removeLastRoutine() {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         flogInteractor.deleteRoutine(index: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.count) - 1)
     }
     
     func createLog(date: Date) {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.createLog(date: date, routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
@@ -403,7 +403,7 @@ class TimelineInteractorTests: QuickSpec {
     func removeLog() {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
 
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.removeLog(removeIndex: 0, routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
@@ -413,7 +413,7 @@ class TimelineInteractorTests: QuickSpec {
     func createSet() {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
@@ -426,7 +426,7 @@ class TimelineInteractorTests: QuickSpec {
     func updateSet(at index:Int, weight: String, reps: String) {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
@@ -440,7 +440,7 @@ class TimelineInteractorTests: QuickSpec {
     func removeSet() {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
@@ -464,7 +464,7 @@ class TimelinePresenterMock: TimelineInteractorOutputProtocol {
         errorOccurred = false
     }
     
-    func onError() {
+    func onError(isInitial: Bool) {
         loadedArray = []
         dispatched = false
         errorOccurred = true

@@ -105,7 +105,7 @@ class NewRoutineInteractorTests: QuickSpec {
 
                     let flogInteractor = FLogInteractor()
                     flogInteractor.presenter = FLogPresenterMock()
-                    flogInteractor.dispatchRoutines()
+                    flogInteractor.loadData()
                     self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
                 }
 
@@ -120,7 +120,7 @@ class NewRoutineInteractorTests: QuickSpec {
 
                     let flogInteractor = FLogInteractor()
                     flogInteractor.presenter = FLogPresenterMock()
-                    flogInteractor.dispatchRoutines()
+                    flogInteractor.loadData()
                     self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
                 }
 
@@ -135,7 +135,7 @@ class NewRoutineInteractorTests: QuickSpec {
 
                     let flogInteractor = FLogInteractor()
                     flogInteractor.presenter = FLogPresenterMock()
-                    flogInteractor.dispatchRoutines()
+                    flogInteractor.loadData()
                     self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
                 }
 
@@ -148,7 +148,7 @@ class NewRoutineInteractorTests: QuickSpec {
                 if self.newRoutinePresenterMock.succeeded {
                     let flogInteractor = FLogInteractor()
                     flogInteractor.presenter = FLogPresenterMock()
-                    flogInteractor.dispatchRoutines()
+                    flogInteractor.loadData()
                     
                     let lastIndex = (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count - 1
                     flogInteractor.deleteRoutine(index: lastIndex)

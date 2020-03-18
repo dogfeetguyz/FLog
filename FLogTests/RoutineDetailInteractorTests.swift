@@ -30,7 +30,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
 
@@ -115,7 +115,7 @@ class RoutineDetailInteractorTests: QuickSpec {
             afterEach {
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
@@ -129,7 +129,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
             
@@ -177,7 +177,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
@@ -190,7 +190,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
             
@@ -216,6 +216,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     oldLoadedData = self.routineDetailPresenterMock.loadedData
                     
                     self.sut.createSet(routineDetail: oldLoadedData!, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
+                    self.sut.loadLogs(routine: routine)
                 }
                 
                 it("Shoud have the increased number of sets in the exercise") {
@@ -266,7 +267,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
@@ -280,7 +281,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
             
@@ -597,7 +598,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
@@ -611,7 +612,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
 
@@ -994,7 +995,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
