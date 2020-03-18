@@ -381,6 +381,7 @@ class TimelineInteractorTests: QuickSpec {
     
     func createRoutine() {
         let newRoutineInteractor = NewRoutineInteractor()
+        newRoutineInteractor.presenter = NewRoutinePresenterMock()
         newRoutineInteractor.createNewRoutine(title: "test_timeline", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
     }
     

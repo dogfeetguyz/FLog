@@ -79,7 +79,7 @@ public protocol ViperPresenter: class {
     /// Reference to the Interactor's interface.
     var interactor: ViperInteractorInput? {get set}
     /// Reference to the Router.
-    var wireFrame: ViperRouter? {get set}
+    var router: ViperRouter? {get set}
 
     // MARK: view -> presenter
     /// Should call after viewDidLoad is called

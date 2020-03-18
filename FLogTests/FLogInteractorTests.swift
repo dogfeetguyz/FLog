@@ -42,12 +42,17 @@ class FLogInteractorTests: QuickSpec {
         }
         
         describe("Routine") {
+            let newRoutineInteractor = NewRoutineInteractor()
+            
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
             }
             
             context("When the routine moved to the other position") {
                 beforeEach {
+                    newRoutineInteractor.createNewRoutine(title: "test_flog2", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+                    
                     self.sut.loadData()
                     self.oldLoadedArray = self.fLogPresenterMock.loadedArray
                     
@@ -60,6 +65,7 @@ class FLogInteractorTests: QuickSpec {
                 }
                 
                 afterEach {
+                    self.sut.deleteRoutine(index: self.fLogPresenterMock.loadedArray.count-1)
                     self.sut.deleteRoutine(index: 0)
                 }
             }
@@ -80,11 +86,18 @@ class FLogInteractorTests: QuickSpec {
         }
         
         describe("Routine Name") {
+            let newRoutineInteractor = NewRoutineInteractor()
+            
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_flog", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+                
                 self.sut.loadData()
                 self.oldLoadedArray = self.fLogPresenterMock.loadedArray
-                self.sut.replaceRoutines(sourceIndex: self.oldLoadedArray!.count-1, destinationIndex: 0)
+                
+                if self.oldLoadedArray!.count > 1 {
+                    self.sut.replaceRoutines(sourceIndex: self.oldLoadedArray!.count-1, destinationIndex: 0)
+                }
             }
             
             context("When the name is changed to a name not existing") {
@@ -110,7 +123,7 @@ class FLogInteractorTests: QuickSpec {
             
             context("When the name trying to change already exists") {
                 beforeEach {
-                    NewRoutineInteractor().createNewRoutine(title: "test_flog2", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
+                    newRoutineInteractor.createNewRoutine(title: "test_flog2", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
                     self.sut.updateRoutineTitle(index: 0, newTitle: "test_flog2")
                 }
                 

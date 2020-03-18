@@ -15,11 +15,11 @@ class FLogRouter: FLogRouterProtocol {
             
             let presenter: FLogPresenterProtocol & FLogInteractorOutputProtocol = FLogPresenter()
             let interactor: FLogInteractorInputProtocol = FLogInteractor()
-            let wireFrame: FLogRouterProtocol = FLogRouter()
+            let router: FLogRouterProtocol = FLogRouter()
 
             view.presenter = presenter
             presenter.view = view
-            presenter.wireFrame = wireFrame
+            presenter.router = router
             presenter.interactor = interactor
             interactor.presenter = presenter
 
@@ -38,7 +38,7 @@ class FLogRouter: FLogRouterProtocol {
 
     
     func presentNewRoutineViewScreen(from view: ViperView) {
-        let newRoutineView = NewRoutineWireFrame.createNewRoutineModule()
+        let newRoutineView = NewRoutineRouter.createModule()
 
         if let sourceView = view as? UIViewController {
            sourceView.navigationController?.pushViewController(newRoutineView, animated: true)

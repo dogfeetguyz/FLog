@@ -11,7 +11,7 @@ import UIKit
 class TimelinePresenter: TimelinePresenterProtocol {
     var view: ViperView?
     var interactor: ViperInteractorInput?
-    var wireFrame: ViperRouter?
+    var router: ViperRouter?
     
     var isInitial: Bool = false
     

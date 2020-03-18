@@ -16,11 +16,11 @@ class TimelineRouter: TimelineRouterProtocol {
             
             let presenter: TimelinePresenterProtocol & TimelineInteractorOutputProtocol = TimelinePresenter()
             let interactor: TimelineInteractorInputProtocol = TimelineInteractor()
-            let wireFrame: TimelineRouterProtocol = TimelineRouter()
+            let router: TimelineRouterProtocol = TimelineRouter()
 
             view.presenter = presenter
             presenter.view = view
-            presenter.wireFrame = wireFrame
+            presenter.router = router
             presenter.interactor = interactor
             interactor.presenter = presenter
 

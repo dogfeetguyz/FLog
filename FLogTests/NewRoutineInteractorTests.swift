@@ -165,8 +165,11 @@ class NewRoutineInteractorTests: QuickSpec {
 }
 
 class NewRoutinePresenterMock: NewRoutineInteractorOutputProtocol {
+    
     var succeeded = false
     var errorOccurred = false
+    
+    func didDataLoaded(with loadedData: ViperEntity) { }
     
     func didCreateNewRoutine() {
         succeeded = true

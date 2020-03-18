@@ -11,7 +11,7 @@ import UIKit
 class FLogPresenter: FLogPresenterProtocol {
     var view: ViperView?
     var interactor: ViperInteractorInput?
-    var wireFrame: ViperRouter?
+    var router: ViperRouter?
     
     func viewDidLoad() {
         if let _interactor = interactor as? FLogInteractorInputProtocol {
@@ -44,14 +44,14 @@ class FLogPresenter: FLogPresenterProtocol {
     }
     
     func clickRoutineCell(forRoutine routine: MainRoutineModel) {
-        if let _wireFrame = wireFrame as? FLogRouterProtocol {
-            _wireFrame.presentRoutineDetailViewScreen(from: view!, forRoutine: routine)
+        if let _router = router as? FLogRouterProtocol {
+            _router.presentRoutineDetailViewScreen(from: view!, forRoutine: routine)
         }
     }
     
     func clickNewButton() {
-        if let _wireFrame = wireFrame as? FLogRouterProtocol {
-            _wireFrame.presentNewRoutineViewScreen(from: view!)
+        if let _router = router as? FLogRouterProtocol {
+            _router.presentNewRoutineViewScreen(from: view!)
         }
     }
 }

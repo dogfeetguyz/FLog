@@ -25,8 +25,11 @@ class RoutineDetailInteractorTests: QuickSpec {
         }
         
         describe("Result") {
+            let newRoutineInteractor = NewRoutineInteractor()
+            
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
@@ -123,9 +126,11 @@ class RoutineDetailInteractorTests: QuickSpec {
         
         describe("The number of logs") {
             var oldLoadedData: RoutineDetailModel?
+            let newRoutineInteractor = NewRoutineInteractor()
             
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
@@ -184,9 +189,11 @@ class RoutineDetailInteractorTests: QuickSpec {
 
         describe("A Log") {
             var oldLoadedData: RoutineDetailModel?
+            let newRoutineInteractor = NewRoutineInteractor()
             
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
@@ -275,9 +282,11 @@ class RoutineDetailInteractorTests: QuickSpec {
         describe("Max Weight") {
             var prevMaxWeight: String?
             var currentMaxWeight: String?
+            let newRoutineInteractor = NewRoutineInteractor()
             
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
@@ -606,9 +615,11 @@ class RoutineDetailInteractorTests: QuickSpec {
         describe("Max Total") {
             var prevMaxTotal: String?
             var currentMaxTotal: String?
-
+            let newRoutineInteractor = NewRoutineInteractor()
+            
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
