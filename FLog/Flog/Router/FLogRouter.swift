@@ -8,16 +8,14 @@
 
 import UIKit
 
-class FLogWireFrame: FLogWireFrameProtocol {
-    
-    class func createRoutineModule() -> UIViewController {
-        
+class FLogRouter: FLogRouterProtocol {
+    static func createModule(with initialData: ViperEntity?) -> UIViewController {
         let navigationController = UIStoryboard(name: "FLogView", bundle: Bundle.main).instantiateInitialViewController()
         if let view = navigationController!.children.first as? FLogView {
             
             let presenter: FLogPresenterProtocol & FLogInteractorOutputProtocol = FLogPresenter()
             let interactor: FLogInteractorInputProtocol = FLogInteractor()
-            let wireFrame: FLogWireFrameProtocol = FLogWireFrame()
+            let wireFrame: FLogRouterProtocol = FLogRouter()
 
             view.presenter = presenter
             presenter.view = view
@@ -30,7 +28,7 @@ class FLogWireFrame: FLogWireFrameProtocol {
         return UIViewController()
     }
     
-    func presentRoutineDetailViewScreen(from view: FLogViewProtocol, forRoutine routine: MainRoutineModel) {
+    func presentRoutineDetailViewScreen(from view: ViperView, forRoutine routine: MainRoutineModel) {
         let routineDetailView = RoutineDetailWireFrame.createRoutineDetailModule(with: routine)
 
         if let sourceView = view as? UIViewController {
@@ -39,7 +37,7 @@ class FLogWireFrame: FLogWireFrameProtocol {
     }
 
     
-    func presentNewRoutineViewScreen(from view: FLogViewProtocol) {
+    func presentNewRoutineViewScreen(from view: ViperView) {
         let newRoutineView = NewRoutineWireFrame.createNewRoutineModule()
 
         if let sourceView = view as? UIViewController {

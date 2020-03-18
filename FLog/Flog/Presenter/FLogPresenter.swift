@@ -9,45 +9,56 @@
 import UIKit
 
 class FLogPresenter: FLogPresenterProtocol {
-    weak var view: FLogViewProtocol?
-    var wireFrame: FLogWireFrameProtocol?
-    var interactor: FLogInteractorInputProtocol?
+    var view: ViperView?
+    var interactor: ViperInteractorInput?
+    var wireFrame: ViperRouter?
     
     func viewDidLoad() {
-        interactor?.createSampleData()
+        if let _interactor = interactor as? FLogInteractorInputProtocol {
+            _interactor.createSampleData()
+        }
     }
     
-    func updateView() {
-        interactor?.dispatchRoutines()
+    func needsUpdate() {
+        if let _interactor = interactor as? FLogInteractorInputProtocol {
+            _interactor.loadData()
+        }
     }
     
     func deleteCell(index: Int) {
-        interactor?.deleteRoutine(index: index)
+        if let _interactor = interactor as? FLogInteractorInputProtocol {
+            _interactor.deleteRoutine(index: index)
+        }
     }
     
     func moveCell(sourceIndex: Int, destinationIndex: Int) {
-        interactor?.replaceRoutines(sourceIndex: sourceIndex, destinationIndex: destinationIndex)
+        if let _interactor = interactor as? FLogInteractorInputProtocol {
+            _interactor.replaceRoutines(sourceIndex: sourceIndex, destinationIndex: destinationIndex)
+        }
     }
     
     func modifyCellTitle(index: Int, newTitle: String) {
-        interactor?.updateRoutineTitle(index: index, newTitle: newTitle)
+        if let _interactor = interactor as? FLogInteractorInputProtocol {
+            _interactor.updateRoutineTitle(index: index, newTitle: newTitle)
+        }
     }
     
     func clickRoutineCell(forRoutine routine: MainRoutineModel) {
-        wireFrame?.presentRoutineDetailViewScreen(from: view!, forRoutine: routine)
+        if let _wireFrame = wireFrame as? FLogRouterProtocol {
+            _wireFrame.presentRoutineDetailViewScreen(from: view!, forRoutine: routine)
+        }
     }
     
     func clickNewButton() {
-        wireFrame?.presentNewRoutineViewScreen(from: view!)
+        if let _wireFrame = wireFrame as? FLogRouterProtocol {
+            _wireFrame.presentNewRoutineViewScreen(from: view!)
+        }
     }
 }
 
 extension FLogPresenter: FLogInteractorOutputProtocol {
-    // MARK: interactor -> presenter
-    /// Finished dispatching Routines from UserDefaults
-    /// - parameter mainRoutineModelArray: An array of MainRoutineModel loaded from UserDefaults
-    func didDispatchRoutines(with mainRoutineArray: [MainRoutineModel]) {
-        view?.showRoutines(with: mainRoutineArray)
+    func didDataLoaded(with loadedData: ViperEntity) {
+        view?.updateVIew(with: loadedData)
     }
 
     func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {

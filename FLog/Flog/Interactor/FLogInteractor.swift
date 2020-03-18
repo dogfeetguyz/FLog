@@ -12,7 +12,7 @@ import CoreData
 
 
 class FLogInteractor: FLogInteractorInputProtocol {
-    var presenter: FLogInteractorOutputProtocol?
+    var presenter: ViperInteractorOutput?
     
     func createSampleData() {
         if UserDefaults.standard.value(forKey: Common.Define.mainRoutine) == nil {
@@ -131,16 +131,17 @@ class FLogInteractor: FLogInteractorInputProtocol {
         }
     }
     
-    func dispatchRoutines() {
-        
-        let loadedArray = UserDefaults.standard.array(forKey: Common.Define.mainRoutine) as! Array<Dictionary<String, Any>>
-        var routines = Array<MainRoutineModel>()
-        for loadedData in loadedArray {
-            let routine = MainRoutineModel(title: loadedData[Common.Define.mainRoutineTitle] as! String, unit: loadedData[Common.Define.mainRoutineUnit] as! String, exerciseTitles: loadedData[Common.Define.mainRoutineExercises] as! [String])
-            routines.append(routine)
+    func loadData(with initialData: ViperEntity?) {
+        if let _presenter = presenter as? FLogInteractorOutputProtocol {
+            let loadedArray = UserDefaults.standard.array(forKey: Common.Define.mainRoutine) as! Array<Dictionary<String, Any>>
+            var routines = Array<MainRoutineModel>()
+            for loadedData in loadedArray {
+                let routine = MainRoutineModel(title: loadedData[Common.Define.mainRoutineTitle] as! String, unit: loadedData[Common.Define.mainRoutineUnit] as! String, exerciseTitles: loadedData[Common.Define.mainRoutineExercises] as! [String])
+                routines.append(routine)
+            }
+            
+            _presenter.didDataLoaded(with: FlogEntity(flogArray: routines))
         }
-        
-        presenter?.didDispatchRoutines(with: routines)
     }
     
     private func updateRoutine(routineArray: Array<Dictionary<String, Any>>) {
@@ -173,7 +174,7 @@ class FLogInteractor: FLogInteractorInputProtocol {
         routineArray.remove(at: index)
         updateRoutine(routineArray: routineArray)
 
-        dispatchRoutines()
+        loadData()
     }
     
     
@@ -185,7 +186,7 @@ class FLogInteractor: FLogInteractorInputProtocol {
         routineArray.insert(sourceItem, at: destinationIndex)
         updateRoutine(routineArray: routineArray)
         
-        dispatchRoutines()
+        loadData()
     }
     
     func updateRoutineTitle(index: Int, newTitle: String) {
@@ -226,7 +227,7 @@ class FLogInteractor: FLogInteractorInputProtocol {
             UserDefaults.standard.set(detailArray, forKey: newTitle + Common.Define.routineDetail)
             UserDefaults.standard.set(bestDictionary, forKey: newTitle + Common.Define.routineBest)
             
-            dispatchRoutines()
+            loadData()
         }
     }
 }

@@ -14,11 +14,13 @@ class FLogView: UIViewController {
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    var presenter: FLogPresenterProtocol?
-    var mainRoutineArray = Array<MainRoutineModel>()
+    var presenter: ViperPresenter?
+    var loadedData: ViperEntity?
     
     override func viewWillAppear(_ animated: Bool) {
-        presenter?.updateView()
+        if let _presenter = presenter as? FLogPresenter {
+            _presenter.needsUpdate()
+        }
     }
     
     override func viewDidLoad() {
@@ -42,7 +44,9 @@ class FLogView: UIViewController {
     
     // MARK: ButtonAction
     @IBAction func newButtonAction() {
-        presenter?.clickNewButton()
+        if let _presenter = presenter as? FLogPresenter {
+            _presenter.clickNewButton()
+        }
     }
     
     @IBAction func editButtonAction() {
@@ -63,28 +67,34 @@ class FLogView: UIViewController {
     }
     
     @IBAction func editCellButtonAction(button: UIButton) {
-        let index = button.tag
-        let routine = mainRoutineArray[index]
+        if let _loadedData = loadedData as? FLogEntityProtocol {
+            let index = button.tag
+            let routine = _loadedData.flogArray?[index]
 
-        let alert = UIAlertController(title: "Rename", message: "Enter a new name", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Rename", message: "Enter a new name", preferredStyle: .alert)
 
-        alert.addTextField { (textField) in
-            textField.text = routine.title
+            alert.addTextField { (textField) in
+                textField.text = routine?.title
+            }
+
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+
+                if let _presenter = self.presenter as? FLogPresenterProtocol {
+                    _presenter.modifyCellTitle(index: index, newTitle: (textField?.text)!)
+                }
+            }))
+
+            self.present(alert, animated: true, completion: nil)  // 업데이트
         }
-
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
-            self.presenter?.modifyCellTitle(index: index, newTitle: (textField?.text)!)
-        }))
-
-        self.present(alert, animated: true, completion: nil)  // 업데이트
     }
 }
 
 extension FLogView: FLogViewProtocol {
-    func showRoutines(with mainRoutineArray: [MainRoutineModel]) {
-        self.mainRoutineArray = mainRoutineArray
+    
+    func updateVIew(with entity: ViperEntity) {
+        self.loadedData = entity
         
         tableView.reloadData()
     }

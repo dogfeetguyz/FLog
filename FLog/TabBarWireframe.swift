@@ -20,7 +20,7 @@ public class TabBarWireframe {
         let tabbarController = UIStoryboard(name: "TabBarController", bundle: Bundle.main).instantiateInitialViewController() as? UITabBarController
         
         var viewControllers = [UIViewController]()
-        viewControllers.append(FLogWireFrame.createRoutineModule())
+        viewControllers.append(FLogRouter.createModule())
         viewControllers.append(TimelineWireFrame.createTimelineModule())
         
         tabbarController!.viewControllers = viewControllers
