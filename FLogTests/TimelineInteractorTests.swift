@@ -464,7 +464,7 @@ class TimelinePresenterMock: TimelineInteractorOutputProtocol {
         errorOccurred = false
     }
     
-    func onError() {
+    func onError(isInitial: Bool) {
         loadedArray = []
         dispatched = false
         errorOccurred = true
