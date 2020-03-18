@@ -25,6 +25,7 @@
 		FA33E88C2404DCBA000C99DC /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33E88B2404DCBA000C99DC /* Common.swift */; };
 		FA356E3B242221B700771D5A /* ViperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA356E3A242221B700771D5A /* ViperProtocol.swift */; };
 		FA356E402422422800771D5A /* FLogEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA356E3F2422422800771D5A /* FLogEntity.swift */; };
+		FA356E432422542B00771D5A /* TimelineEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA356E422422542B00771D5A /* TimelineEntity.swift */; };
 		FA4A6AA923FA9079000E54C4 /* RoutineDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */; };
 		FA60DB70241A69C400298427 /* Timeline+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */; };
 		FA60DB71241A69C400298427 /* Timeline+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */; };
@@ -108,6 +109,7 @@
 		FA33E88B2404DCBA000C99DC /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		FA356E3A242221B700771D5A /* ViperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViperProtocol.swift; sourceTree = "<group>"; };
 		FA356E3F2422422800771D5A /* FLogEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogEntity.swift; sourceTree = "<group>"; };
+		FA356E422422542B00771D5A /* TimelineEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineEntity.swift; sourceTree = "<group>"; };
 		FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineDetailTableViewCell.swift; sourceTree = "<group>"; };
 		FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Timeline+CoreDataProperties.swift"; path = "/Users/yejunpark/Workspace/FLog/FLog/Entity/Timeline+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Timeline+CoreDataClass.swift"; path = "/Users/yejunpark/Workspace/FLog/FLog/Entity/Timeline+CoreDataClass.swift"; sourceTree = "<absolute>"; };
@@ -210,9 +212,10 @@
 			isa = PBXGroup;
 			children = (
 				FA09FA2C2419DD17006BE8A2 /* Protocol */,
-				FA09FA2B2419DD12006BE8A2 /* Presenter */,
-				FA09FA2A2419DD0D006BE8A2 /* Interactor */,
 				FA09FA292419DD03006BE8A2 /* View */,
+				FA09FA2A2419DD0D006BE8A2 /* Interactor */,
+				FA09FA2B2419DD12006BE8A2 /* Presenter */,
+				FA356E412422541800771D5A /* Entity */,
 				FA09FA282419DCFA006BE8A2 /* Router */,
 			);
 			path = Timeline;
@@ -284,6 +287,14 @@
 			isa = PBXGroup;
 			children = (
 				FA356E3F2422422800771D5A /* FLogEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		FA356E412422541800771D5A /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FA356E422422542B00771D5A /* TimelineEntity.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -838,6 +849,7 @@
 				FA09FA2E2419DF8A006BE8A2 /* TabBarWireframe.swift in Sources */,
 				FAA12C152417C0E400736315 /* FLogView+UITableViewDelegate.swift in Sources */,
 				FAF661B923F674540003B589 /* FLogViewCell.swift in Sources */,
+				FA356E432422542B00771D5A /* TimelineEntity.swift in Sources */,
 				FAA12C2D2417D16C00736315 /* RoutineDetailProtocol.swift in Sources */,
 				FA09FA322419EE8A006BE8A2 /* TimelineProtocol.swift in Sources */,
 				FAC5BC3323FA57410069B016 /* RoutineDetailView.swift in Sources */,

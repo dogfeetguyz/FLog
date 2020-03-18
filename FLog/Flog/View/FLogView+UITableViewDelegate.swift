@@ -17,17 +17,17 @@ extension FLogView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let _loadedData = loadedData as? FLogEntityProtocol {
-            let routine = _loadedData.flogArray?[indexPath.row]
+            let routine = _loadedData.flogArray[indexPath.row]
             
             if let _presenter = presenter as? FLogPresenterProtocol {
-                _presenter.clickRoutineCell(forRoutine: routine!)
+                _presenter.clickRoutineCell(forRoutine: routine)
             }
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let _loadedData = loadedData as? FLogEntityProtocol {
-            return _loadedData.flogArray!.count
+            return _loadedData.flogArray.count
         } else {
             return 0
         }
@@ -59,13 +59,13 @@ extension FLogView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FLogViewCell", for: indexPath) as! FLogViewCell
         
         if let _loadedData = loadedData as? FLogEntityProtocol {
-            let routine = _loadedData.flogArray?[indexPath.row]
+            let routine = _loadedData.flogArray[indexPath.row]
             
-            let exercises = routine!.exerciseTitles
+            let exercises = routine.exerciseTitles
             let exercise: String = exercises.joined(separator: "\n")
             cell.contentLabel.numberOfLines = exercises.count
             
-            cell.titleLabel?.text = routine!.title
+            cell.titleLabel?.text = routine.title
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 5

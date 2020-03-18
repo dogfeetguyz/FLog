@@ -48,7 +48,7 @@ public protocol ViperInteractorInput: class {
 
 extension ViperInteractorInput {
     func loadData() {
-        return loadData(with: nil)
+        loadData(with: nil)
     }
 }
 

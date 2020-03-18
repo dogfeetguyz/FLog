@@ -8,87 +8,66 @@
 
 import UIKit
 
-/**
- Protocol that defines the commands sent from the View to the Presenter.
- The Presenter is responsible for connecting the other objects inside a VIPER module.
- */
-public protocol TimelinePresenterProtocol: class {
-    /// Reference to the View (weak to avoid retain cycle).
-    var view: TimelineViewProtocol? {get set}
+protocol TimelineViewProtocol: ViperView {
+    ///check If it is an initial request or paging request
+    var isInitial: Bool { get set }
+}
+
+extension TimelineViewProtocol {
+    func updateVIew(with entity: ViperEntity, isInitial: Bool) {
+        self.isInitial = isInitial
+        updateVIew(with: entity)
+    }
     
-    /// Reference to the Interactor's interface.
-    var interactor: TimelineInteractorInputProtocol? {get set}
+    func showError(isInitial: Bool) {
+        self.isInitial = isInitial
+        showError(title: "", message: "", buttonTitle: "", handler: nil)
+    }
+}
+
+
+protocol TimelineInteractorInputProtocol: ViperInteractorInput {
+    ///check If it is an initial request or paging request
+    var isInitial: Bool { get set }
+    ///offset for fetching data from Core Data
+    var fetchOffset: Int { get set }
     
-    /// Reference to the Router.
-    var wireFrame: TimelineWireFrameProtocol? {get set}
+    /// Creates TImeline data for the first execute
+    func createTimelineData()
+}
+
+extension TimelineInteractorInputProtocol {
+    func loadData(isInitial: Bool) {
+        self.isInitial = isInitial
+        loadData()
+    }
+}
+
+protocol TimelineInteractorOutputProtocol: ViperInteractorOutput {
+    ///check If it is an initial request or paging request
+    var isInitial: Bool { get set }
+}
+
+extension TimelineInteractorOutputProtocol {
+    func didDataLoaded(with loadedData: ViperEntity, isInitial: Bool) {
+        self.isInitial = isInitial
+        didDataLoaded(with: loadedData)
+    }
     
-    
-    // MARK: view -> presenter
-    /// Should call after viewDidLoad is called
-    func viewDidLoad()
-    
+    func onError(isInitial: Bool) {
+        self.isInitial = isInitial
+        onError(title: "", message: "", buttonTitle: "", handler: nil)
+    }
+}
+
+protocol TimelinePresenterProtocol: ViperPresenter {
     /// Should call after the user scrolls the tableview to the bottom
     func tableViewScrollToBottom()
 }
 
-/**
- Protocol that defines the commands sent from the Interactor to the Presenter.
- */
-public protocol TimelineInteractorOutputProtocol: class {
-    // MARK: interactor -> presenter
-    /// Finished dispatching Timelines from Core Data
-    /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
-    /// - parameter isInitial: check If it is an initial request or paging request
-    func didDispatchTimelines(with timelineArray: [TimelineModel], isInitial: Bool)
-    
-    /// Handles error occurred during dispatching Timeline
-    /// - parameter isInitial: check If it is an initial request or paging request 
-    func onError(isInitial: Bool)
+protocol TimelineEntityProtocol: ViperEntity {
+    var timelineArray: Array<TimelineModel> { get set }
 }
 
-/**
- Protocol that defines the Interactor's use case.
- The Interactor is responsible for implementing business logics of the module.
- */
-public protocol TimelineInteractorInputProtocol: class {
-    /// Reference to the Presenter's interface.
-    var presenter: TimelineInteractorOutputProtocol? {get set}
-    var fetchOffset: Int {get set}
-    
-    /// Creates TImeline data for the first execute
-    func createTimelineData()
-    
-    // MARK: prsenter -> interactor
-    /// Dispatches Timeline from Core Data
-    /// - parameter isInitial: check If it is an initial request or paging request
-    func dispatchTimelines(isInitial: Bool)
-}
-
-/**
- Protocol that defines the view input methods.
- The View is responsible for displaying Timeline Screen.
- */
-public protocol TimelineViewProtocol: class {
-    /// Reference to the Presenter's interface.
-    var presenter: TimelinePresenterProtocol? {get set}
-    
-    
-    // MARK: presenter -> view
-    /// Shows timeline data on tableview
-    /// - parameter timelineArray: An array of TimelineModel including Timeline Data loaded from Core Data and Content processed from UserDefaults
-    /// - parameter isInitial: check If it is an initial request or paging request
-    func showTimelines(with timelineArray: [TimelineModel], isInitial: Bool)
-    
-    /// Handles error occurred during dispatching Timeline
-    /// - parameter isInitial: check If it is an initial request or paging request
-    func onError(isInitial: Bool)
-}
-
-/**
- Protocol that defines the possible routes from the Timeline Module.
- The Router is responsible for navigation between modules.
- */
-public protocol TimelineWireFrameProtocol: class {
-    /// Creates Timeline Module
-    static func createTimelineModule() -> UIViewController
+protocol TimelineRouterProtocol: ViperRouter {
 }

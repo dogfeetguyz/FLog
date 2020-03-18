@@ -8,8 +8,8 @@
 
 import Foundation
 
-class FlogEntity: FLogEntityProtocol {
-    var flogArray: Array<MainRoutineModel>?
+class FLogEntity: FLogEntityProtocol {
+    var flogArray: Array<MainRoutineModel>
     
     init(flogArray: Array<MainRoutineModel>) {
         self.flogArray = flogArray

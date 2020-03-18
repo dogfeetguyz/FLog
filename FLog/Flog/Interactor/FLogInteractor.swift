@@ -140,7 +140,7 @@ class FLogInteractor: FLogInteractorInputProtocol {
                 routines.append(routine)
             }
             
-            _presenter.didDataLoaded(with: FlogEntity(flogArray: routines))
+            _presenter.didDataLoaded(with: FLogEntity(flogArray: routines))
         }
     }
     

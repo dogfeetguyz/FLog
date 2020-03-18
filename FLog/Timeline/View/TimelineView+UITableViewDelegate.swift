@@ -12,17 +12,23 @@ extension TimelineView: UITableViewDelegate, UITableViewDataSource {
         
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return timelineArray.count
+        if let _loadedData = loadedData as? TimelineEntityProtocol {
+            return _loadedData.timelineArray.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineViewCell", for: indexPath) as! TimelineViewCell
-        let timeline = timelineArray[indexPath.row]
+        if let _loadedData = loadedData as? TimelineEntityProtocol {
+            let timeline = _loadedData.timelineArray[indexPath.row]
 
-        cell.titleLabel?.text = timeline.timelineData.routineTitle
-        cell.dateLabel?.text = timeline.timelineData.logDate        
-        cell.contentLabel?.attributedText = timeline.content
+            cell.titleLabel?.text = timeline.timelineData.routineTitle
+            cell.dateLabel?.text = timeline.timelineData.logDate
+            cell.contentLabel?.attributedText = timeline.content
+        }
         
         return cell
     }
@@ -30,8 +36,12 @@ extension TimelineView: UITableViewDelegate, UITableViewDataSource {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == tableView {
             if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
-                if timelineArray.count > 0 && canCallNextTimeline {
-                    presenter?.tableViewScrollToBottom()
+                if let _loadedData = loadedData as? TimelineEntityProtocol {
+                    if _loadedData.timelineArray.count > 0 && canCallNextTimeline {
+                        if let _presenter = presenter as? TimelinePresenterProtocol {
+                            _presenter.tableViewScrollToBottom()
+                        }
+                    }
                 }
             }
         }

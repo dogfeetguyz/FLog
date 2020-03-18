@@ -18,7 +18,7 @@ class FLogView: UIViewController {
     var loadedData: ViperEntity?
     
     override func viewWillAppear(_ animated: Bool) {
-        if let _presenter = presenter as? FLogPresenter {
+        if let _presenter = presenter as? FLogPresenterProtocol {
             _presenter.needsUpdate()
         }
     }
@@ -44,7 +44,7 @@ class FLogView: UIViewController {
     
     // MARK: ButtonAction
     @IBAction func newButtonAction() {
-        if let _presenter = presenter as? FLogPresenter {
+        if let _presenter = presenter as? FLogPresenterProtocol {
             _presenter.clickNewButton()
         }
     }
@@ -69,12 +69,12 @@ class FLogView: UIViewController {
     @IBAction func editCellButtonAction(button: UIButton) {
         if let _loadedData = loadedData as? FLogEntityProtocol {
             let index = button.tag
-            let routine = _loadedData.flogArray?[index]
+            let routine = _loadedData.flogArray[index]
 
             let alert = UIAlertController(title: "Rename", message: "Enter a new name", preferredStyle: .alert)
 
             alert.addTextField { (textField) in
-                textField.text = routine?.title
+                textField.text = routine.title
             }
 
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))

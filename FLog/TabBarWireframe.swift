@@ -21,7 +21,7 @@ public class TabBarWireframe {
         
         var viewControllers = [UIViewController]()
         viewControllers.append(FLogRouter.createModule())
-        viewControllers.append(TimelineWireFrame.createTimelineModule())
+        viewControllers.append(TimelineRouter.createModule())
         
         tabbarController!.viewControllers = viewControllers
         return tabbarController ?? UIViewController()

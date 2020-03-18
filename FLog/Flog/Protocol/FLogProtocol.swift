@@ -9,10 +9,10 @@
 import UIKit
 
 
-public protocol FLogViewProtocol: ViperView {
+protocol FLogViewProtocol: ViperView {
 }
 
-public protocol FLogInteractorInputProtocol: ViperInteractorInput {
+protocol FLogInteractorInputProtocol: ViperInteractorInput {
     /// Create Sample Data for the first execution
     func createSampleData()
     
@@ -31,7 +31,7 @@ public protocol FLogInteractorInputProtocol: ViperInteractorInput {
     func updateRoutineTitle(index: Int, newTitle: String)
 }
 
-public protocol FLogPresenterProtocol: ViperPresenter {
+protocol FLogPresenterProtocol: ViperPresenter {
     
     /// Should call after viewWillAppear is called
     func needsUpdate()
@@ -58,14 +58,14 @@ public protocol FLogPresenterProtocol: ViperPresenter {
     func clickNewButton()
 }
 
-public protocol FLogInteractorOutputProtocol: ViperInteractorOutput {
+protocol FLogInteractorOutputProtocol: ViperInteractorOutput {
 }
 
-public protocol FLogEntityProtocol: ViperEntity {
-    var flogArray: Array<MainRoutineModel>? {get set}
+protocol FLogEntityProtocol: ViperEntity {
+    var flogArray: Array<MainRoutineModel> {get set}
 }
 
-public protocol FLogRouterProtocol: ViperRouter {
+protocol FLogRouterProtocol: ViperRouter {
     /// Presents Routine Detail Module
     /// - parameter view: this view
     /// - parameter routine: targeted routine to go detail module

@@ -10,7 +10,11 @@ import CoreData
 import UIKit
 
 class TimelineInteractor: TimelineInteractorInputProtocol {
-    var presenter: TimelineInteractorOutputProtocol?
+    
+    var isInitial: Bool = false
+    
+    var presenter: ViperInteractorOutput?
+    
     var fetchOffset = 0
     
     func createTimelineData() {
@@ -67,99 +71,100 @@ class TimelineInteractor: TimelineInteractorInputProtocol {
             UserDefaults.standard.set(true, forKey: Common.Define.checkTimelineCreatedBefore)
         }
     }
-    
-    func dispatchTimelines(isInitial: Bool) {
-        if isInitial {
-            fetchOffset = 0
-        }
-        
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let managedOC = appDelegate.persistentContainer.viewContext
-            do {
-                while true {
-                    let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
-                    request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-                    request.fetchLimit = Common.Define.dbRequestLimit
-                    request.fetchOffset = fetchOffset
-                    
-                    let fetchedList = try managedOC.fetch(request)
-                    
-                    var timelinelList = Array<TimelineModel>()
-                    for timeline in fetchedList {
-                        var contentString = ""
-                        var totalWeight = 0
-
-                        var routine:MainRoutineModel?
-                        let loadedArray = UserDefaults.standard.array(forKey: Common.Define.mainRoutine) as! Array<Dictionary<String, Any>>
-                        for loadedData in loadedArray {
-                            if (loadedData[Common.Define.mainRoutineTitle] as! String) == timeline.routineTitle {
-                                routine = MainRoutineModel(title: loadedData[Common.Define.mainRoutineTitle] as! String, unit: loadedData[Common.Define.mainRoutineUnit] as! String, exerciseTitles: loadedData[Common.Define.mainRoutineExercises] as! [String])
-                                break
-                            }
-                        }
+    func loadData(with initialData: ViperEntity?) {
+        if let _presenter = presenter as? TimelineInteractorOutputProtocol {
+            if isInitial {
+                fetchOffset = 0
+            }
+            
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                let managedOC = appDelegate.persistentContainer.viewContext
+                do {
+                    while true {
+                        let request: NSFetchRequest<Timeline> = NSFetchRequest(entityName: String(describing: Timeline.self))
+                        request.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+                        request.fetchLimit = Common.Define.dbRequestLimit
+                        request.fetchOffset = fetchOffset
                         
-                        let unit = routine?.unit
-                        for arrayItem in UserDefaults.standard.array(forKey: timeline.routineTitle! + Common.Define.routineDetail)! {
-                            let dict: Dictionary<String, Any> = arrayItem as! Dictionary<String, Any>
-                            if (dict[Common.Define.routineDetailLogDate] as! String) == timeline.logDate! {
-                                for exerciseTitle in routine!.exerciseTitles {
-                                    
-                                    var setString = ""
-                                    var totalSetWeight = 0
-                                    let setArray: Array<Dictionary<String, String>> = dict[exerciseTitle] as! Array<Dictionary<String, String>>
-                                    for setDictionary in setArray {
-                                        let weight = Int(setDictionary[Common.Define.routineDetailWeight]!) ?? 0
-                                        let reps = Int(setDictionary[Common.Define.routineDetailReps]!) ?? 0
+                        let fetchedList = try managedOC.fetch(request)
+                        
+                        var timelinelList = Array<TimelineModel>()
+                        for timeline in fetchedList {
+                            var contentString = ""
+                            var totalWeight = 0
+
+                            var routine:MainRoutineModel?
+                            let loadedArray = UserDefaults.standard.array(forKey: Common.Define.mainRoutine) as! Array<Dictionary<String, Any>>
+                            for loadedData in loadedArray {
+                                if (loadedData[Common.Define.mainRoutineTitle] as! String) == timeline.routineTitle {
+                                    routine = MainRoutineModel(title: loadedData[Common.Define.mainRoutineTitle] as! String, unit: loadedData[Common.Define.mainRoutineUnit] as! String, exerciseTitles: loadedData[Common.Define.mainRoutineExercises] as! [String])
+                                    break
+                                }
+                            }
+                            
+                            let unit = routine?.unit
+                            for arrayItem in UserDefaults.standard.array(forKey: timeline.routineTitle! + Common.Define.routineDetail)! {
+                                let dict: Dictionary<String, Any> = arrayItem as! Dictionary<String, Any>
+                                if (dict[Common.Define.routineDetailLogDate] as! String) == timeline.logDate! {
+                                    for exerciseTitle in routine!.exerciseTitles {
                                         
-                                        if weight > 0 && reps > 0 {
-                                            totalSetWeight = totalSetWeight + (weight*reps)
-                                            setString = "\(setString) - \(setDictionary[Common.Define.routineDetailWeight]!)\(unit!) x \(setDictionary[Common.Define.routineDetailReps]!)reps\n"
+                                        var setString = ""
+                                        var totalSetWeight = 0
+                                        let setArray: Array<Dictionary<String, String>> = dict[exerciseTitle] as! Array<Dictionary<String, String>>
+                                        for setDictionary in setArray {
+                                            let weight = Int(setDictionary[Common.Define.routineDetailWeight]!) ?? 0
+                                            let reps = Int(setDictionary[Common.Define.routineDetailReps]!) ?? 0
+                                            
+                                            if weight > 0 && reps > 0 {
+                                                totalSetWeight = totalSetWeight + (weight*reps)
+                                                setString = "\(setString) - \(setDictionary[Common.Define.routineDetailWeight]!)\(unit!) x \(setDictionary[Common.Define.routineDetailReps]!)reps\n"
+                                            }
+                                        }
+                                        
+                                        if setString.count > 0 {
+                                            setString = "\(setString) - Total \(exerciseTitle): \(totalSetWeight)\(unit!)\n\n"
+                                            contentString = contentString + exerciseTitle + "\n" + setString
+                                            totalWeight = totalWeight + totalSetWeight
                                         }
                                     }
-                                    
-                                    if setString.count > 0 {
-                                        setString = "\(setString) - Total \(exerciseTitle): \(totalSetWeight)\(unit!)\n\n"
-                                        contentString = contentString + exerciseTitle + "\n" + setString
-                                        totalWeight = totalWeight + totalSetWeight
-                                    }
+                                    break
                                 }
-                                break
+                            }
+                            
+                            fetchOffset += 1
+                            if contentString.count > 0 {
+                                contentString = "\(contentString)Total: \(totalWeight)\(unit!)"
+                                let string = NSAttributedString(string: contentString)
+                                timelinelList.append(TimelineModel(timelineData: timeline, content: string))
+                                
+                                if timelinelList.count == Common.Define.dbResultLimit {
+                                    break
+                                }
                             }
                         }
                         
-                        fetchOffset += 1
-                        if contentString.count > 0 {
-                            contentString = "\(contentString)Total: \(totalWeight)\(unit!)"
-                            let string = NSAttributedString(string: contentString)
-                            timelinelList.append(TimelineModel(timelineData: timeline, content: string))
-                            
+                        if fetchedList.count < Common.Define.dbRequestLimit {
+                            if timelinelList.count == 0 {
+                                _presenter.onError(isInitial: isInitial)
+                            } else {
+                                _presenter.didDataLoaded(with: TimelineEntity(timelineArray: timelinelList), isInitial: isInitial)
+                            }
+                            break
+                        } else {
                             if timelinelList.count == Common.Define.dbResultLimit {
+                                _presenter.didDataLoaded(with: TimelineEntity(timelineArray: timelinelList), isInitial: isInitial)
                                 break
+                            } else {
+                                continue
                             }
                         }
                     }
-                    
-                    if fetchedList.count < Common.Define.dbRequestLimit {
-                        if timelinelList.count == 0 {
-                            presenter?.onError(isInitial: isInitial)
-                        } else {
-                            presenter?.didDispatchTimelines(with: timelinelList, isInitial: isInitial)
-                        }
-                        break
-                    } else {
-                        if timelinelList.count == Common.Define.dbResultLimit {
-                            presenter?.didDispatchTimelines(with: timelinelList, isInitial: isInitial)
-                            break
-                        } else {
-                            continue
-                        }
-                    }
+                } catch {
+                    _presenter.onError(isInitial: isInitial)
                 }
-            } catch {
-                presenter?.onError(isInitial: isInitial)
+            } else {
+                _presenter.onError(isInitial: isInitial)
             }
-        } else {
-            presenter?.onError(isInitial: isInitial)
         }
     }
 }

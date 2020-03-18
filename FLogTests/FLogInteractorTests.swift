@@ -143,8 +143,8 @@ class FLogPresenterMock: FLogInteractorOutputProtocol {
     var loadedArray: Array<MainRoutineModel> = []
     
     func didDataLoaded(with loadedData: ViperEntity) {
-        if let _loadedData = loadedData as? FlogEntity {
-            loadedArray = _loadedData.flogArray!
+        if let _loadedData = loadedData as? FLogEntityProtocol {
+            loadedArray = _loadedData.flogArray
         }
         dispatched = true
         errorOccurred = false

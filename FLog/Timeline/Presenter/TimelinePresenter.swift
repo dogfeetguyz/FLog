@@ -9,27 +9,38 @@
 import UIKit
 
 class TimelinePresenter: TimelinePresenterProtocol {
-    weak var view: TimelineViewProtocol?
-    var wireFrame: TimelineWireFrameProtocol?
-    var interactor: TimelineInteractorInputProtocol?
+    var view: ViperView?
+    var interactor: ViperInteractorInput?
+    var wireFrame: ViperRouter?
+    
+    var isInitial: Bool = false
+    
     
     func viewDidLoad() {
-        interactor?.createTimelineData()
-        interactor?.dispatchTimelines(isInitial: true)
+        if let _interactor = interactor as? TimelineInteractorInputProtocol {
+            _interactor.createTimelineData()
+            _interactor.loadData(isInitial: true)
+        }
     }
     
     func tableViewScrollToBottom() {
-        interactor?.dispatchTimelines(isInitial: false)
+        if let _interactor = interactor as? TimelineInteractorInputProtocol {
+            _interactor.loadData(isInitial: false)
+        }
     }
 }
 
 extension TimelinePresenter: TimelineInteractorOutputProtocol {
-    func didDispatchTimelines(with timelineArray: [TimelineModel], isInitial: Bool) {
-        view?.showTimelines(with: timelineArray, isInitial: isInitial)
+    
+    func didDataLoaded(with loadedData: ViperEntity) {
+        if let _view = view as? TimelineViewProtocol {
+            _view.updateVIew(with: loadedData, isInitial: isInitial)
+        }
     }
     
-    func onError(isInitial: Bool) {
-        view?.onError(isInitial: isInitial)
+    func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
+        if let _view = view as? TimelineView {
+            _view.showError(isInitial: isInitial)
+        }
     }
-    
 }
