@@ -9,21 +9,26 @@
 import UIKit
 
 class NewRoutinePresenter: NewRoutinePresenterProtocol {
-    weak var view: NewRoutineViewProtocol?
-    var wireFrame: NewRoutineWireFrameProtocol?
-    var interactor: NewRoutineInteractorInputProtocol?
+    var view: ViperView?
+    var interactor: ViperInteractorInput?
+    var router: ViperRouter?
     
-    func viewDidLoad() {
-    }
+    func viewDidLoad() { }
     
     func clickCreateButton(title: String?, unit: Unit, exerciseTitles:Array<String?>) {
-        interactor?.createNewRoutine(title: title, unit: unit, exerciseTitles: exerciseTitles)
+        if let _interactor = interactor as? NewRoutineInteractorInputProtocol {
+            _interactor.createNewRoutine(title: title, unit: unit, exerciseTitles: exerciseTitles)
+        }
     }
 }
 
 extension NewRoutinePresenter: NewRoutineInteractorOutputProtocol {
+    func didDataLoaded(with loadedData: ViperEntity) { }
+    
     func didCreateNewRoutine() {
-        wireFrame?.finishNewRoutineModule(from: view!)
+        if let _router = router as? NewRoutineRouter {
+            _router.finishNewRoutineModule(from: view!)
+        }
     }
     
     func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {

@@ -12,8 +12,9 @@ class TimelineView: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var presenter: TimelinePresenterProtocol?
-    var timelineArray = Array<TimelineModel>()
+    var presenter: ViperPresenter?
+    var isInitial: Bool = false
+    var loadedData: ViperEntity?
     
     var canCallNextTimeline = true
     
@@ -26,8 +27,11 @@ class TimelineView: UIViewController {
         super.viewWillAppear(animated)
         presenter?.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: .now()) {
-            if self.timelineArray.count > 0 {
-                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            
+            if let _loadedData = self.loadedData as? TimelineEntityProtocol {
+                if _loadedData.timelineArray.count > 0 {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
             }
         }
     }
@@ -46,22 +50,27 @@ class TimelineView: UIViewController {
 }
 
 extension TimelineView: TimelineViewProtocol {
-    func showTimelines(with timelineArray: [TimelineModel], isInitial: Bool) {
+    
+    func updateVIew(with entity: ViperEntity) {
         canCallNextTimeline = true
         
         if isInitial {
-            self.timelineArray = timelineArray
+            loadedData = entity
         } else {
-            self.timelineArray.append(contentsOf: timelineArray)
+            if let _loadedData = loadedData as? TimelineEntityProtocol {
+                _loadedData.timelineArray.append(contentsOf: (entity as? TimelineEntity)!.timelineArray)
+            }
         }
         tableView.reloadData()
     }
     
-    func onError(isInitial: Bool) {
+    func showError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
         canCallNextTimeline = false
         
         if isInitial {
-            self.timelineArray = []
+            if let _loadedData = loadedData as? TimelineEntityProtocol {
+                _loadedData.timelineArray = []
+            }
             tableView.reloadData()
         }
     }

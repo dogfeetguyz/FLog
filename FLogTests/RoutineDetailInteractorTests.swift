@@ -25,12 +25,15 @@ class RoutineDetailInteractorTests: QuickSpec {
         }
         
         describe("Result") {
+            let newRoutineInteractor = NewRoutineInteractor()
+            
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
 
@@ -38,7 +41,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                 }
 
                 it("Should show a popup request creating a new log") {
@@ -51,7 +54,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     let routine = (self.routineArray?.last)!
                     
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                 }
 
                 it("Should include Routine Detail Data") {
@@ -67,8 +70,8 @@ class RoutineDetailInteractorTests: QuickSpec {
                     oneweekago.addTimeInterval(-(60*60*24*7))
                     self.sut.createLog(date: oneweekago, routine: routine)
                     self.sut.createLog(date: Date(), routine:routine)
-
-                    self.sut.loadLogs(routine: routine)
+                    
+                    self.sut.loadData(with: routine)
                 }
 
                 it("Should include Routine Detail data") {
@@ -104,7 +107,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
                     self.sut.removeLog(removeIndex: 0, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                 }
 
                 it("Should show a popup to request creating a new log") {
@@ -115,21 +118,24 @@ class RoutineDetailInteractorTests: QuickSpec {
             afterEach {
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
         
         
         describe("The number of logs") {
-            var oldLoadedData: RoutineDetailModel?
+            var oldLoadedData: RoutineDetailEntity?
+            var currentLoadedData: RoutineDetailEntity?
+            let newRoutineInteractor = NewRoutineInteractor()
             
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
             
@@ -140,15 +146,16 @@ class RoutineDetailInteractorTests: QuickSpec {
                     var oneweekago = Date()
                     oneweekago.addTimeInterval(-(60*60*24*7))
                     self.sut.createLog(date: oneweekago, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    oldLoadedData = self.routineDetailPresenterMock.loadedData
+                    self.sut.loadData(with: routine)
+                    oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
                 it("Should be increased by 1") {
-                    expect((oldLoadedData?.dailyLogs.count)! + 1 == self.routineDetailPresenterMock.loadedData!.dailyLogs.count).toEventually(beTrue())
+                    expect((oldLoadedData?.dailyLogs.count)! + 1 == currentLoadedData?.dailyLogs.count).toEventually(beTrue())
                 }
             }
             
@@ -160,15 +167,16 @@ class RoutineDetailInteractorTests: QuickSpec {
                     oneweekago.addTimeInterval(-(60*60*24*7))
                     self.sut.createLog(date: oneweekago, routine: routine)
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    oldLoadedData = self.routineDetailPresenterMock.loadedData
+                    self.sut.loadData(with: routine)
+                    oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     self.sut.removeLog(removeIndex: 0, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
                 it("should be decreased by 1") {
-                    expect((oldLoadedData?.dailyLogs.count)! - 1 == self.routineDetailPresenterMock.loadedData!.dailyLogs.count).toEventually(beTrue())
+                    expect((oldLoadedData?.dailyLogs.count)! - 1 == currentLoadedData?.dailyLogs.count).toEventually(beTrue())
                 }
             }
 
@@ -177,20 +185,23 @@ class RoutineDetailInteractorTests: QuickSpec {
                 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
 
         describe("A Log") {
-            var oldLoadedData: RoutineDetailModel?
+            var oldLoadedData: RoutineDetailEntity?
+            var currentLoadedData: RoutineDetailEntity?
+            let newRoutineInteractor = NewRoutineInteractor()
             
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
             
@@ -198,11 +209,12 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
                 it("Should have one set for each exercise") {
-                    for exerciseLog in (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs)! {
+                    for exerciseLog in (currentLoadedData?.dailyLogs[0].exerciseLogs)! {
                         expect(exerciseLog.set.count == 1).toEventually(beTrue())
                     }
                 }
@@ -212,14 +224,16 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    oldLoadedData = self.routineDetailPresenterMock.loadedData
+                    self.sut.loadData(with: routine)
+                    oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.createSet(routineDetail: oldLoadedData!, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
+                    self.sut.createSet(routine: oldLoadedData!.routine, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
                 it("Shoud have the increased number of sets in the exercise") {
-                    expect((oldLoadedData?.dailyLogs[0].exerciseLogs[0].set.count)! + 1 == self.routineDetailPresenterMock.loadedData!.dailyLogs[0].exerciseLogs[0].set.count).toEventually(beTrue())
+                    expect((oldLoadedData?.dailyLogs[0].exerciseLogs[0].set.count)! + 1 == currentLoadedData!.dailyLogs[0].exerciseLogs[0].set.count).toEventually(beTrue())
                 }
             }
             
@@ -227,21 +241,22 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let loadedData = self.routineDetailPresenterMock.loadedData
+                    self.sut.loadData(with: routine)
+                    let loadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.createSet(routineDetail: loadedData!, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.createSet(routineDetail: loadedData!, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.createSet(routineDetail: loadedData!, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.loadLogs(routine: routine)
-                    oldLoadedData = self.routineDetailPresenterMock.loadedData
+                    self.sut.createSet(routine: loadedData!.routine, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
+                    self.sut.createSet(routine: loadedData!.routine, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
+                    self.sut.createSet(routine: loadedData!.routine, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
+                    self.sut.loadData(with: routine)
+                    oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.removeSet(routineDetail: oldLoadedData!, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.removeSet(routine: oldLoadedData!.routine, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
                 it("Shoud have the decreased number of sets in the exercise") {
-                    expect((oldLoadedData?.dailyLogs[0].exerciseLogs[0].set.count)! - 1 == self.routineDetailPresenterMock.loadedData!.dailyLogs[0].exerciseLogs[0].set.count).toEventually(beTrue())
+                    expect((oldLoadedData?.dailyLogs[0].exerciseLogs[0].set.count)! - 1 == currentLoadedData!.dailyLogs[0].exerciseLogs[0].set.count).toEventually(beTrue())
                 }
             }
             
@@ -249,15 +264,16 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    oldLoadedData = self.routineDetailPresenterMock.loadedData
+                    self.sut.loadData(with: routine)
+                    oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.removeSet(routineDetail: oldLoadedData!, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.removeSet(routine: oldLoadedData!.routine, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
                 it("Shoud happen nothing since it is not permitted to do in the UI") {
-                    expect((oldLoadedData?.dailyLogs[0].exerciseLogs[0].set.count)! == self.routineDetailPresenterMock.loadedData!.dailyLogs[0].exerciseLogs[0].set.count).toEventually(beTrue())
+                    expect((oldLoadedData?.dailyLogs[0].exerciseLogs[0].set.count)! == currentLoadedData!.dailyLogs[0].exerciseLogs[0].set.count).toEventually(beTrue())
                 }
             }
 
@@ -266,7 +282,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
@@ -274,13 +290,16 @@ class RoutineDetailInteractorTests: QuickSpec {
         describe("Max Weight") {
             var prevMaxWeight: String?
             var currentMaxWeight: String?
+            var currentLoadedData: RoutineDetailEntity?
+            let newRoutineInteractor = NewRoutineInteractor()
             
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
             
@@ -290,14 +309,16 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
                     
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //""
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -313,20 +334,22 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"100"
                     
                     
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     currentMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -342,20 +365,22 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                     
                     
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     currentMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"100000"
                 }
@@ -371,17 +396,19 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                     
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -397,16 +424,18 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                     
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"100"
                 }
@@ -422,24 +451,26 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "1000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "1000", logDate: logDate, exerciseTitle: exerciseTitle)
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:2, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:2, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
                     
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                     
                     
                     // remove "10000"
-                    self.sut.removeSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.removeSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"1000"
                 }
@@ -456,18 +487,19 @@ class RoutineDetailInteractorTests: QuickSpec {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"100"
                 }
                 
@@ -482,24 +514,26 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:2, slotIdentifier: .weight, text: "1000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:2, slotIdentifier: .weight, text: "1000", logDate: logDate, exerciseTitle: exerciseTitle)
                     
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                     
                     
                     // remove "1000"
-                    self.sut.removeSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.removeSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -516,18 +550,19 @@ class RoutineDetailInteractorTests: QuickSpec {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     currentMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
                 }
                 
@@ -542,12 +577,14 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
                     
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
@@ -569,12 +606,14 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10000", logDate: logDate, exerciseTitle: exerciseTitle)
                     
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxWeight = self.getMaxWeight(exerciseTitle: exerciseTitle) //"10000"
@@ -597,7 +636,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
@@ -605,13 +644,16 @@ class RoutineDetailInteractorTests: QuickSpec {
         describe("Max Total") {
             var prevMaxTotal: String?
             var currentMaxTotal: String?
-
+            var currentLoadedData: RoutineDetailEntity?
+            let newRoutineInteractor = NewRoutineInteractor()
+            
             beforeEach {
-                NewRoutineInteractor().createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
+                newRoutineInteractor.presenter = NewRoutinePresenterMock()
+                newRoutineInteractor.createNewRoutine(title: "test_routine_detail", unit: .kg, exerciseTitles: ["exercise1", "exercise2", "exercise3"])
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 self.routineArray = (flogInteractor.presenter as! FLogPresenterMock).loadedArray
             }
 
@@ -621,16 +663,18 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
 
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //""
 
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -646,19 +690,21 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
 
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                     
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"20000"
@@ -675,21 +721,24 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
 
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "1000", logDate: newLogDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "1000", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "1000", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "1000", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"1000000"
                 }
@@ -705,21 +754,25 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
 
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -735,22 +788,24 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
 
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"20000"
                     
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .reps, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .reps, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -766,22 +821,24 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
 
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"20000"
                     
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -797,23 +854,25 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
 
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"20000"
                     
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .reps, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .reps, text: "", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -829,22 +888,24 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
 
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"20000"
                     
                     
-                    self.sut.removeSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.removeSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -860,24 +921,28 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                     
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -893,24 +958,28 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                     
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -926,25 +995,29 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                     
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -960,25 +1033,29 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let logDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[0].logDate
-                    let exerciseTitle = (self.routineDetailPresenterMock.loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    let logDate = currentLoadedData!.dailyLogs[0].logDate
+                    let exerciseTitle = (currentLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!
+                    
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .reps, text: "100", logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
-                    let newLogDate = self.routineDetailPresenterMock.loadedData!.dailyLogs[1].logDate
-                    self.sut.createSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: newLogDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
-                    self.sut.updateSet(routineDetail: self.routineDetailPresenterMock.loadedData!, setIndex:1, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.loadData(with: routine)
+                    currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
+                    
+                    let newLogDate = currentLoadedData!.dailyLogs[1].logDate
+                    self.sut.createSet(routine: currentLoadedData!.routine, logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .weight, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
+                    self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:1, slotIdentifier: .reps, text: "10", logDate: newLogDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     prevMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                     
                     
-                    self.sut.removeSet(routineDetail: self.routineDetailPresenterMock.loadedData!, logDate: logDate, exerciseTitle: exerciseTitle)
+                    self.sut.removeSet(routine: currentLoadedData!.routine, logDate: logDate, exerciseTitle: exerciseTitle)
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: newLogDate)
                     currentMaxTotal = self.getMaxVolume(exerciseTitle: exerciseTitle) //"10000"
                 }
@@ -994,7 +1071,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
                 let flogInteractor = FLogInteractor()
                 flogInteractor.presenter = FLogPresenterMock()
-                flogInteractor.dispatchRoutines()
+                flogInteractor.loadData()
                 flogInteractor.deleteRoutine(index: (flogInteractor.presenter as! FLogPresenterMock).loadedArray.count-1)
             }
         }
@@ -1017,19 +1094,20 @@ class RoutineDetailInteractorTests: QuickSpec {
 }
 
 class RoutineDetailPresenterMock: RoutineDetailInteractorOutputProtocol {
+    
     var succeeded = false
     var errorOccurred = false
-    var loadedData: RoutineDetailModel?
+    var loadedData: ViperEntity?
     var maxInfo: Dictionary<String, Dictionary<String, String>>?
     
-    func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>) {
-        self.maxInfo = maxInfo
+    func didDataLoaded(with loadedData: ViperEntity) {
+        self.loadedData = loadedData
         errorOccurred = false
         succeeded = true
     }
     
-    func didLogLoaded(routineDetail: RoutineDetailModel) {
-        loadedData = routineDetail
+    func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>) {
+        self.maxInfo = maxInfo
         errorOccurred = false
         succeeded = true
     }
@@ -1049,7 +1127,7 @@ class RoutineDetailPresenterMock: RoutineDetailInteractorOutputProtocol {
         succeeded = true
     }
     
-    func didUpdateSetData(routineDetail: RoutineDetailModel) {
+    func didUpdateSetData(routineDetail: ViperEntity) {
         loadedData = routineDetail
         errorOccurred = false
         succeeded = true

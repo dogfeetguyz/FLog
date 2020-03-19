@@ -15,7 +15,8 @@ class NewRoutineView: KUIViewController  {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unitSegmentedControl: UISegmentedControl!
     
-    var presenter: NewRoutinePresenterProtocol?
+    var presenter: ViperPresenter?
+    var loadedData: ViperEntity?
     
     override func viewDidLoad() {
         cancelsTouchesInView = true // must be called before super.viewDidLoad() called
@@ -66,11 +67,18 @@ class NewRoutineView: KUIViewController  {
             exerciseTitles.append(textField.text!)
         }
         
-        presenter?.clickCreateButton(title: nameTextField.text!, unit: Unit(rawValue: unitSegmentedControl.selectedSegmentIndex)!, exerciseTitles:exerciseTitles)
+        if let _presenter = presenter as? NewRoutinePresenterProtocol {
+            _presenter.clickCreateButton(title: nameTextField.text!, unit: Unit(rawValue: unitSegmentedControl.selectedSegmentIndex)!, exerciseTitles:exerciseTitles)
+        }
     }
 }
 
 extension NewRoutineView: NewRoutineViewProtocol {
+    
+    func updateVIew(with entity: ViperEntity) {
+        
+    }
+    
     func showError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
         Common.View.showAlertWithOneButton(viewController: self, title: title, message: message, buttonTitle: buttonTitle, handler: handler)
     }

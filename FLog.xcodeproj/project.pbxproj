@@ -19,11 +19,15 @@
 		FA09FA3E2419EEBA006BE8A2 /* TimelineViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA3A2419EEBA006BE8A2 /* TimelineViewCell.swift */; };
 		FA09FA3F2419EEBA006BE8A2 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA3B2419EEBA006BE8A2 /* TimelineView.swift */; };
 		FA09FA402419EEBA006BE8A2 /* TimelineView+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA3C2419EEBA006BE8A2 /* TimelineView+UITableViewDelegate.swift */; };
-		FA09FA422419EEC3006BE8A2 /* TimelineWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA412419EEC3006BE8A2 /* TimelineWireFrame.swift */; };
+		FA09FA422419EEC3006BE8A2 /* TimelineRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA412419EEC3006BE8A2 /* TimelineRouter.swift */; };
 		FA09FA43241A0256006BE8A2 /* TimelineView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA09FA392419EEBA006BE8A2 /* TimelineView.storyboard */; };
 		FA09FA45241A3729006BE8A2 /* TimelineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09FA44241A3729006BE8A2 /* TimelineModel.swift */; };
 		FA33E88C2404DCBA000C99DC /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33E88B2404DCBA000C99DC /* Common.swift */; };
+		FA356E3B242221B700771D5A /* ViperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA356E3A242221B700771D5A /* ViperProtocol.swift */; };
+		FA356E402422422800771D5A /* FLogEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA356E3F2422422800771D5A /* FLogEntity.swift */; };
+		FA356E432422542B00771D5A /* TimelineEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA356E422422542B00771D5A /* TimelineEntity.swift */; };
 		FA4A6AA923FA9079000E54C4 /* RoutineDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */; };
+		FA5E2E5A2422DA7600790E9A /* RoutineDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5E2E592422DA7600790E9A /* RoutineDetailEntity.swift */; };
 		FA60DB70241A69C400298427 /* Timeline+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */; };
 		FA60DB71241A69C400298427 /* Timeline+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */; };
 		FA90ABD1241B2F92007F7249 /* FLogInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABD0241B2F92007F7249 /* FLogInteractorTests.swift */; };
@@ -33,20 +37,19 @@
 		FA90ABEB241B77A5007F7249 /* TimelineInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABE8241B77A5007F7249 /* TimelineInteractorTests.swift */; };
 		FAA12C0524179BD500736315 /* FLogProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0424179BD500736315 /* FLogProtocol.swift */; };
 		FAA12C0724179BE100736315 /* FLogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0624179BE100736315 /* FLogPresenter.swift */; };
-		FAA12C0924179BF700736315 /* FLogWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0824179BF700736315 /* FLogWireFrame.swift */; };
+		FAA12C0924179BF700736315 /* FLogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0824179BF700736315 /* FLogRouter.swift */; };
 		FAA12C0C2417A46E00736315 /* FLogInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0B2417A46E00736315 /* FLogInteractor.swift */; };
 		FAA12C0F2417A56400736315 /* MainRoutineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0E2417A56400736315 /* MainRoutineModel.swift */; };
-		FAA12C112417A60900736315 /* RoutineDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C102417A60900736315 /* RoutineDetailModel.swift */; };
 		FAA12C132417A67300736315 /* RoutineBestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C122417A67300736315 /* RoutineBestModel.swift */; };
 		FAA12C152417C0E400736315 /* FLogView+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C142417C0E400736315 /* FLogView+UITableViewDelegate.swift */; };
 		FAA12C1D2417C47E00736315 /* NewRoutineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C1C2417C47E00736315 /* NewRoutineProtocol.swift */; };
 		FAA12C1F2417C48600736315 /* NewRoutinePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C1E2417C48600736315 /* NewRoutinePresenter.swift */; };
-		FAA12C212417C49200736315 /* NewRoutineWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C202417C49200736315 /* NewRoutineWireFrame.swift */; };
+		FAA12C212417C49200736315 /* NewRoutineRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C202417C49200736315 /* NewRoutineRouter.swift */; };
 		FAA12C242417C51600736315 /* NewRoutineInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C232417C51600736315 /* NewRoutineInteractor.swift */; };
 		FAA12C2D2417D16C00736315 /* RoutineDetailProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C2C2417D16C00736315 /* RoutineDetailProtocol.swift */; };
 		FAA12C2F2417D17B00736315 /* RoutineDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C2E2417D17B00736315 /* RoutineDetailPresenter.swift */; };
 		FAA12C312417D18400736315 /* RoutineDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C302417D18300736315 /* RoutineDetailInteractor.swift */; };
-		FAA12C332417D19400736315 /* RoutineDetailWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C322417D19400736315 /* RoutineDetailWireFrame.swift */; };
+		FAA12C332417D19400736315 /* RoutineDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C322417D19400736315 /* RoutineDetailRouter.swift */; };
 		FABD9641241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD9640241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift */; };
 		FABD96442418A122007C868D /* SetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD96432418A122007C868D /* SetModel.swift */; };
 		FABD96462418A167007C868D /* ExerciseLogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD96452418A167007C868D /* ExerciseLogModel.swift */; };
@@ -101,10 +104,14 @@
 		FA09FA3A2419EEBA006BE8A2 /* TimelineViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewCell.swift; sourceTree = "<group>"; };
 		FA09FA3B2419EEBA006BE8A2 /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		FA09FA3C2419EEBA006BE8A2 /* TimelineView+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimelineView+UITableViewDelegate.swift"; sourceTree = "<group>"; };
-		FA09FA412419EEC3006BE8A2 /* TimelineWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineWireFrame.swift; sourceTree = "<group>"; };
+		FA09FA412419EEC3006BE8A2 /* TimelineRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineRouter.swift; sourceTree = "<group>"; };
 		FA09FA44241A3729006BE8A2 /* TimelineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineModel.swift; sourceTree = "<group>"; };
 		FA33E88B2404DCBA000C99DC /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		FA356E3A242221B700771D5A /* ViperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViperProtocol.swift; sourceTree = "<group>"; };
+		FA356E3F2422422800771D5A /* FLogEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogEntity.swift; sourceTree = "<group>"; };
+		FA356E422422542B00771D5A /* TimelineEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineEntity.swift; sourceTree = "<group>"; };
 		FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineDetailTableViewCell.swift; sourceTree = "<group>"; };
+		FA5E2E592422DA7600790E9A /* RoutineDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailEntity.swift; sourceTree = "<group>"; };
 		FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Timeline+CoreDataProperties.swift"; path = "/Users/yejunpark/Workspace/FLog/FLog/Entity/Timeline+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Timeline+CoreDataClass.swift"; path = "/Users/yejunpark/Workspace/FLog/FLog/Entity/Timeline+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		FA90ABCE241B2F92007F7249 /* FLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,20 +125,19 @@
 		FA90ABE8241B77A5007F7249 /* TimelineInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineInteractorTests.swift; sourceTree = "<group>"; };
 		FAA12C0424179BD500736315 /* FLogProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogProtocol.swift; sourceTree = "<group>"; };
 		FAA12C0624179BE100736315 /* FLogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogPresenter.swift; sourceTree = "<group>"; };
-		FAA12C0824179BF700736315 /* FLogWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogWireFrame.swift; sourceTree = "<group>"; };
+		FAA12C0824179BF700736315 /* FLogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogRouter.swift; sourceTree = "<group>"; };
 		FAA12C0B2417A46E00736315 /* FLogInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogInteractor.swift; sourceTree = "<group>"; };
 		FAA12C0E2417A56400736315 /* MainRoutineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRoutineModel.swift; sourceTree = "<group>"; };
-		FAA12C102417A60900736315 /* RoutineDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailModel.swift; sourceTree = "<group>"; };
 		FAA12C122417A67300736315 /* RoutineBestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBestModel.swift; sourceTree = "<group>"; };
 		FAA12C142417C0E400736315 /* FLogView+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FLogView+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		FAA12C1C2417C47E00736315 /* NewRoutineProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoutineProtocol.swift; sourceTree = "<group>"; };
 		FAA12C1E2417C48600736315 /* NewRoutinePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoutinePresenter.swift; sourceTree = "<group>"; };
-		FAA12C202417C49200736315 /* NewRoutineWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoutineWireFrame.swift; sourceTree = "<group>"; };
+		FAA12C202417C49200736315 /* NewRoutineRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoutineRouter.swift; sourceTree = "<group>"; };
 		FAA12C232417C51600736315 /* NewRoutineInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoutineInteractor.swift; sourceTree = "<group>"; };
 		FAA12C2C2417D16C00736315 /* RoutineDetailProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailProtocol.swift; sourceTree = "<group>"; };
 		FAA12C2E2417D17B00736315 /* RoutineDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailPresenter.swift; sourceTree = "<group>"; };
 		FAA12C302417D18300736315 /* RoutineDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailInteractor.swift; sourceTree = "<group>"; };
-		FAA12C322417D19400736315 /* RoutineDetailWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailWireFrame.swift; sourceTree = "<group>"; };
+		FAA12C322417D19400736315 /* RoutineDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailRouter.swift; sourceTree = "<group>"; };
 		FABD9640241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutineDetailView+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		FABD96432418A122007C868D /* SetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetModel.swift; sourceTree = "<group>"; };
 		FABD96452418A167007C868D /* ExerciseLogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLogModel.swift; sourceTree = "<group>"; };
@@ -206,9 +212,10 @@
 			isa = PBXGroup;
 			children = (
 				FA09FA2C2419DD17006BE8A2 /* Protocol */,
-				FA09FA2B2419DD12006BE8A2 /* Presenter */,
-				FA09FA2A2419DD0D006BE8A2 /* Interactor */,
 				FA09FA292419DD03006BE8A2 /* View */,
+				FA09FA2A2419DD0D006BE8A2 /* Interactor */,
+				FA09FA2B2419DD12006BE8A2 /* Presenter */,
+				FA356E412422541800771D5A /* Entity */,
 				FA09FA282419DCFA006BE8A2 /* Router */,
 			);
 			path = Timeline;
@@ -217,7 +224,7 @@
 		FA09FA282419DCFA006BE8A2 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				FA09FA412419EEC3006BE8A2 /* TimelineWireFrame.swift */,
+				FA09FA412419EEC3006BE8A2 /* TimelineRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -269,10 +276,28 @@
 		FA33E88D2404DCC6000C99DC /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FAA12C0D2417A4B900736315 /* Entity */,
 				FAF661BE23F8D3DD0003B589 /* KUIViewController.swift */,
 				FA33E88B2404DCBA000C99DC /* Common.swift */,
+				FA356E3A242221B700771D5A /* ViperProtocol.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		FA356E3E2422404B00771D5A /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FA356E3F2422422800771D5A /* FLogEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		FA356E412422541800771D5A /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FA356E422422542B00771D5A /* TimelineEntity.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		FA90ABCF241B2F92007F7249 /* FLogTests */ = {
@@ -300,9 +325,10 @@
 			isa = PBXGroup;
 			children = (
 				FAA12C0024179B5D00736315 /* Protocol */,
-				FAA12C0324179B7200736315 /* Presenter */,
-				FAA12C0A2417A44D00736315 /* Interactor */,
 				FAA12C0224179B6E00736315 /* View */,
+				FAA12C0A2417A44D00736315 /* Interactor */,
+				FAA12C0324179B7200736315 /* Presenter */,
+				FA356E3E2422404B00771D5A /* Entity */,
 				FAA12C0124179B6200736315 /* Router */,
 			);
 			path = Flog;
@@ -319,7 +345,7 @@
 		FAA12C0124179B6200736315 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				FAA12C0824179BF700736315 /* FLogWireFrame.swift */,
+				FAA12C0824179BF700736315 /* FLogRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -357,7 +383,6 @@
 				FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */,
 				FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */,
 				FAA12C0E2417A56400736315 /* MainRoutineModel.swift */,
-				FAA12C102417A60900736315 /* RoutineDetailModel.swift */,
 				FABD96472418A2BA007C868D /* DailyLogModel.swift */,
 				FABD96452418A167007C868D /* ExerciseLogModel.swift */,
 				FABD96432418A122007C868D /* SetModel.swift */,
@@ -371,9 +396,9 @@
 			isa = PBXGroup;
 			children = (
 				FAA12C172417C40300736315 /* Protocol */,
-				FAA12C182417C40B00736315 /* Presenter */,
-				FAA12C222417C50600736315 /* Interactor */,
 				FAA12C1A2417C41700736315 /* View */,
+				FAA12C222417C50600736315 /* Interactor */,
+				FAA12C182417C40B00736315 /* Presenter */,
 				FAA12C192417C41100736315 /* Router */,
 			);
 			path = NewRoutine;
@@ -398,7 +423,7 @@
 		FAA12C192417C41100736315 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				FAA12C202417C49200736315 /* NewRoutineWireFrame.swift */,
+				FAA12C202417C49200736315 /* NewRoutineRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -424,9 +449,10 @@
 			isa = PBXGroup;
 			children = (
 				FAA12C2A2417D12500736315 /* Protocol */,
-				FAA12C292417D12100736315 /* Presenter */,
-				FAA12C282417D11C00736315 /* Interactor */,
 				FAA12C272417D11300736315 /* View */,
+				FAA12C282417D11C00736315 /* Interactor */,
+				FAA12C292417D12100736315 /* Presenter */,
+				FADA2B6E2422D6C80079E08D /* Entity */,
 				FAA12C262417D10D00736315 /* Router */,
 			);
 			path = RoutineDetail;
@@ -435,7 +461,7 @@
 		FAA12C262417D10D00736315 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				FAA12C322417D19400736315 /* RoutineDetailWireFrame.swift */,
+				FAA12C322417D19400736315 /* RoutineDetailRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -475,6 +501,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		FADA2B6E2422D6C80079E08D /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FA5E2E592422DA7600790E9A /* RoutineDetailEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 		FAF6619823F6554B0003B589 = {
 			isa = PBXGroup;
 			children = (
@@ -504,7 +538,6 @@
 				FAA12C162417C3F700736315 /* NewRoutine */,
 				FA09FA272419DCE0006BE8A2 /* Timeline */,
 				FAA12BFF24179B4300736315 /* Flog */,
-				FAA12C0D2417A4B900736315 /* Entity */,
 				FA33E88D2404DCC6000C99DC /* Common */,
 				FA33E8892404D45D000C99DC /* Supporting Files */,
 				FA09FA2D2419DF8A006BE8A2 /* TabBarWireframe.swift */,
@@ -796,22 +829,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA356E402422422800771D5A /* FLogEntity.swift in Sources */,
 				FAA12C1D2417C47E00736315 /* NewRoutineProtocol.swift in Sources */,
+				FA5E2E5A2422DA7600790E9A /* RoutineDetailEntity.swift in Sources */,
 				FAA12C0F2417A56400736315 /* MainRoutineModel.swift in Sources */,
 				FA09FA45241A3729006BE8A2 /* TimelineModel.swift in Sources */,
-				FAA12C332417D19400736315 /* RoutineDetailWireFrame.swift in Sources */,
+				FAA12C332417D19400736315 /* RoutineDetailRouter.swift in Sources */,
 				FAA12C312417D18400736315 /* RoutineDetailInteractor.swift in Sources */,
-				FAA12C112417A60900736315 /* RoutineDetailModel.swift in Sources */,
-				FAA12C0924179BF700736315 /* FLogWireFrame.swift in Sources */,
+				FAA12C0924179BF700736315 /* FLogRouter.swift in Sources */,
 				FAA12C2F2417D17B00736315 /* RoutineDetailPresenter.swift in Sources */,
 				FA09FA3E2419EEBA006BE8A2 /* TimelineViewCell.swift in Sources */,
 				FA60DB71241A69C400298427 /* Timeline+CoreDataProperties.swift in Sources */,
 				FAA12C0724179BE100736315 /* FLogPresenter.swift in Sources */,
 				FAA12C242417C51600736315 /* NewRoutineInteractor.swift in Sources */,
 				FA33E88C2404DCBA000C99DC /* Common.swift in Sources */,
+				FA356E3B242221B700771D5A /* ViperProtocol.swift in Sources */,
 				FAA12C132417A67300736315 /* RoutineBestModel.swift in Sources */,
 				FA09FA402419EEBA006BE8A2 /* TimelineView+UITableViewDelegate.swift in Sources */,
-				FAA12C212417C49200736315 /* NewRoutineWireFrame.swift in Sources */,
+				FAA12C212417C49200736315 /* NewRoutineRouter.swift in Sources */,
 				FAF661BB23F6869A0003B589 /* NewRoutineView.swift in Sources */,
 				FAF661A923F6554B0003B589 /* FLogView.swift in Sources */,
 				FAA12C0524179BD500736315 /* FLogProtocol.swift in Sources */,
@@ -822,13 +857,14 @@
 				FA09FA2E2419DF8A006BE8A2 /* TabBarWireframe.swift in Sources */,
 				FAA12C152417C0E400736315 /* FLogView+UITableViewDelegate.swift in Sources */,
 				FAF661B923F674540003B589 /* FLogViewCell.swift in Sources */,
+				FA356E432422542B00771D5A /* TimelineEntity.swift in Sources */,
 				FAA12C2D2417D16C00736315 /* RoutineDetailProtocol.swift in Sources */,
 				FA09FA322419EE8A006BE8A2 /* TimelineProtocol.swift in Sources */,
 				FAC5BC3323FA57410069B016 /* RoutineDetailView.swift in Sources */,
 				FABD96482418A2BA007C868D /* DailyLogModel.swift in Sources */,
 				FAA12C1F2417C48600736315 /* NewRoutinePresenter.swift in Sources */,
 				FA60DB70241A69C400298427 /* Timeline+CoreDataClass.swift in Sources */,
-				FA09FA422419EEC3006BE8A2 /* TimelineWireFrame.swift in Sources */,
+				FA09FA422419EEC3006BE8A2 /* TimelineRouter.swift in Sources */,
 				FAF661BF23F8D3DD0003B589 /* KUIViewController.swift in Sources */,
 				FA4A6AA923FA9079000E54C4 /* RoutineDetailTableViewCell.swift in Sources */,
 				FAA12C0C2417A46E00736315 /* FLogInteractor.swift in Sources */,

@@ -8,20 +8,19 @@
 
 import UIKit
 
-class TimelineWireFrame: TimelineWireFrameProtocol {
-    
-    class func createTimelineModule() -> UIViewController {
+class TimelineRouter: TimelineRouterProtocol {
+    class func createModule(with initialData: ViperEntity?) -> UIViewController {
         
         let navigationController = UIStoryboard(name: "TimelineView", bundle: Bundle.main).instantiateInitialViewController()
         if let view = navigationController!.children.first as? TimelineView {
             
             let presenter: TimelinePresenterProtocol & TimelineInteractorOutputProtocol = TimelinePresenter()
             let interactor: TimelineInteractorInputProtocol = TimelineInteractor()
-            let wireFrame: TimelineWireFrameProtocol = TimelineWireFrame()
+            let router: TimelineRouterProtocol = TimelineRouter()
 
             view.presenter = presenter
             presenter.view = view
-            presenter.wireFrame = wireFrame
+            presenter.router = router
             presenter.interactor = interactor
             interactor.presenter = presenter
 

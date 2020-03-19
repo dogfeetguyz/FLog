@@ -9,7 +9,7 @@
 /**
  Structure that is used for holding Main Routine data.
  */
-public struct MainRoutineModel {
+public class MainRoutineModel: ViperEntity {
     /// Routine Routine tItle
     public var title: String = ""
     
@@ -18,4 +18,10 @@ public struct MainRoutineModel {
     
     /// Array of exercise titles
     public var exerciseTitles = Array<String>()
+    
+    init(title: String, unit: String, exerciseTitles: Array<String>) {
+        self.title = title
+        self.unit = unit
+        self.exerciseTitles = exerciseTitles
+    }
 }

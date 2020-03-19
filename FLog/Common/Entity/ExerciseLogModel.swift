@@ -9,12 +9,17 @@
 /**
  Structure that is used for holding Exercise log data.
  */
-public struct ExerciseLogModel {
+public class ExerciseLogModel: ViperEntity {
     
     /// Exercise title for this log
     public var exerciseTitle: String = ""
     
     /// Each set for this log containing weight and repetitions
     public var set: [SetModel]
+    
+    init(exerciseTitle: String, set: [SetModel]) {
+        self.exerciseTitle = exerciseTitle
+        self.set = set
+    }
 }
 

@@ -36,25 +36,27 @@ class TimelineInteractorTests: QuickSpec {
 
                     let flogInteractor = FLogInteractor()
                     flogInteractor.presenter = FLogPresenterMock()
-                    flogInteractor.dispatchRoutines()
+                    flogInteractor.loadData()
                     
                     let routineDetailInteractor = RoutineDetailInteractor()
                     routineDetailInteractor.presenter = RoutineDetailPresenterMock()
-                    routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+                    routineDetailInteractor.loadData(with: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+                    let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData as? RoutineDetailEntity
+                    let logDate = (routineDetailData?.dailyLogs[i].logDate)!
+                    let exerciseTitle = (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!
                     
                     let weight = Int.random(in: Range(0 ... 100)) % 2 == 0 ? "10" : ""
                     let reps = Int.random(in: Range(0 ... 100)) % 2 == 0 ? "10" : ""
                     
-                    let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData
-                    routineDetailInteractor.updateSet(routineDetail: routineDetailData!, setIndex:0, slotIdentifier: .weight, text: weight, logDate: (routineDetailData?.dailyLogs[i].logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
-                    routineDetailInteractor.updateSet(routineDetail: routineDetailData!, setIndex:0, slotIdentifier: .reps, text: reps, logDate: (routineDetailData?.dailyLogs[i].logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
+                    routineDetailInteractor.updateSet(routine: routineDetailData!.routine, setIndex:0, slotIdentifier: .weight, text: weight, logDate: logDate, exerciseTitle: exerciseTitle)
+                    routineDetailInteractor.updateSet(routine: routineDetailData!.routine, setIndex:0, slotIdentifier: .reps, text: reps, logDate: logDate, exerciseTitle: exerciseTitle)
                 }
 
             }
             
             context("When the data is dispatched once") {
                 beforeEach {
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should have 10 or less than 10 timelines") {
@@ -66,7 +68,7 @@ class TimelineInteractorTests: QuickSpec {
                 beforeEach {
                     while true {
                         let currentFetchOffset = self.sut.fetchOffset
-                        self.sut.dispatchTimelines(isInitial: false)
+                        self.sut.loadData(isInitial: false)
                         
                         if currentFetchOffset == self.sut.fetchOffset {
                             break
@@ -87,11 +89,11 @@ class TimelineInteractorTests: QuickSpec {
         describe("Timeline list") {
             context("When a user created a routine") {
                 beforeEach {
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.createRoutine()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should have no difference on the count between befor and after") {
@@ -106,11 +108,11 @@ class TimelineInteractorTests: QuickSpec {
             context("When a user creates a log") {
                 beforeEach {
                     self.createRoutine()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.createLog(date: Date())
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should have no difference on the count between befor and after") {
@@ -126,11 +128,11 @@ class TimelineInteractorTests: QuickSpec {
                 beforeEach {
                     self.createRoutine()
                     self.createLog(date: Date())
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.createSet()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should have no difference on the count between befor and after") {
@@ -147,11 +149,11 @@ class TimelineInteractorTests: QuickSpec {
                     self.createRoutine()
                     self.createLog(date: Date())
                     self.createSet()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.updateSet(at: 1, weight: "10", reps:"")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should have no difference on the count between befor and after") {
@@ -168,11 +170,11 @@ class TimelineInteractorTests: QuickSpec {
                     self.createRoutine()
                     self.createLog(date: Date())
                     self.createSet()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.updateSet(at: 1, weight: "", reps:"10")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should have no difference on the count between befor and after") {
@@ -189,11 +191,11 @@ class TimelineInteractorTests: QuickSpec {
                     self.createRoutine()
                     self.createLog(date: Date())
                     self.createSet()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.updateSet(at: 1, weight: "10", reps: "10")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should be increased by 1 after setting weight and reps") {
@@ -211,11 +213,11 @@ class TimelineInteractorTests: QuickSpec {
                     self.createLog(date: Date())
                     self.createSet()
                     self.updateSet(at: 1, weight: "10", reps:"10")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.updateSet(at: 1, weight: "", reps:"10")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should be decreased by 1 after removing weight") {
@@ -233,11 +235,11 @@ class TimelineInteractorTests: QuickSpec {
                     self.createLog(date: Date())
                     self.createSet()
                     self.updateSet(at: 1, weight: "10", reps:"10")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.updateSet(at: 1, weight: "10", reps:"")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should be decreased by 1 after removing reps") {
@@ -253,11 +255,11 @@ class TimelineInteractorTests: QuickSpec {
                 beforeEach {
                     self.createRoutine()
                     self.createLog(date: Date())
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.removeSet()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should have no difference on the count between befor and after") {
@@ -275,11 +277,11 @@ class TimelineInteractorTests: QuickSpec {
                     self.createLog(date: Date())
                     self.createSet()
                     self.updateSet(at: 1, weight: "10", reps:"10")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.removeSet()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should be decreased by 1 after removing the set") {
@@ -295,11 +297,11 @@ class TimelineInteractorTests: QuickSpec {
                 beforeEach {
                     self.createRoutine()
                     self.createLog(date: Date())
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.removeLog()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
 
                 it("Should have no difference on the count between befor and after") {
@@ -316,11 +318,11 @@ class TimelineInteractorTests: QuickSpec {
                     self.createRoutine()
                     self.createLog(date: Date())
                     self.updateSet(at: 0, weight: "10", reps:"10")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
 
                     self.removeLog()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should be decreased by 1 after removing the log") {
@@ -336,11 +338,11 @@ class TimelineInteractorTests: QuickSpec {
                 beforeEach {
                     self.createRoutine()
                     self.createLog(date: Date())
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
                     
                     self.removeLastRoutine()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
 
                 it("Should have no difference on the count between befor and after") {
@@ -359,11 +361,11 @@ class TimelineInteractorTests: QuickSpec {
                     self.createRoutine()
                     self.createLog(date: Date())
                     self.updateSet(at: 0, weight: "10", reps: "10")
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                     self.oldLoadedArray = self.timelinePresenterMock.loadedArray
 
                     self.removeLastRoutine()
-                    self.sut.dispatchTimelines(isInitial: true)
+                    self.sut.loadData(isInitial: true)
                 }
                 
                 it("Should be decreased by 1 after removing the log") {
@@ -381,31 +383,34 @@ class TimelineInteractorTests: QuickSpec {
     
     func createRoutine() {
         let newRoutineInteractor = NewRoutineInteractor()
+        newRoutineInteractor.presenter = NewRoutinePresenterMock()
         newRoutineInteractor.createNewRoutine(title: "test_timeline", unit: .kg, exerciseTitles: ["exercise1", "exercise2"])
     }
     
     func removeLastRoutine() {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         flogInteractor.deleteRoutine(index: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.count) - 1)
     }
     
     func createLog(date: Date) {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         
         let routineDetailInteractor = RoutineDetailInteractor()
+        routineDetailInteractor.presenter = RoutineDetailPresenterMock()
         routineDetailInteractor.createLog(date: date, routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
     }
     
     func removeLog() {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
 
         let routineDetailInteractor = RoutineDetailInteractor()
+        routineDetailInteractor.presenter = RoutineDetailPresenterMock()
         routineDetailInteractor.removeLog(removeIndex: 0, routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
 
     }
@@ -413,58 +418,61 @@ class TimelineInteractorTests: QuickSpec {
     func createSet() {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
-        routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+        routineDetailInteractor.loadData(with: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
         
-        let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData
-        routineDetailInteractor.createSet(routineDetail: routineDetailData!, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
+        let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData as? RoutineDetailEntity
+        routineDetailInteractor.createSet(routine: routineDetailData!.routine, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
     }
     
     func updateSet(at index:Int, weight: String, reps: String) {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
-        routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+        routineDetailInteractor.loadData(with: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
         
-        let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData
-        routineDetailInteractor.updateSet(routineDetail: routineDetailData!, setIndex:index, slotIdentifier: .weight, text: weight, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
-        routineDetailInteractor.updateSet(routineDetail: routineDetailData!, setIndex:index, slotIdentifier: .reps, text: reps, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
+        let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData as? RoutineDetailEntity
+        routineDetailInteractor.updateSet(routine: routineDetailData!.routine, setIndex:index, slotIdentifier: .weight, text: weight, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
+        routineDetailInteractor.updateSet(routine: routineDetailData!.routine, setIndex:index, slotIdentifier: .reps, text: reps, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
     }
     
     func removeSet() {
         let flogInteractor = FLogInteractor()
         flogInteractor.presenter = FLogPresenterMock()
-        flogInteractor.dispatchRoutines()
+        flogInteractor.loadData()
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
-        routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+        routineDetailInteractor.loadData(with: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
         
-        let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData
-        
-        routineDetailInteractor.removeSet(routineDetail: routineDetailData!, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
+        let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData as? RoutineDetailEntity
+        routineDetailInteractor.removeSet(routine: routineDetailData!.routine, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
         
     }
 }
 
 class TimelinePresenterMock: TimelineInteractorOutputProtocol {
+    var isInitial: Bool = false
+    
     var dispatched = false
     var errorOccurred = false
     var loadedArray:Array<TimelineModel> = []
     
-    func didDispatchTimelines(with timelineArray: [TimelineModel], isInitial: Bool) {
-        loadedArray = timelineArray
+    func didDataLoaded(with loadedData: ViperEntity) {
+        if let _loadedData = loadedData as? TimelineEntityProtocol {
+            loadedArray = _loadedData.timelineArray
+        }
         dispatched = true
         errorOccurred = false
     }
     
-    func onError(isInitial: Bool) {
+    func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
         loadedArray = []
         dispatched = false
         errorOccurred = true

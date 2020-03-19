@@ -17,19 +17,21 @@ class RoutineDetailView: KUIViewController {
     @IBOutlet weak var personalRecordStackView: UIStackView!
     @IBOutlet weak var moreButton: UIButton!
     
-    var presenter: RoutineDetailPresenterProtocol?
-    var routineDetailData: RoutineDetailModel?
+    var presenter: ViperPresenter?
+    var loadedData: ViperEntity?
     var maxInfoData: Dictionary<String, Dictionary<String, String>>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = routineDetailData!.routine.title
         
         segmentedControl.segmentStyle = .textOnly
         segmentedControl.underlineSelected = true
         segmentedControl.fixedSegmentWidth = false
         
-        presenter?.viewDidLoad()
+        if let _presenter = presenter as? RoutineDetailPresenterProtocol {
+            _presenter.viewDidLoad()
+            _presenter.loadMaxInfo()
+        }
         segmentedControl.selectedSegmentIndex = 0
     }
     
@@ -38,11 +40,12 @@ class RoutineDetailView: KUIViewController {
     }
     
     @IBAction func deleteButtonAction() {
-        
-        Common.View.showAlertWithTwoButtons(viewController: self, title: "Delete the fitness log?", message: "", cancelButtonTitle: "Cancel", OKButtonTitle: "Delete", OKHandler: { (_) in
-            let removeIndex = self.segmentedControl.numberOfSegments - 1 - self.segmentedControl.selectedSegmentIndex
-            self.presenter?.removeLogAction(removeIndex: removeIndex)
-        })
+        if let _presenter = presenter as? RoutineDetailPresenterProtocol {
+            Common.View.showAlertWithTwoButtons(viewController: self, title: "Delete the fitness log?", message: "", cancelButtonTitle: "Cancel", OKButtonTitle: "Delete", OKHandler: { (_) in
+                let removeIndex = self.segmentedControl.numberOfSegments - 1 - self.segmentedControl.selectedSegmentIndex
+                _presenter.removeLogAction(removeIndex: removeIndex)
+            })
+        }
     }
     
     @IBAction func moreButtonAction() {
@@ -55,7 +58,9 @@ class RoutineDetailView: KUIViewController {
             moreButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
         
-        presenter?.loadMaxInfo()
+        if let _presenter = presenter as? RoutineDetailPresenterProtocol {
+            _presenter.loadMaxInfo()
+        }
     }
        
     @IBAction func segmentSelected(sender:ScrollableSegmentedControl) {
@@ -64,10 +69,12 @@ class RoutineDetailView: KUIViewController {
     
     override func keyboardWillHide(sender: NSNotification) {
         super.keyboardWillHide(sender: sender)
-        presenter?.finishedInputData(logDate: segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!)
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        if let _presenter = presenter as? RoutineDetailPresenterProtocol {
+            _presenter.finishedInputData(logDate: segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!)
+
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 }
@@ -75,8 +82,8 @@ class RoutineDetailView: KUIViewController {
 
 extension RoutineDetailView: RoutineDetailViewProtocol {
     
-    func showRoutineDetail(routineDetail: RoutineDetailModel) {
-        routineDetailData = routineDetail
+    func updateVIew(with entity: ViperEntity) {
+        loadedData = entity
         
         if segmentedControl.numberOfSegments > 0 {
             for _ in Range(0 ... segmentedControl.numberOfSegments-1) {
@@ -84,8 +91,10 @@ extension RoutineDetailView: RoutineDetailViewProtocol {
             }
         }
         
-        for dailyLog in self.routineDetailData!.dailyLogs {
-            segmentedControl.insertSegment(withTitle: dailyLog.logDate, at: 0)
+        if let _loadedData = loadedData as? RoutineDetailEntityProtocol {
+            for dailyLog in _loadedData.dailyLogs {
+                segmentedControl.insertSegment(withTitle: dailyLog.logDate, at: 0)
+            }
         }
     }
     
@@ -93,28 +102,33 @@ extension RoutineDetailView: RoutineDetailViewProtocol {
         if isFirst {
             tableView.isHidden = true
         }
-        DatePickerDialog().show("Choose a date", datePickerMode: .date) { (date) in
-            
-            if isFirst {    // if it is the first log, it should be created whether user choose a date or not
-                self.presenter?.newLogAction(date: date == nil ? Date() : date!)
-                self.tableView.isHidden = false
-            } else {
-                if date == nil {
-                    return
-                }
+        
+        if let _presenter = presenter as? RoutineDetailPresenterProtocol {
+            DatePickerDialog().show("Choose a date", datePickerMode: .date) { (date) in
                 
-                self.presenter?.newLogAction(date: date!)
+                if isFirst {    // if it is the first log, it should be created whether user choose a date or not
+                    _presenter.newLogAction(date: date == nil ? Date() : date!)
+                    self.tableView.isHidden = false
+                } else {
+                    if date == nil {
+                        return
+                    }
+                    
+                    _presenter.newLogAction(date: date!)
+                }
             }
         }
     }
     
     func updateLogView(segmentIndex: Int) {
-        presenter?.loadLogs()
-        
-        if segmentIndex >= 0 {
-            self.segmentedControl.selectedSegmentIndex = segmentIndex
-            DispatchQueue.main.async {  // to scroll the segmentControll, it needs to be called again as an async call
+        if let _presenter = presenter as? RoutineDetailPresenterProtocol {
+            _presenter.viewDidLoad()
+            
+            if segmentIndex >= 0 {
                 self.segmentedControl.selectedSegmentIndex = segmentIndex
+                DispatchQueue.main.async {  // to scroll the segmentControll, it needs to be called again as an async call
+                    self.segmentedControl.selectedSegmentIndex = segmentIndex
+                }
             }
         }
     }
@@ -133,38 +147,40 @@ extension RoutineDetailView: RoutineDetailViewProtocol {
         
         if (moreButton.attributedTitle(for: .normal)?.string == "less") {
 
-            for exerciseTitle in routineDetailData!.routine.exerciseTitles {
-                let text1 = exerciseTitle
+            if let _loadedData = loadedData as? RoutineDetailEntityProtocol {
+                for exerciseTitle in _loadedData.routine.exerciseTitles {
+                    let text1 = exerciseTitle
 
-                let unit = maxInfo[exerciseTitle]![Common.Define.mainRoutineUnit]!
-                let bestMaxVolume = maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume]!
-                let bestMaxVolumeDate = maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate]!
-                let bestMaxWeight = maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!
-                let bestMaxWeightDate = maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate]!
-                let text2 = String(format: "Max Volume: %@%@ (%@)\nMax Weight: %@%@ (%@)", bestMaxVolume, unit, bestMaxVolumeDate, bestMaxWeight, unit, bestMaxWeightDate)
+                    let unit = maxInfo[exerciseTitle]![Common.Define.mainRoutineUnit]!
+                    let bestMaxVolume = maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolume]!
+                    let bestMaxVolumeDate = maxInfo[exerciseTitle]![Common.Define.routineBestMaxVolumeDate]!
+                    let bestMaxWeight = maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeight]!
+                    let bestMaxWeightDate = maxInfo[exerciseTitle]![Common.Define.routineBestMaxWeightDate]!
+                    let text2 = String(format: "Max Volume: %@%@ (%@)\nMax Weight: %@%@ (%@)", bestMaxVolume, unit, bestMaxVolumeDate, bestMaxWeight, unit, bestMaxWeightDate)
 
-                let text = text1 + "\n" + text2 as NSString
-                let nameLabel = UILabel()
-                nameLabel.numberOfLines = 3
-                let attributedString = NSMutableAttributedString(string: text as String)
-                attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: (text as NSString).range(of: text1))
-                attributedString.addAttribute(.foregroundColor, value: UIColor.lightGray, range: (text as NSString).range(of: text2))
-                attributedString.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 14), range: (text as NSString).range(of: text1))
-                attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 12), range: (text as NSString).range(of: text2))
+                    let text = text1 + "\n" + text2 as NSString
+                    let nameLabel = UILabel()
+                    nameLabel.numberOfLines = 3
+                    let attributedString = NSMutableAttributedString(string: text as String)
+                    attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: (text as NSString).range(of: text1))
+                    attributedString.addAttribute(.foregroundColor, value: UIColor.lightGray, range: (text as NSString).range(of: text2))
+                    attributedString.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 14), range: (text as NSString).range(of: text1))
+                    attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 12), range: (text as NSString).range(of: text2))
 
 
-                let paragraphStyle = NSMutableParagraphStyle()
-                paragraphStyle.lineSpacing = 3
-                attributedString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text.length))
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    paragraphStyle.lineSpacing = 3
+                    attributedString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text.length))
 
-                nameLabel.attributedText = attributedString
-                personalRecordStackView.addArrangedSubview(nameLabel)
+                    nameLabel.attributedText = attributedString
+                    personalRecordStackView.addArrangedSubview(nameLabel)
+                }
             }
         }
     }
     
-    func updateTableView(routineDetail: RoutineDetailModel) {
-        routineDetailData = routineDetail
+    func updateTableView(routineDetail: ViperEntity) {
+        loadedData = routineDetail
         tableView.reloadData()
     }
     

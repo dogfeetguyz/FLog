@@ -9,78 +9,113 @@
 import UIKit
 
 class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
-    
-    var view: RoutineDetailViewProtocol?
-    
-    var interactor: RoutineDetailInteractorInputProtocol?
-    
-    var wireFrame: RoutineDetailWireFrameProtocol?
+    var view: ViperView?
+    var interactor: ViperInteractorInput?
+    var router: ViperRouter?
     
     func viewDidLoad() {
-        loadMaxInfo()
-        loadLogs()
-    }
-    
-    func loadLogs() {
-        interactor?.loadLogs(routine: (view?.routineDetailData!.routine)!)
+        if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
+            if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
+                _interactor.loadData(with: _routineDetailData.routine)
+            }
+        }
     }
     
     func loadMaxInfo() {
-        interactor?.loadMaxInfo(routineTitle: (view?.routineDetailData?.routine.title)!)
+        if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
+            if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
+                _interactor.loadMaxInfo(routineTitle: _routineDetailData.routine.title)
+            }
+        }
     }
     
     func textfieldUpdated(setIndex: Int, slotIdentifier:Slot, text: String, logDate: String, exerciseTitle: String) {
-        interactor?.updateSet(routineDetail: view!.routineDetailData!, setIndex: setIndex, slotIdentifier: slotIdentifier, text: text, logDate: logDate, exerciseTitle: exerciseTitle)
+        if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
+            if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
+                _interactor.updateSet(routine: _routineDetailData.routine, setIndex: setIndex, slotIdentifier: slotIdentifier, text: text, logDate: logDate, exerciseTitle: exerciseTitle)
+            }
+        }
     }
     
     func finishedInputData(logDate: String) {
-        interactor?.updateMaxValueIfNeeded(routineTitle: (view?.routineDetailData?.routine.title)!, logDate: logDate)
+        if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
+            if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
+                _interactor.updateMaxValueIfNeeded(routineTitle: _routineDetailData.routine.title, logDate: logDate)
+            }
+        }
     }
     
     func newLogAction(date: Date) {
-        interactor?.createLog(date: date, routine: view!.routineDetailData!.routine)
+        if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
+            if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
+                _interactor.createLog(date: date, routine: _routineDetailData.routine)
+            }
+        }
     }
     
     func removeLogAction(removeIndex: Int) {
-        interactor?.removeLog(removeIndex: removeIndex, routine: view!.routineDetailData!.routine)
+        if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
+            if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
+                _interactor.removeLog(removeIndex: removeIndex, routine: _routineDetailData.routine)
+            }
+        }
     }
     
     func addSetAction(logDate: String, exerciseTitle: String) {
-        interactor?.createSet(routineDetail: view!.routineDetailData!, logDate: logDate, exerciseTitle: exerciseTitle)
+        if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
+            if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
+                _interactor.createSet(routine: _routineDetailData.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+            }
+        }
     }
     
     func removeSetAction(logDate: String, exerciseTitle: String) {
-        interactor?.removeSet(routineDetail: view!.routineDetailData!, logDate: logDate, exerciseTitle: exerciseTitle)
+        if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
+            if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
+                _interactor.removeSet(routine: _routineDetailData.routine, logDate: logDate, exerciseTitle: exerciseTitle)
+            }
+        }
     }
 }
 
 extension RoutineDetailPresenter: RoutineDetailInteractorOutputProtocol {
-    
-    func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>) {
-        view?.updateMaxInfoView(maxInfo: maxInfo)
+    func didDataLoaded(with loadedData: ViperEntity) {
+        if let _view = view as? RoutineDetailView {
+            _view.updateVIew(with: loadedData)
+        }
     }
     
-    func didLogLoaded(routineDetail: RoutineDetailModel) {
-        view?.showRoutineDetail(routineDetail: routineDetail)
+    func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>) {
+        if let _view = view as? RoutineDetailView {
+            _view.updateMaxInfoView(maxInfo: maxInfo)
+        }
     }
     
     func didCreateLog() {
-        view?.updateLogView(segmentIndex: 0)
+        if let _view = view as? RoutineDetailView {
+            _view.updateLogView(segmentIndex: 0)
+        }
     }
     
     func onError(title: String, message: String, buttonTitle: String, handler: ((UIAlertAction) -> Void)?) {
-        if title == "" && message == "" && buttonTitle == "" && handler == nil {
-            view?.showCreateDialog(isFirst: true)
-        } else {
-            view?.showError(title: title, message: message, buttonTitle: buttonTitle, handler: handler)
+        if let _view = view as? RoutineDetailView {
+            if title == "" && message == "" && buttonTitle == "" && handler == nil {
+                _view.showCreateDialog(isFirst: true)
+            } else {
+                _view.showError(title: title, message: message, buttonTitle: buttonTitle, handler: handler)
+            }
         }
     }
     
     func didRemoveLog(removedIndex: Int) {
-        view?.updateLogView(segmentIndex: removedIndex)
+        if let _view = view as? RoutineDetailView {
+            _view.updateLogView(segmentIndex: removedIndex)
+        }
     }
     
-    func didUpdateSetData(routineDetail: RoutineDetailModel) {
-        view?.updateTableView(routineDetail: routineDetail)
+    func didUpdateSetData(routineDetail: ViperEntity) {
+        if let _view = view as? RoutineDetailView {
+            _view.updateTableView(routineDetail: routineDetail)
+        }
     }
 }

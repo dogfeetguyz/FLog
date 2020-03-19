@@ -8,20 +8,18 @@
 
 import UIKit
 
-class FLogWireFrame: FLogWireFrameProtocol {
-    
-    class func createRoutineModule() -> UIViewController {
-        
+class FLogRouter: FLogRouterProtocol {
+    static func createModule(with initialData: ViperEntity?) -> UIViewController {
         let navigationController = UIStoryboard(name: "FLogView", bundle: Bundle.main).instantiateInitialViewController()
         if let view = navigationController!.children.first as? FLogView {
             
             let presenter: FLogPresenterProtocol & FLogInteractorOutputProtocol = FLogPresenter()
             let interactor: FLogInteractorInputProtocol = FLogInteractor()
-            let wireFrame: FLogWireFrameProtocol = FLogWireFrame()
+            let router: FLogRouterProtocol = FLogRouter()
 
             view.presenter = presenter
             presenter.view = view
-            presenter.wireFrame = wireFrame
+            presenter.router = router
             presenter.interactor = interactor
             interactor.presenter = presenter
 
@@ -30,8 +28,8 @@ class FLogWireFrame: FLogWireFrameProtocol {
         return UIViewController()
     }
     
-    func presentRoutineDetailViewScreen(from view: FLogViewProtocol, forRoutine routine: MainRoutineModel) {
-        let routineDetailView = RoutineDetailWireFrame.createRoutineDetailModule(with: routine)
+    func presentRoutineDetailViewScreen(from view: ViperView, forRoutine routine: MainRoutineModel) {
+        let routineDetailView = RoutineDetailRouter.createModule(with: RoutineDetailEntity(routine: routine, dailyLogs: []))
 
         if let sourceView = view as? UIViewController {
            sourceView.navigationController?.pushViewController(routineDetailView, animated: true)
@@ -39,8 +37,8 @@ class FLogWireFrame: FLogWireFrameProtocol {
     }
 
     
-    func presentNewRoutineViewScreen(from view: FLogViewProtocol) {
-        let newRoutineView = NewRoutineWireFrame.createNewRoutineModule()
+    func presentNewRoutineViewScreen(from view: ViperView) {
+        let newRoutineView = NewRoutineRouter.createModule()
 
         if let sourceView = view as? UIViewController {
            sourceView.navigationController?.pushViewController(newRoutineView, animated: true)
