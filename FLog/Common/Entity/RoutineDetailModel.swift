@@ -9,7 +9,7 @@
 /**
  Structure that is used for holding Routine Detail Data.
  */
-public struct RoutineDetailModel {
+public struct RoutineDetailModelaaaa {
     
     /// Main Routine data for this Routine Detail data
     public var routine: MainRoutineModel

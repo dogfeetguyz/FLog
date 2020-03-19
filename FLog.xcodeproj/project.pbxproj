@@ -27,6 +27,7 @@
 		FA356E402422422800771D5A /* FLogEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA356E3F2422422800771D5A /* FLogEntity.swift */; };
 		FA356E432422542B00771D5A /* TimelineEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA356E422422542B00771D5A /* TimelineEntity.swift */; };
 		FA4A6AA923FA9079000E54C4 /* RoutineDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */; };
+		FA5E2E5A2422DA7600790E9A /* RoutineDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5E2E592422DA7600790E9A /* RoutineDetailEntity.swift */; };
 		FA60DB70241A69C400298427 /* Timeline+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */; };
 		FA60DB71241A69C400298427 /* Timeline+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */; };
 		FA90ABD1241B2F92007F7249 /* FLogInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90ABD0241B2F92007F7249 /* FLogInteractorTests.swift */; };
@@ -49,7 +50,7 @@
 		FAA12C2D2417D16C00736315 /* RoutineDetailProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C2C2417D16C00736315 /* RoutineDetailProtocol.swift */; };
 		FAA12C2F2417D17B00736315 /* RoutineDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C2E2417D17B00736315 /* RoutineDetailPresenter.swift */; };
 		FAA12C312417D18400736315 /* RoutineDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C302417D18300736315 /* RoutineDetailInteractor.swift */; };
-		FAA12C332417D19400736315 /* RoutineDetailWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C322417D19400736315 /* RoutineDetailWireFrame.swift */; };
+		FAA12C332417D19400736315 /* RoutineDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C322417D19400736315 /* RoutineDetailRouter.swift */; };
 		FABD9641241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD9640241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift */; };
 		FABD96442418A122007C868D /* SetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD96432418A122007C868D /* SetModel.swift */; };
 		FABD96462418A167007C868D /* ExerciseLogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD96452418A167007C868D /* ExerciseLogModel.swift */; };
@@ -111,6 +112,7 @@
 		FA356E3F2422422800771D5A /* FLogEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogEntity.swift; sourceTree = "<group>"; };
 		FA356E422422542B00771D5A /* TimelineEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineEntity.swift; sourceTree = "<group>"; };
 		FA4A6AA823FA9078000E54C4 /* RoutineDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineDetailTableViewCell.swift; sourceTree = "<group>"; };
+		FA5E2E592422DA7600790E9A /* RoutineDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailEntity.swift; sourceTree = "<group>"; };
 		FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Timeline+CoreDataProperties.swift"; path = "/Users/yejunpark/Workspace/FLog/FLog/Entity/Timeline+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Timeline+CoreDataClass.swift"; path = "/Users/yejunpark/Workspace/FLog/FLog/Entity/Timeline+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		FA90ABCE241B2F92007F7249 /* FLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,7 +139,7 @@
 		FAA12C2C2417D16C00736315 /* RoutineDetailProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailProtocol.swift; sourceTree = "<group>"; };
 		FAA12C2E2417D17B00736315 /* RoutineDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailPresenter.swift; sourceTree = "<group>"; };
 		FAA12C302417D18300736315 /* RoutineDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailInteractor.swift; sourceTree = "<group>"; };
-		FAA12C322417D19400736315 /* RoutineDetailWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailWireFrame.swift; sourceTree = "<group>"; };
+		FAA12C322417D19400736315 /* RoutineDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailRouter.swift; sourceTree = "<group>"; };
 		FABD9640241899C2007C868D /* RoutineDetailView+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutineDetailView+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		FABD96432418A122007C868D /* SetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetModel.swift; sourceTree = "<group>"; };
 		FABD96452418A167007C868D /* ExerciseLogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLogModel.swift; sourceTree = "<group>"; };
@@ -450,9 +452,10 @@
 			isa = PBXGroup;
 			children = (
 				FAA12C2A2417D12500736315 /* Protocol */,
-				FAA12C292417D12100736315 /* Presenter */,
-				FAA12C282417D11C00736315 /* Interactor */,
 				FAA12C272417D11300736315 /* View */,
+				FAA12C282417D11C00736315 /* Interactor */,
+				FAA12C292417D12100736315 /* Presenter */,
+				FADA2B6E2422D6C80079E08D /* Entity */,
 				FAA12C262417D10D00736315 /* Router */,
 			);
 			path = RoutineDetail;
@@ -461,7 +464,7 @@
 		FAA12C262417D10D00736315 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				FAA12C322417D19400736315 /* RoutineDetailWireFrame.swift */,
+				FAA12C322417D19400736315 /* RoutineDetailRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -499,6 +502,14 @@
 				FAA12C2C2417D16C00736315 /* RoutineDetailProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		FADA2B6E2422D6C80079E08D /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				FA5E2E592422DA7600790E9A /* RoutineDetailEntity.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		FAF6619823F6554B0003B589 = {
@@ -823,9 +834,10 @@
 			files = (
 				FA356E402422422800771D5A /* FLogEntity.swift in Sources */,
 				FAA12C1D2417C47E00736315 /* NewRoutineProtocol.swift in Sources */,
+				FA5E2E5A2422DA7600790E9A /* RoutineDetailEntity.swift in Sources */,
 				FAA12C0F2417A56400736315 /* MainRoutineModel.swift in Sources */,
 				FA09FA45241A3729006BE8A2 /* TimelineModel.swift in Sources */,
-				FAA12C332417D19400736315 /* RoutineDetailWireFrame.swift in Sources */,
+				FAA12C332417D19400736315 /* RoutineDetailRouter.swift in Sources */,
 				FAA12C312417D18400736315 /* RoutineDetailInteractor.swift in Sources */,
 				FAA12C112417A60900736315 /* RoutineDetailModel.swift in Sources */,
 				FAA12C0924179BF700736315 /* FLogRouter.swift in Sources */,

@@ -29,7 +29,7 @@ class FLogRouter: FLogRouterProtocol {
     }
     
     func presentRoutineDetailViewScreen(from view: ViperView, forRoutine routine: MainRoutineModel) {
-        let routineDetailView = RoutineDetailWireFrame.createRoutineDetailModule(with: routine)
+        let routineDetailView = RoutineDetailRouter.createModule(with: RoutineDetailEntity(routine: routine, dailyLogs: []))
 
         if let sourceView = view as? UIViewController {
            sourceView.navigationController?.pushViewController(routineDetailView, animated: true)
