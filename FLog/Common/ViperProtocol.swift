@@ -86,7 +86,7 @@ public protocol ViperPresenter: class {
     func viewDidLoad()
 }
 
-public protocol ViperEntity: Any {
+public protocol ViperEntity: class {
 }
 
 /**

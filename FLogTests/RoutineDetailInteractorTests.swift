@@ -41,7 +41,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                 }
 
                 it("Should show a popup request creating a new log") {
@@ -54,7 +54,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     let routine = (self.routineArray?.last)!
                     
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                 }
 
                 it("Should include Routine Detail Data") {
@@ -70,8 +70,8 @@ class RoutineDetailInteractorTests: QuickSpec {
                     oneweekago.addTimeInterval(-(60*60*24*7))
                     self.sut.createLog(date: oneweekago, routine: routine)
                     self.sut.createLog(date: Date(), routine:routine)
-
-                    self.sut.loadLogs(routine: routine)
+                    
+                    self.sut.loadData(with: routine)
                 }
 
                 it("Should include Routine Detail data") {
@@ -107,7 +107,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
                     self.sut.removeLog(removeIndex: 0, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                 }
 
                 it("Should show a popup to request creating a new log") {
@@ -146,11 +146,11 @@ class RoutineDetailInteractorTests: QuickSpec {
                     var oneweekago = Date()
                     oneweekago.addTimeInterval(-(60*60*24*7))
                     self.sut.createLog(date: oneweekago, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
@@ -167,11 +167,11 @@ class RoutineDetailInteractorTests: QuickSpec {
                     oneweekago.addTimeInterval(-(60*60*24*7))
                     self.sut.createLog(date: oneweekago, routine: routine)
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     self.sut.removeLog(removeIndex: 0, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
@@ -209,7 +209,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
@@ -224,11 +224,11 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     self.sut.createSet(routine: oldLoadedData!.routine, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
@@ -241,17 +241,17 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     let loadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     self.sut.createSet(routine: loadedData!.routine, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
                     self.sut.createSet(routine: loadedData!.routine, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
                     self.sut.createSet(routine: loadedData!.routine, logDate: loadedData!.dailyLogs[0].logDate, exerciseTitle: (loadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     self.sut.removeSet(routine: oldLoadedData!.routine, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
@@ -264,11 +264,11 @@ class RoutineDetailInteractorTests: QuickSpec {
                 beforeEach {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     oldLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     self.sut.removeSet(routine: oldLoadedData!.routine, logDate: oldLoadedData!.dailyLogs[0].logDate, exerciseTitle: (oldLoadedData?.dailyLogs[0].exerciseLogs[0].exerciseTitle)!)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                 }
                 
@@ -309,7 +309,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -334,7 +334,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -345,7 +345,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     
                     
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let newLogDate = currentLoadedData!.dailyLogs[1].logDate
@@ -365,7 +365,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -376,7 +376,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     
                     
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let newLogDate = currentLoadedData!.dailyLogs[1].logDate
@@ -396,7 +396,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -424,7 +424,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -451,7 +451,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -487,7 +487,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -514,7 +514,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -550,7 +550,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -577,7 +577,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -606,7 +606,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -663,7 +663,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -690,7 +690,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -721,7 +721,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -734,7 +734,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     let newLogDate = currentLoadedData!.dailyLogs[1].logDate
                     self.sut.updateSet(routine: currentLoadedData!.routine, setIndex:0, slotIdentifier: .weight, text: "1000", logDate: newLogDate, exerciseTitle: exerciseTitle)
@@ -754,7 +754,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -767,7 +767,7 @@ class RoutineDetailInteractorTests: QuickSpec {
 
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let newLogDate = currentLoadedData!.dailyLogs[1].logDate
@@ -788,7 +788,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -821,7 +821,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -854,7 +854,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -888,7 +888,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -921,7 +921,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -932,7 +932,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let newLogDate = currentLoadedData!.dailyLogs[1].logDate
@@ -958,7 +958,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -969,7 +969,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let newLogDate = currentLoadedData!.dailyLogs[1].logDate
@@ -995,7 +995,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -1006,7 +1006,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let newLogDate = currentLoadedData!.dailyLogs[1].logDate
@@ -1033,7 +1033,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     aMonthAgo.addTimeInterval(-(60*60*24*30))
                     let routine = (self.routineArray?.last)!
                     self.sut.createLog(date: aMonthAgo, routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let logDate = currentLoadedData!.dailyLogs[0].logDate
@@ -1044,7 +1044,7 @@ class RoutineDetailInteractorTests: QuickSpec {
                     self.sut.updateMaxValueIfNeeded(routineTitle: routine.title, logDate: logDate)
 
                     self.sut.createLog(date: Date(), routine: routine)
-                    self.sut.loadLogs(routine: routine)
+                    self.sut.loadData(with: routine)
                     currentLoadedData = self.routineDetailPresenterMock.loadedData as? RoutineDetailEntity
                     
                     let newLogDate = currentLoadedData!.dailyLogs[1].logDate
@@ -1101,17 +1101,13 @@ class RoutineDetailPresenterMock: RoutineDetailInteractorOutputProtocol {
     var maxInfo: Dictionary<String, Dictionary<String, String>>?
     
     func didDataLoaded(with loadedData: ViperEntity) {
-        
-    }
-    
-    func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>) {
-        self.maxInfo = maxInfo
+        self.loadedData = loadedData
         errorOccurred = false
         succeeded = true
     }
     
-    func didLogLoaded(routineDetail: ViperEntity) {
-        loadedData = routineDetail
+    func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>) {
+        self.maxInfo = maxInfo
         errorOccurred = false
         succeeded = true
     }

@@ -40,7 +40,6 @@
 		FAA12C0924179BF700736315 /* FLogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0824179BF700736315 /* FLogRouter.swift */; };
 		FAA12C0C2417A46E00736315 /* FLogInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0B2417A46E00736315 /* FLogInteractor.swift */; };
 		FAA12C0F2417A56400736315 /* MainRoutineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C0E2417A56400736315 /* MainRoutineModel.swift */; };
-		FAA12C112417A60900736315 /* RoutineDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C102417A60900736315 /* RoutineDetailModel.swift */; };
 		FAA12C132417A67300736315 /* RoutineBestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C122417A67300736315 /* RoutineBestModel.swift */; };
 		FAA12C152417C0E400736315 /* FLogView+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C142417C0E400736315 /* FLogView+UITableViewDelegate.swift */; };
 		FAA12C1D2417C47E00736315 /* NewRoutineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA12C1C2417C47E00736315 /* NewRoutineProtocol.swift */; };
@@ -129,7 +128,6 @@
 		FAA12C0824179BF700736315 /* FLogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogRouter.swift; sourceTree = "<group>"; };
 		FAA12C0B2417A46E00736315 /* FLogInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLogInteractor.swift; sourceTree = "<group>"; };
 		FAA12C0E2417A56400736315 /* MainRoutineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRoutineModel.swift; sourceTree = "<group>"; };
-		FAA12C102417A60900736315 /* RoutineDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineDetailModel.swift; sourceTree = "<group>"; };
 		FAA12C122417A67300736315 /* RoutineBestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineBestModel.swift; sourceTree = "<group>"; };
 		FAA12C142417C0E400736315 /* FLogView+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FLogView+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		FAA12C1C2417C47E00736315 /* NewRoutineProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoutineProtocol.swift; sourceTree = "<group>"; };
@@ -385,7 +383,6 @@
 				FA60DB6F241A69C300298427 /* Timeline+CoreDataClass.swift */,
 				FA60DB6E241A69C300298427 /* Timeline+CoreDataProperties.swift */,
 				FAA12C0E2417A56400736315 /* MainRoutineModel.swift */,
-				FAA12C102417A60900736315 /* RoutineDetailModel.swift */,
 				FABD96472418A2BA007C868D /* DailyLogModel.swift */,
 				FABD96452418A167007C868D /* ExerciseLogModel.swift */,
 				FABD96432418A122007C868D /* SetModel.swift */,
@@ -839,7 +836,6 @@
 				FA09FA45241A3729006BE8A2 /* TimelineModel.swift in Sources */,
 				FAA12C332417D19400736315 /* RoutineDetailRouter.swift in Sources */,
 				FAA12C312417D18400736315 /* RoutineDetailInteractor.swift in Sources */,
-				FAA12C112417A60900736315 /* RoutineDetailModel.swift in Sources */,
 				FAA12C0924179BF700736315 /* FLogRouter.swift in Sources */,
 				FAA12C2F2417D17B00736315 /* RoutineDetailPresenter.swift in Sources */,
 				FA09FA3E2419EEBA006BE8A2 /* TimelineViewCell.swift in Sources */,

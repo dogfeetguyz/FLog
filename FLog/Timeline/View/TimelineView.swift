@@ -57,7 +57,7 @@ extension TimelineView: TimelineViewProtocol {
         if isInitial {
             loadedData = entity
         } else {
-            if var _loadedData = loadedData as? TimelineEntityProtocol {
+            if let _loadedData = loadedData as? TimelineEntityProtocol {
                 _loadedData.timelineArray.append(contentsOf: (entity as? TimelineEntity)!.timelineArray)
             }
         }
@@ -68,7 +68,7 @@ extension TimelineView: TimelineViewProtocol {
         canCallNextTimeline = false
         
         if isInitial {
-            if var _loadedData = loadedData as? TimelineEntityProtocol {
+            if let _loadedData = loadedData as? TimelineEntityProtocol {
                 _loadedData.timelineArray = []
             }
             tableView.reloadData()

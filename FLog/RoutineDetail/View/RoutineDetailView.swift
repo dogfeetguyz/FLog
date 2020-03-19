@@ -28,7 +28,10 @@ class RoutineDetailView: KUIViewController {
         segmentedControl.underlineSelected = true
         segmentedControl.fixedSegmentWidth = false
         
-        presenter?.viewDidLoad()
+        if let _presenter = presenter as? RoutineDetailPresenterProtocol {
+            _presenter.viewDidLoad()
+            _presenter.loadMaxInfo()
+        }
         segmentedControl.selectedSegmentIndex = 0
     }
     
@@ -80,12 +83,7 @@ class RoutineDetailView: KUIViewController {
 extension RoutineDetailView: RoutineDetailViewProtocol {
     
     func updateVIew(with entity: ViperEntity) {
-        
-    }
-    
-    
-    func showRoutineDetail(routineDetail: ViperEntity) {
-        loadedData = routineDetail
+        loadedData = entity
         
         if segmentedControl.numberOfSegments > 0 {
             for _ in Range(0 ... segmentedControl.numberOfSegments-1) {
@@ -124,7 +122,7 @@ extension RoutineDetailView: RoutineDetailViewProtocol {
     
     func updateLogView(segmentIndex: Int) {
         if let _presenter = presenter as? RoutineDetailPresenterProtocol {
-            _presenter.loadLogs()
+            _presenter.viewDidLoad()
             
             if segmentIndex >= 0 {
                 self.segmentedControl.selectedSegmentIndex = segmentIndex

@@ -10,11 +10,6 @@ import UIKit
 
 protocol RoutineDetailViewProtocol: ViperView {
     // MARK: presenter -> view
-    
-    /// Shows routine detail with logs for this routine
-    /// - parameter routineDetail: Routine detail data to draw the screen
-    func showRoutineDetail(routineDetail: ViperEntity)
-    
     /// Shows a dialog to create new log
     /// - parameter isFirst: Indicates whetere is the first log or not
     func showCreateDialog(isFirst: Bool)
@@ -33,11 +28,6 @@ protocol RoutineDetailViewProtocol: ViperView {
 }
 
 protocol RoutineDetailInteractorInputProtocol: ViperInteractorInput {
-    // MARK: prsenter -> interactor
-    /// Loads logs from UserDefaults
-    /// - parameter routine: Routine Data to load the detail data
-    func loadLogs(routine: MainRoutineModel)
-    
     /// Loads max info from UserDefaults
     /// - parameter routineTitle: The routine title related to this loading
     func loadMaxInfo(routineTitle: String)
@@ -91,10 +81,6 @@ protocol RoutineDetailInteractorOutputProtocol: ViperInteractorOutput {
     /// - parameter maxInfo: The information of max data
     func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>)
     
-    /// Finished load logs
-    /// - parameter routineDetail: Routine detail data to draw the screen
-    func didLogLoaded(routineDetail: ViperEntity)
-    
     /// finished creating new log
     func didCreateLog()
     
@@ -108,9 +94,6 @@ protocol RoutineDetailInteractorOutputProtocol: ViperInteractorOutput {
 }
 
 protocol RoutineDetailPresenterProtocol: ViperPresenter {
-    /// Should call when the contents of logs were updated
-    func loadLogs()
-    
     /// Should call when the more/less button for maxInfo clicked
     func loadMaxInfo()
     

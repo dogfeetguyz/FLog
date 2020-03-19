@@ -11,11 +11,16 @@ import Foundation
 /**
  Structure that is used for holding Timeline Data.
  */
-public struct TimelineModel {
+public class TimelineModel: ViperEntity {
     
     /// Timeline data loaded from Core Data
     public var timelineData: Timeline
     
     /// Dtailed content for each timeline
     public var content: NSAttributedString
+    
+    init(timelineData: Timeline, content: NSAttributedString) {
+        self.timelineData = timelineData
+        self.content = content
+    }
 }

@@ -14,6 +14,18 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
     var presenter: ViperInteractorOutput?
     
     func loadData(with initialData: ViperEntity?) {
+        if let routine = initialData as? MainRoutineModel {
+            if let _presenter = presenter as? RoutineDetailInteractorOutputProtocol {
+                let routineTitle = routine.title
+                
+                if UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) == nil || UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)?.count == 0 {
+                    UserDefaults.standard.set([], forKey: routineTitle + Common.Define.routineDetail)
+                    _presenter.onError(title: "", message: "", buttonTitle: "", handler: nil)
+                } else {
+                    _presenter.didDataLoaded(with: load(routine: routine))
+                }
+            }
+        }
     }
     
     private func load(routine: MainRoutineModel) -> ViperEntity {
@@ -37,19 +49,6 @@ class RoutineDetailInteractor: RoutineDetailInteractorInputProtocol {
         }
         
         return RoutineDetailEntity(routine: routine, dailyLogs: dailyLogs)
-    }
-    
-    func loadLogs(routine: MainRoutineModel) {
-        if let _presenter = presenter as? RoutineDetailInteractorOutputProtocol {
-            let routineTitle = routine.title
-            
-            if UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail) == nil || UserDefaults.standard.array(forKey: routineTitle + Common.Define.routineDetail)?.count == 0 {
-                UserDefaults.standard.set([], forKey: routineTitle + Common.Define.routineDetail)
-                _presenter.onError(title: "", message: "", buttonTitle: "", handler: nil)
-            } else {
-                _presenter.didLogLoaded(routineDetail: load(routine: routine))
-            }
-        }
     }
     
     func loadMaxInfo(routineTitle: String) {

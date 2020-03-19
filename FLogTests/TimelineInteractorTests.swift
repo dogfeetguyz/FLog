@@ -40,7 +40,7 @@ class TimelineInteractorTests: QuickSpec {
                     
                     let routineDetailInteractor = RoutineDetailInteractor()
                     routineDetailInteractor.presenter = RoutineDetailPresenterMock()
-                    routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+                    routineDetailInteractor.loadData(with: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
                     let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData as? RoutineDetailEntity
                     let logDate = (routineDetailData?.dailyLogs[i].logDate)!
                     let exerciseTitle = (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!
@@ -422,7 +422,7 @@ class TimelineInteractorTests: QuickSpec {
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
-        routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+        routineDetailInteractor.loadData(with: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
         
         let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData as? RoutineDetailEntity
         routineDetailInteractor.createSet(routine: routineDetailData!.routine, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
@@ -435,7 +435,7 @@ class TimelineInteractorTests: QuickSpec {
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
-        routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+        routineDetailInteractor.loadData(with: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
         
         let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData as? RoutineDetailEntity
         routineDetailInteractor.updateSet(routine: routineDetailData!.routine, setIndex:index, slotIdentifier: .weight, text: weight, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)
@@ -449,7 +449,7 @@ class TimelineInteractorTests: QuickSpec {
         
         let routineDetailInteractor = RoutineDetailInteractor()
         routineDetailInteractor.presenter = RoutineDetailPresenterMock()
-        routineDetailInteractor.loadLogs(routine: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
+        routineDetailInteractor.loadData(with: ((flogInteractor.presenter as! FLogPresenterMock).loadedArray.last)!)
         
         let routineDetailData = (routineDetailInteractor.presenter as! RoutineDetailPresenterMock).loadedData as? RoutineDetailEntity
         routineDetailInteractor.removeSet(routine: routineDetailData!.routine, logDate: (routineDetailData?.dailyLogs.first!.logDate)!, exerciseTitle: (routineDetailData?.dailyLogs.first!.exerciseLogs.first!.exerciseTitle)!)

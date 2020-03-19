@@ -14,14 +14,9 @@ class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
     var router: ViperRouter?
     
     func viewDidLoad() {
-        loadMaxInfo()
-        loadLogs()
-    }
-    
-    func loadLogs() {
         if let _interactor = interactor as? RoutineDetailInteractorInputProtocol {
             if let _routineDetailData = view?.loadedData as? RoutineDetailEntityProtocol {
-                _interactor.loadLogs(routine: _routineDetailData.routine)
+                _interactor.loadData(with: _routineDetailData.routine)
             }
         }
     }
@@ -85,19 +80,14 @@ class RoutineDetailPresenter: RoutineDetailPresenterProtocol {
 
 extension RoutineDetailPresenter: RoutineDetailInteractorOutputProtocol {
     func didDataLoaded(with loadedData: ViperEntity) {
-        
+        if let _view = view as? RoutineDetailView {
+            _view.updateVIew(with: loadedData)
+        }
     }
-    
     
     func didMaxInfoLoaded(maxInfo: Dictionary<String, Dictionary<String, String>>) {
         if let _view = view as? RoutineDetailView {
             _view.updateMaxInfoView(maxInfo: maxInfo)
-        }
-    }
-    
-    func didLogLoaded(routineDetail: ViperEntity) {
-        if let _view = view as? RoutineDetailView {
-            _view.showRoutineDetail(routineDetail: routineDetail)
         }
     }
     
